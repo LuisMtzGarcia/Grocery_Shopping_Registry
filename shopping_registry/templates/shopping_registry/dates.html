@@ -1,0 +1,17 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+
+<p>Viajes al súper: </p>
+
+<ul>
+    {% for date in dates %}
+        <li>
+            <a href="{% url 'shopping_registry:date' date.id %}">{{ date }}</a>
+        </li>
+    {% empty %}
+        <li>Aún no se ha registrado ninguna ida.</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

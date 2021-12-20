@@ -1,6 +1,6 @@
 from django.db import models
 
-class Category:
+class Category(models.Model):
     """Categories to classify the items."""
     name = models.CharField(max_length=100)
 
@@ -11,10 +11,10 @@ class Category:
         """Return a string representation of the name of the category."""
         return f"{self.name}"
 
-class Product:
+class Product(models.Model):
     """A product the user pruchases and registers."""
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    category = modedls.ForeignKey(Category, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'products'
@@ -23,22 +23,30 @@ class Product:
         """Return the name of the product in a string."""
         return f"{self.name}"
 
-class Purchase:
+class Date(models.Model):
+    """The purchase date of a group of products in a trip to the supermarket."""
+    date_trip = models.DateField()
+
+    class Meta:
+        verbose_name_plural = 'dates'
+
+    def __str__(self):
+        """Return a string representation of the date."""
+        return f"{self.date_trip}"
+
+
+class Purchase(models.Model):
     """The purchase of a product."""
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.FloatField()
-    date_purchase = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    date_purchase = models.ForeignKey(Date, on_delete=models.CASCADE)
     # Compras a granel
     bulk = models.BooleanField()
 
     class Meta:
         verbose_name_plural = 'purchases'
 
-    if self.bulk == True:
-        message = f"{self.quantity} gr/ml of {self.product} on {self.date_purchase}"
-    else:
-        message = f"{self.quantity} of {self.product} on {self.date_purchase}"
-
     def __str__(self):
         """Return a string representation of the purchase."""
-        return f"Bought {self.quantity} {if self.bulk == True }"
+        return f"{self.quantity} de {self.product} por ${self.price}"

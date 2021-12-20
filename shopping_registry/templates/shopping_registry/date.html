@@ -1,0 +1,19 @@
+{% extends 'shopping_registry/base.html' %}
+
+{% block content %}
+
+<p>
+    Visita: {{ date }}
+</p>
+<p>
+    Compras:
+</p>
+<ul>
+    {% for purchase in purchases %}
+        <li>{{ purchase }}</li>
+    {% empty %}
+        <li>Aún no se han registrado compras para esta visita.</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
