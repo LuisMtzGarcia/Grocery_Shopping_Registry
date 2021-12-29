@@ -23,10 +23,16 @@
 <ul>
     {% for key, value in dictionary.items %}
         {% for key2, value2 in value.items %}
-            {% if value2 > 0 %}
+            {% if value2 == True %}
+                <li>Precio 100 gramos: ${{ value2 }}</li>
+                <br>
+            {% elif value2 > 0 %}
                 <li>Precio unitario: ${{ value2 }}</li>
                 <br>
             {% elif value2 == False %}
+            {% comment %}
+                Last elif tag is empty so the page doesn't display "Producto: False"
+            {% endcomment %}
             {% else %}
                 <li>Producto: {{ value2 }}</li>
             {% endif %}
