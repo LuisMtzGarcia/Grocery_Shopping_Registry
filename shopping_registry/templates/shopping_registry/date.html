@@ -15,5 +15,32 @@
         <li>Aún no se han registrado compras para esta visita.</li>
     {% endfor %}
 </ul>
+<p>
+    Total de la visita: ${{ total }}
+    <br><br>
+    Productos con precio por unidad:
+</p>
+<ul>
+    {% for key, value in dictionary.items %}
+        {% for key2, value2 in value.items %}
+            {% if value2 > 0 %}
+                <li>Precio unitario: ${{ value2 }}</li>
+                <br>
+            {% elif value2 == False %}
+            {% else %}
+                <li>Producto: {{ value2 }}</li>
+            {% endif %}
+        {% endfor %}
+    {% empty %}
+        <li>Aún no se han registrado productos.</li>
+    {% endfor %}
+</ul>
+<p>
+    {% if graph %}
+    <div style="width:600; height:500;">
+        {{ graph|safe}}
+    </div>
+    {% endif %}
+</p>
 
 {% endblock content %}
