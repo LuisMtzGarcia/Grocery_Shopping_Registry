@@ -31,7 +31,10 @@ def date(request, date_id):
     # Stores the name of the product, its individual price and its bulk's boolean
     # value
     dictionary = {}
-    # Stores the categories of all the products bought in the trip
+    # Stores the categories of all the products bought in the trip.
+    # The function of this list is to pass it to the Django template, and there,
+    # uses this list to verify that a key/value pair relates to the product's
+    # category.
     categories = []
     # Dictionary to store the category of the product coupled with the total
     # spent on that category
@@ -40,15 +43,14 @@ def date(request, date_id):
     bulk = [] 
 
     for purchase in purchases:
-        # Sums the price to the total
+        # Sums purchase's price to the total.
         total += purchase.price
-        # Appends the product's name and quantity bought
+        # Stores the product's name, quantity, price and if it's either bought in
+        # bulk or not.
         # Stores the product model, it only contains the name and the category
         products.append(purchase.product)
         quantities.append(purchase.quantity)
-        # Stores the price of the product
         prices.append(purchase.price)
-        # Stores the bulk value of the product
         bulk.append(purchase.bulk)
 
     for x in range(0, len(products)):
@@ -56,26 +58,24 @@ def date(request, date_id):
         # previously added, omits it if it has.
         if products[x].category not in categories:
             categories.append(products[x].category)
-        # Since bulk was already calculated, check for bulk status and calculate
-        # individual price
+        # Creating dictionary to store the total spent per category
+        category_spent[products[x].category] = 0
+        # Check for bulk status and calculate pricer per unit.
         if bulk[x] == True:
+            # If it was a bulk purchase, multiply by 100 to display the price per
+            # 100 grams.
             ind_prices.append(float((prices[x] / quantities[x]) * 100))
         else:
             ind_prices.append(float((prices[x] / quantities[x])))
-        # Rounds the value to 2 decimal places
+        # Rounds the value to 2 decimal places.
         ind_prices[x] = round(ind_prices[x], 2)
-        # Generates the dictionary
+        # Generates a dictionary to store a product's details.
         dictionary[x] = {'Nombre': products[x], 'Categoria': products[x].category,
             'Bulk': bulk[x], 'Precio': ind_prices[x]}
 
-    # Obtaining total spent per category
-    # Creating the dictionary
-    for category in categories:
-        category_spent[category] = 0
-    # Obtaining the total per category
+    # Calculating total spent per category
     for purchase in purchases:
         category_spent[purchase.product.category] += purchase.price
-
 
     context = {'date': date, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
