@@ -41,7 +41,7 @@ class Purchase(models.Model):
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     date_purchase = models.ForeignKey(Date, on_delete=models.CASCADE)
-    # Compras a granel
+    # Compras a granel / Bulk purchases
     bulk = models.BooleanField()
 
     class Meta:

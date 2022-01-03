@@ -17,28 +17,46 @@
 </ul>
 <p>
     Total de la visita: ${{ total }}
-    <br><br>
-    Productos con precio por unidad:
+    <br>
+    <br>
+    Productos con precio por unidad o 100gr:
 </p>
 <ul>
     {% for key, value in dictionary.items %}
         {% for key2, value2 in value.items %}
             {% if value2 == True %}
-                <li>Precio 100 gramos: ${{ value2 }}</li>
-                <br>
-            {% elif value2 > 0 %}
-                <li>Precio unitario: ${{ value2 }}</li>
-                <br>
+                <li>Precio 100 gramos: 
             {% elif value2 == False %}
-            {% comment %}
-                Last elif tag is empty so the page doesn't display "Producto: False"
-            {% endcomment %}
+                <li>Precio por unidad: 
+            {% elif value2 > 0 %}
+                ${{ value2 }}</li>
+                <br>
+            {% elif value2 in categories %}
+                <li>Categoria: {{ value2 }}</li>
             {% else %}
                 <li>Producto: {{ value2 }}</li>
             {% endif %}
         {% endfor %}
     {% empty %}
         <li>Aún no se han registrado productos.</li>
+    {% endfor %}
+</ul>
+<p>
+    Gasto por categoría de productos:
+</p>
+<ul>
+    {% for key, value in category_spent.items %}
+        <li>
+            Categoría: {{ key }}
+        </li>
+        <li>
+            Total: ${{ value }}
+        </li>
+        <br>
+    {% empty %}
+        <li>
+            Aún no se han registrado productos.
+        </li>
     {% endfor %}
 </ul>
 <p>
