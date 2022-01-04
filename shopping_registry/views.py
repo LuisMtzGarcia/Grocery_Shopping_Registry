@@ -39,7 +39,7 @@ def date(request, date_id):
     # Stores the categories of all the products bought in the trip.
     # The function of this list is to pass it to the Django template, and there,
     # uses this list to verify that a key/value pair relates to the product's
-    # category.
+    # category. It's also responsible for the Category/TotalCost visualization
     categories = []
     # Dictionary to store the category of the product coupled with the total
     # spent on that category
@@ -82,30 +82,44 @@ def date(request, date_id):
     for purchase in purchases:
         category_spent[purchase.product.category] += purchase.price
 
-    # Creating a visualization
+    # Product and Price visualization
     # Serialize into JSON the product list QuerySet.
     product_json = serializers.serialize("json", products)
     # Converts JSON into a dict.
     product_dict = json.loads(product_json)
     # List to store the products name to use as tags for the graph.
-    product_names = []
-    for product in product_dict:
-        product_names.append(product['fields']['name'])
+    product_names = [product['fields']['name'] for product in product_dict]
 
     # Convert the prices list QuerySet to a list of floats.
     prices_float = [float(price) for price in prices]
 
-    x = prices
-    y = [q*2 for q in x]
-    trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': 10},
-        mode="lines", name='1st Trace')
+    x = product_names
+    y = prices_float
+    trace1 = go.Bar(x=x, y=y)
 
-    layout = go.Layout(title="Random Graph", xaxis={'title':'x1'}, yaxis={'title':'x2'})
+    layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
+        yaxis={'title':'Costo'})
     figure = go.Figure(data=[trace1],layout=layout)
 
     graph = figure.to_html()
 
+    # Total spent per category visualization
+    # Serialize into JSON the category list QuerySet.
+    category_json = serializers.serialize("json", categories)
+    # Converts JSON into a dict.
+    category_dict = json.loads(category_json)
+    # List to store the categories name.
+    category_names = [category['fields']['name'] for category in category_dict]
+    # Calculating total per category.
+    for purchase in purchases:
+        for x in range(0, len(category_names)):
+            if purchase.product.category == category_names[x]:
+
+    # Might have to serialize the Purchase QuerySet
+
+
     context = {'date': date, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
-        'categories': categories, 'category_spent': category_spent, 'graph': graph}
+        'categories': categories, 'category_spent': category_spent, 
+        'graph': graph}
     return render(request, 'shopping_registry/date.html', context)

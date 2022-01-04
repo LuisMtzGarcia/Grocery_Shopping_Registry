@@ -17,6 +17,16 @@
 </ul>
 <p>
     Total de la visita: ${{ total }}
+</p>
+<p>
+    {% if graph %}
+    <div style="width:600; height:500;">
+        {{ graph|safe}}
+    </div>
+    {% endif %}
+</p>
+<p>
+    Información detallada: 
     <br>
     <br>
     Productos con precio por unidad o 100gr:
@@ -59,12 +69,6 @@
         </li>
     {% endfor %}
 </ul>
-<p>
-    {% if graph %}
-    <div style="width:600; height:500;">
-        {{ graph|safe}}
-    </div>
-    {% endif %}
-</p>
+
 
 {% endblock content %}
