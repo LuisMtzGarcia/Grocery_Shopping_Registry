@@ -1,8 +1,11 @@
 from django.shortcuts import render
+from django.core import serializers
 
 from .models import Date, Product, Category
 
 import plotly.graph_objects as go
+
+import json
 
 def index(request):
     """The home page for Grocery Registry."""
@@ -80,12 +83,24 @@ def date(request, date_id):
         category_spent[purchase.product.category] += purchase.price
 
     # Creating a visualization
-    x = [-2,0,4,6,7]
-    y = [q**2-q+3 for q in x]
+    # Serialize into JSON the product list QuerySet.
+    product_json = serializers.serialize("json", products)
+    # Converts JSON into a dict.
+    product_dict = json.loads(product_json)
+    # List to store the products name to use as tags for the graph.
+    product_names = []
+    for product in product_dict:
+        product_names.append(product['fields']['name'])
+
+    # Convert the prices list QuerySet to a list of floats.
+    prices_float = [float(price) for price in prices]
+
+    x = prices
+    y = [q*2 for q in x]
     trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': 10},
         mode="lines", name='1st Trace')
 
-    layout = go.Layout(title="Meine Daten", xaxis={'title':'x1'}, yaxis={'title':'x2'})
+    layout = go.Layout(title="Random Graph", xaxis={'title':'x1'}, yaxis={'title':'x2'})
     figure = go.Figure(data=[trace1],layout=layout)
 
     graph = figure.to_html()
