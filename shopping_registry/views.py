@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 from .models import Date, Product, Category
 
+import plotly.graph_objects as go
+
 def index(request):
     """The home page for Grocery Registry."""
     return render(request, 'shopping_registry/index.html')
@@ -77,7 +79,18 @@ def date(request, date_id):
     for purchase in purchases:
         category_spent[purchase.product.category] += purchase.price
 
+    # Creating a visualization
+    x = [-2,0,4,6,7]
+    y = [q**2-q+3 for q in x]
+    trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': 10},
+        mode="lines", name='1st Trace')
+
+    layout = go.Layout(title="Meine Daten", xaxis={'title':'x1'}, yaxis={'title':'x2'})
+    figure = go.Figure(data=[trace1],layout=layout)
+
+    graph = figure.to_html()
+
     context = {'date': date, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
-        'categories': categories, 'category_spent': category_spent}
+        'categories': categories, 'category_spent': category_spent, 'graph': graph}
     return render(request, 'shopping_registry/date.html', context)
