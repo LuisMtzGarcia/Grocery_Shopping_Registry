@@ -79,6 +79,7 @@ def date(request, date_id):
             'Bulk': bulk[x], 'Precio': ind_prices[x]}
 
     # Calculating total spent per category
+    # Try serializing this
     for purchase in purchases:
         category_spent[purchase.product.category] += purchase.price
 
@@ -89,18 +90,14 @@ def date(request, date_id):
     product_dict = json.loads(product_json)
     # List to store the products name to use as tags for the graph.
     product_names = [product['fields']['name'] for product in product_dict]
-
     # Convert the prices list QuerySet to a list of floats.
     prices_float = [float(price) for price in prices]
 
-    x = product_names
-    y = prices_float
-    trace1 = go.Bar(x=x, y=y)
-
+    # Generate the Bar chart.
+    Bar = go.Bar(x=product_names, y=prices_float)
     layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
         yaxis={'title':'Costo'})
-    figure = go.Figure(data=[trace1],layout=layout)
-
+    figure = go.Figure(data=[Bar],layout=layout)
     graph = figure.to_html()
 
     # Total spent per category visualization
@@ -110,16 +107,17 @@ def date(request, date_id):
     category_dict = json.loads(category_json)
     # List to store the categories name.
     category_names = [category['fields']['name'] for category in category_dict]
-    # Calculating total per category.
-    for purchase in purchases:
-        for x in range(0, len(category_names)):
-            if purchase.product.category == category_names[x]:
+    # List to store the values per category.
+    total_cat_spent = []
+    category_values = category_spent.values()
+    for value in category_values:
+        total_cat_spent.append(float(value))
 
-    # Might have to serialize the Purchase QuerySet
-
+    pie_chart = go.Figure(data=[go.Pie(labels=category_names, values=total_cat_spent)])
+    pie_graph = pie_chart.to_html()
 
     context = {'date': date, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
         'categories': categories, 'category_spent': category_spent, 
-        'graph': graph}
+        'graph': graph, 'pie_graph': pie_chart}
     return render(request, 'shopping_registry/date.html', context)
