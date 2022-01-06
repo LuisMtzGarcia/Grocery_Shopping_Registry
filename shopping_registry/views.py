@@ -98,7 +98,7 @@ def date(request, date_id):
     layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
         yaxis={'title':'Costo'})
     figure = go.Figure(data=[Bar],layout=layout)
-    graph = figure.to_html()
+    bar_graph = figure.to_html()
 
     # Total spent per category visualization
     # Serialize into JSON the category list QuerySet.
@@ -113,11 +113,12 @@ def date(request, date_id):
     for value in category_values:
         total_cat_spent.append(float(value))
 
-    pie_chart = go.Figure(data=[go.Pie(labels=category_names, values=total_cat_spent)])
+    Pie = go.Pie(labels=category_names, values=total_cat_spent, hole=.3, title_text="Categorias")
+    pie_chart = go.Figure(data=Pie)
     pie_graph = pie_chart.to_html()
 
     context = {'date': date, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
         'categories': categories, 'category_spent': category_spent, 
-        'graph': graph, 'pie_graph': pie_chart}
+        'bar_graph': bar_graph, 'pie_graph': pie_graph}
     return render(request, 'shopping_registry/date.html', context)

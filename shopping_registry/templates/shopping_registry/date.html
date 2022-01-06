@@ -19,9 +19,9 @@
     Total de la visita: ${{ total }}
 </p>
 <p>
-    {% if graph %}
+    {% if bar_graph %}
     <div style="width:600; height:500;">
-        {{ graph|safe}}
+        {{ bar_graph|safe}}
     </div>
     {% endif %}
 </p>
@@ -72,8 +72,12 @@
 <p>
     {% if pie_graph %}
     <div style="width:600; height:500;">
-        {{ graph|safe}}
+        {{ pie_graph|safe}}
     </div>
+    {% else %}
+    <p>
+        No graph was provided.
+    </p>
     {% endif %}
 </p>
 
