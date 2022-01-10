@@ -1,0 +1,22 @@
+{% extends 'shopping_registry/base.html' %}
+
+{% block content %}
+
+<ul>
+    {% for trip in object_list %}
+        <li>
+            {{ trip.date_purchase|date:"F j, Y"}}: {{ trip }}
+        </li>
+    {% endfor %}
+</ul>
+
+<p>
+    {% if previous_month %}
+        Previous Month: {{ previous_month|date:"F Y"}}
+    {% endif %}
+    {% if next_month %}
+        Next Month: {{ next_month|date:"F Y"}}
+    {% endif %}
+</p>
+
+{% endblock content %}

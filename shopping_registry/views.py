@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.core import serializers
+from django.views.generic.dates import YearArchiveView, MonthArchiveView
 
-from .models import Date, Product, Category
+from .models import Date, Product, Category, Purchase
 
 import plotly.graph_objects as go
 
@@ -79,7 +80,6 @@ def date(request, date_id):
             'Bulk': bulk[x], 'Precio': ind_prices[x]}
 
     # Calculating total spent per category
-    # Try serializing this
     for purchase in purchases:
         category_spent[purchase.product.category] += purchase.price
 
@@ -107,13 +107,14 @@ def date(request, date_id):
     category_dict = json.loads(category_json)
     # List to store the categories name.
     category_names = [category['fields']['name'] for category in category_dict]
-    # List to store the values per category.
-    total_cat_spent = []
+    # Obtains the values from the category_spent dict and stores them.
     category_values = category_spent.values()
-    for value in category_values:
-        total_cat_spent.append(float(value))
+    # List to read and store the values per category and convert them to float.
+    total_cat_spent = [value for value in category_values]
 
-    Pie = go.Pie(labels=category_names, values=total_cat_spent, hole=.3, title_text="Categorias")
+    # Generate the Pie chart.
+    Pie = go.Pie(labels=category_names, values=total_cat_spent, hole=.3, 
+        title_text="Categorias")
     pie_chart = go.Figure(data=Pie)
     pie_graph = pie_chart.to_html()
 
@@ -122,3 +123,16 @@ def date(request, date_id):
         'categories': categories, 'category_spent': category_spent, 
         'bar_graph': bar_graph, 'pie_graph': pie_graph}
     return render(request, 'shopping_registry/date.html', context)
+
+class YearView(YearArchiveView):
+    """ Displays all shopping trips in a year."""
+    queryset = Date.objects.all()
+    date_field = "date_trip"
+    make_object_list = True
+    allow_future = True
+
+class MonthView(MonthArchiveView):
+    """ Displays all shopping trips in a month."""
+    queryset = Date.objects.all()
+    date_field = "date_trip"
+    allow_future = True

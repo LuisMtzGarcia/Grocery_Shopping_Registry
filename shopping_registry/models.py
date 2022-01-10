@@ -34,7 +34,6 @@ class Date(models.Model):
         """Return a string representation of the date."""
         return f"{self.date_trip}"
 
-
 class Purchase(models.Model):
     """The purchase of a product."""
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
