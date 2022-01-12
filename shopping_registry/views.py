@@ -7,6 +7,7 @@ from .models import Date, Product, Category, Purchase
 import plotly.graph_objects as go
 
 import json
+import datetime
 
 def index(request):
     """The home page for Grocery Registry."""
@@ -124,15 +125,20 @@ def date(request, date_id):
         'bar_graph': bar_graph, 'pie_graph': pie_graph}
     return render(request, 'shopping_registry/date.html', context)
 
+def MonthView(request, year, month):
+    """Displays all shopping trips in a month."""
+    queryset = Date.objects.filter(date_trip__year=year,
+        date_trip__month=month)
+    date = datetime.datetime(year, month, 1)
+    context = {}
+
+    context['dates'] = queryset
+    context['date'] = date
+    return render(request, 'shopping_registry/month_view.html', context)
+
 class YearView(YearArchiveView):
     """ Displays all shopping trips in a year."""
     queryset = Date.objects.all()
     date_field = "date_trip"
     make_object_list = True
-    allow_future = True
-
-class MonthView(MonthArchiveView):
-    """ Displays all shopping trips in a month."""
-    queryset = Date.objects.all()
-    date_field = "date_trip"
     allow_future = True

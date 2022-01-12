@@ -1,15 +1,27 @@
 {% extends 'shopping_registry/base.html' %}
 
 {% block content %}
-
+<h1>
+    Todas las compras de {{ month|date:"m-Y" }}
+</h1>
 <ul>
     {% for trip in object_list %}
         <li>
-            {{ trip.date_purchase|date:"F j, Y"}}: {{ trip }}
+            <a href="{% url 'shopping_registry:date' trip.id %}">
+                {{ trip.date_trip|date:"d-m-Y" }}
+            </a>
         </li>
     {% endfor %}
 </ul>
-
+<ul>
+    {% for date in dates %}
+        <li>
+            <a href="{% url 'shopping_registry:date' date.id %}">
+                {{ date.date_trip|date:"d-m-Y" }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
 <p>
     {% if previous_month %}
         Previous Month: {{ previous_month|date:"F Y"}}

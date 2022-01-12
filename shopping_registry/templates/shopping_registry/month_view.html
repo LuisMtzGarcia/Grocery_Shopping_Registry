@@ -1,0 +1,16 @@
+{% extends 'shopping_registry/base.html' %}
+
+{% block content %}
+<h1>
+    Todas las compras del mes {{ date|date:"F Y" }}
+</h1>
+<ul>
+    {% for date in dates %}
+        <li>
+            <a href="{% url 'shopping_registry:date' date.id %}">
+                {{ date.date_trip|date:"d-m-Y" }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
