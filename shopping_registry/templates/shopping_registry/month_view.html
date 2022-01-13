@@ -4,6 +4,15 @@
 <h1>
     Todas las compras del mes {{ date|date:"F Y" }}
 </h1>
+<p>
+    Gasto total: ${{ total }}
+</p>
+<ul>
+    {% for product, total in products %}
+        <li>{{ product }} : {{ total }}</li>
+    {% endfor %}
+</ul>
+
 <ul>
     {% for date in dates %}
         <li>

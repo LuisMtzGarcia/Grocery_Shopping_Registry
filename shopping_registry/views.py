@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.views.generic.dates import YearArchiveView, MonthArchiveView
+from django.db.models import Sum
 
 from .models import Date, Product, Category, Purchase
 
@@ -127,13 +128,32 @@ def date(request, date_id):
 
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
-    queryset = Date.objects.filter(date_trip__year=year,
+    # QuerySet to store the filtered Dates.
+    dates = Date.objects.filter(date_trip__year=year,
         date_trip__month=month)
-    date = datetime.datetime(year, month, 1)
-    context = {}
+    # Stores the total spent in the given month.
+    total = 0
+    # Stores the products bought and the total spent on them.
+    products = {}
+    # Primero genera una lista de productos y despues haces el diccionario
+    # Initializes the 'purchases' variable and stores an empty QuerySet.
+    purchases = Date.objects.none()
 
-    context['dates'] = queryset
-    context['date'] = date
+    for date in dates:
+        # Calculates total
+        total_price = date.purchase_set.order_by('product').aggregate(Sum('price'))
+        total += total_price['price__sum']
+        """
+        # Stores all purchases in the purchases variable as a QuerySet.
+        purchases = purchases | date.purchase_set.order_by('product')
+        for purchase in purchases:
+            # Calculates total spent.
+            total += purchase.price
+        """
+    # Stores the datetime value to export to the template.
+    date = datetime.datetime(year, month, 1)
+
+    context = {'date': date, 'dates': dates, 'total':total, 'products':products}
     return render(request, 'shopping_registry/month_view.html', context)
 
 class YearView(YearArchiveView):
