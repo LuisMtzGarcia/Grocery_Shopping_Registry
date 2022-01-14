@@ -29,4 +29,16 @@
     </div>
     {% endif %}
 </p>
+<p>
+    {% if pie_graph %}
+    <div style="width:600; height:500;">
+        {{ pie_graph|safe}}
+    </div>
+    {% else %}
+    <p>
+        No graph was provided.
+    </p>
+    {% endif %}
+</p>
+
 {% endblock content %}

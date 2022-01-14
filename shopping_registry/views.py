@@ -135,6 +135,8 @@ def MonthView(request, year, month):
     total = 0
     # Stores the products bought and the total spent on them.
     products_total = {}
+    # Stores the categories of the bought products and the total spent.
+    categories_total = {}
     # Initializes the 'purchases' variable and stores an empty QuerySet.
     purchases = Date.objects.none()
 
@@ -146,34 +148,76 @@ def MonthView(request, year, month):
         purchases = purchases | date.purchase_set.order_by('product')
 
     for purchase in purchases:
-            # Initializes dictionary.
+            # Initializes dictionaries.
             products_total[purchase.product.name] = 0
+            categories_total[purchase.product.category.name] = 0
     
     for purchase in purchases:
             # Calculates total per product.
             products_total[purchase.product.name] += purchase.price
+            # Calculates total per category.
+            categories_total[purchase.product.category.name] += purchase.price
 
     # Stores the datetime value to export to the template.
     date = datetime.datetime(year, month, 1)
 
-    # Stores keys and values from dict to use as labels and values in the graph.
-    labels = products_total.keys()
-    values = products_total.values()
+    # Stores keys and values from dict to use as labels and values in the charts.
+    # Bar chart.
+    bar_labels = products_total.keys()
+    bar_values = products_total.values()
+    # Pie chart.
+    pie_labels = categories_total.keys()
+    pie_values = categories_total.values()
 
-    # Casts into listo for graph compatibility.
-    labels = list(labels)
-    values = list(values)
+    # Casts into list for chart compatibility.
+    # Bar chart.
+    bar_labels = list(bar_labels)
+    bar_values = list(bar_values)
+    # Pie chart.
+    pie_labels = list(pie_labels)
+    pie_values = list(pie_values)
 
-    # Generate the Bar chart.
-    Bar = go.Bar(x=labels, y=values)
+    # Generating the charts.
+    # Bar chart.
+    Bar = go.Bar(x=bar_labels, y=bar_values)
     layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
         yaxis={'title':'Costo'})
     figure = go.Figure(data=[Bar],layout=layout)
     bar_graph = figure.to_html()
 
+    # Pie chart.
+    Pie = go.Pie(labels=pie_labels, values=pie_values, hole=.3, 
+        title_text="Categorias")
+    pie_chart = go.Figure(data=Pie)
+    pie_graph = pie_chart.to_html()
+
     context = {'date': date, 'dates': dates, 'total':total, 
-        'products_total': products_total, 'bar_graph': bar_graph}
+        'products_total': products_total, 'bar_graph': bar_graph, 
+        'pie_graph':pie_graph}
     return render(request, 'shopping_registry/month_view.html', context)
+
+def Years(request):
+    """Shows all years with registered purchases."""
+    dates = Date.objects.order_by('date_trip')
+    years = []
+    for date in dates:
+        if date.date_trip.year not in years:
+            years.append(date.date_trip.year)
+    context = {'years': years}
+    return render(request, 'shopping_registry/years.html', context)
+
+def Months(request, year):
+    """Shows all the months with registered purchases in the selected month."""
+    dates = Date.objects.order_by('date_trip')
+    months = []
+    for date in dates:
+        if date.date_trip.month not in months:
+            if date.date_trip.year == year:
+                months.append(date.date_trip.month)
+    context = {'months': months}
+    return render(request, 'shopping_registry/months.html', context)
+
+
 
 class YearView(YearArchiveView):
     """ Displays all shopping trips in a year."""
