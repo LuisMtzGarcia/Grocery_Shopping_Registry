@@ -8,8 +8,8 @@
     Gasto total: ${{ total }}
 </p>
 <ul>
-    {% for product, total in products %}
-        <li>{{ product }} : {{ total }}</li>
+    {% for product, total in products_total.items %}
+        <li>{{ product }} : ${{ total }}</li>
     {% endfor %}
 </ul>
 
