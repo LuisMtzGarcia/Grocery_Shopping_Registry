@@ -135,7 +135,6 @@ def MonthView(request, year, month):
     total = 0
     # Stores the products bought and the total spent on them.
     products_total = {}
-    # Primero genera una lista de productos y despues haces el diccionario
     # Initializes the 'purchases' variable and stores an empty QuerySet.
     purchases = Date.objects.none()
 
@@ -145,14 +144,11 @@ def MonthView(request, year, month):
         total += total_price['price__sum']
         # Stores all purchases in the purchases variable as a QuerySet.
         purchases = purchases | date.purchase_set.order_by('product')
-        """
-        for purchase in purchases:
-            # Calculates total spent.
-            total += purchase.price
-        """
+
     for purchase in purchases:
             # Initializes dictionary.
             products_total[purchase.product.name] = 0
+    
     for purchase in purchases:
             # Calculates total per product.
             products_total[purchase.product.name] += purchase.price
@@ -160,8 +156,23 @@ def MonthView(request, year, month):
     # Stores the datetime value to export to the template.
     date = datetime.datetime(year, month, 1)
 
+    # Stores keys and values from dict to use as labels and values in the graph.
+    labels = products_total.keys()
+    values = products_total.values()
+
+    # Casts into listo for graph compatibility.
+    labels = list(labels)
+    values = list(values)
+
+    # Generate the Bar chart.
+    Bar = go.Bar(x=labels, y=values)
+    layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
+        yaxis={'title':'Costo'})
+    figure = go.Figure(data=[Bar],layout=layout)
+    bar_graph = figure.to_html()
+
     context = {'date': date, 'dates': dates, 'total':total, 
-        'products_total': products_total}
+        'products_total': products_total, 'bar_graph': bar_graph}
     return render(request, 'shopping_registry/month_view.html', context)
 
 class YearView(YearArchiveView):
