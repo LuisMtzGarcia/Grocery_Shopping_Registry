@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.core import serializers
-from django.views.generic.dates import YearArchiveView, MonthArchiveView
 from django.db.models import Sum
 
 from .models import Date, Product, Category, Purchase
