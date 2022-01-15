@@ -20,6 +20,4 @@ urlpatterns = [
     path('years/', views.Years, name='years'),
     # Page that displays the months in a year.
     path('<int:year>/', views.Months, name='months'),
-    # Page that shows all months in a year.
-    path('<int:year>/', YearView.as_view(), name="date_archive_year"),
 ]

@@ -220,12 +220,3 @@ def Months(request, year):
     # Find a way to turn the int value to a month datetime.
     context = {'months': months}
     return render(request, 'shopping_registry/months.html', context)
-
-
-
-class YearView(YearArchiveView):
-    """ Displays all shopping trips in a year."""
-    queryset = Date.objects.all()
-    date_field = "date_trip"
-    make_object_list = True
-    allow_future = True
