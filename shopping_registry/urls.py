@@ -3,7 +3,6 @@
 from django.urls import path
 
 from . import views
-from shopping_registry.views import YearView, MonthView
 
 app_name = 'shopping_registry'
 urlpatterns = [
