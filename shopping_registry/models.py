@@ -49,6 +49,9 @@ class Purchase(models.Model):
     def __str__(self):
         """Return a string representation of the purchase."""
         if self.bulk == True:
-            return f"{self.quantity} gramos de {self.product} por ${self.price}"
+            if self.quantity >= 1000:
+                return f"{(self.quantity / 1000)} kilo/s de {self.product} por ${self.price}"
+            else:
+                return f"{self.quantity} gramos de {self.product} por ${self.price}"
         else:
             return f"{self.quantity} de {self.product} por ${self.price}"
