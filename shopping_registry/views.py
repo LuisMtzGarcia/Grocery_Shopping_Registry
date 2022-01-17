@@ -142,7 +142,10 @@ def MonthView(request, year, month):
     for date in dates:
         # Calculates total spent in the given month.
         total_price = date.purchase_set.order_by('product').aggregate(Sum('price'))
-        total += total_price['price__sum']
+        if total_price['price__sum'] is None:
+            pass
+        else:
+            total += total_price['price__sum']
         # Stores all purchases in the purchases variable as a QuerySet.
         purchases = purchases | date.purchase_set.order_by('product')
 
