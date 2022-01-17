@@ -219,6 +219,10 @@ def Months(request, year):
         if date.date_trip.month not in months:
             if date.date_trip.year == year:
                 months.append(date.date_trip.month)
+
+    datetimes = []
+    for month in months:
+        datetimes.append(datetime.datetime(year, month, 1).date())
     # Find a way to turn the int value to a month datetime.
-    context = {'months': months}
+    context = {'months': months, 'dates':datetimes, 'year': year}
     return render(request, 'shopping_registry/months.html', context)

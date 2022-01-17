@@ -5,10 +5,12 @@
     Elige un mes:
 </h1>
 <ul>
-    {% for month in months %}
+    {% for date in dates %}
         <li>
             <h2>
-                {{ month }}
+                <a href="{% url 'shopping_registry:MonthView' year date.month %}">
+                    {{ date|date:"F" }}
+                </a>
             </h2>
         </li>
     {% endfor %}
