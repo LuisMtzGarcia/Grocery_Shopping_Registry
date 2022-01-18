@@ -24,5 +24,5 @@ urlpatterns = [
     # Page for adding a new purchase.
     path('registrar_compra/', views.new_purchase, name='new_purchase'),
     # Page for adding a new product.
-    path('registrar_producto/', views.new_product, name='new_product')
+    path('registrar_producto/', views.new_product, name='new_product'),
 ]

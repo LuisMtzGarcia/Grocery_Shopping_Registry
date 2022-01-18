@@ -16,9 +16,18 @@
                 Categoria:                 
             </label>
             {{ form.category }}
-            <p>Registra nueva categoria</p>
+            
+            <br>
+            
+            <br>
+            
+            <a href="{% url 'shopping_registry:new_category' %}">
+                Registrar nueva categoria
+            </a>
         </div>
 
+        <br>
+        
         <div class="fieldWrapper">
             {{ form.name.errors }}
             <label for="{{ form.name.id_name }}">

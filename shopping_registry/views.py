@@ -240,7 +240,7 @@ def new_category(request):
         form = CategoryForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('shopping_registry:dates')
+            return redirect('shopping_registry:new_product')
 
     # Display a blank or invalid form.
     context = {'form': form}
