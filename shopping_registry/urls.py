@@ -20,7 +20,9 @@ urlpatterns = [
     # Example: /2021/12/
     path('<int:year>/<int:month>/', views.MonthView, name='MonthView'),
     # Page for adding a new category.
-    path('new_category/', views.new_category, name='new_category'),
+    path('registrar_categoria/', views.new_category, name='new_category'),
     # Page for adding a new purchase.
-    path('new_purchase/', views.new_purchase, name='new_purchase'),
+    path('registrar_compra/', views.new_purchase, name='new_purchase'),
+    # Page for adding a new product.
+    path('registrar_producto/', views.new_product, name='new_product')
 ]

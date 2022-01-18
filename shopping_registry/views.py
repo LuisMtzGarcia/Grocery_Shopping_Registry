@@ -3,7 +3,7 @@ from django.core import serializers
 from django.db.models import Sum
 
 from .models import Date, Product, Category, Purchase
-from .forms import CategoryForm, PurchaseForm
+from .forms import CategoryForm, PurchaseForm, ProductForm
 
 import plotly.graph_objects as go
 
@@ -48,7 +48,7 @@ def date(request, date_id):
     # spent on that category
     category_spent = {}
     # Stores the boolean value to check if it was a bulk product.
-    bulk = [] 
+    bulk = []
 
     for purchase in purchases:
         # Sums purchase's price to the total.
@@ -78,6 +78,8 @@ def date(request, date_id):
         # Rounds the value to 2 decimal places.
         ind_prices[x] = round(ind_prices[x], 2)
         # Generates a dictionary to store a product's details.
+        if products[x] in dictionary:
+            dictionary[x]
         dictionary[x] = {'Nombre': products[x], 'Categoria': products[x].category,
             'Bulk': bulk[x], 'Precio': ind_prices[x]}
 
@@ -259,3 +261,16 @@ def new_purchase(request):
     # Display a blank or invalid form.
     context = {'form': form}
     return render(request, 'shopping_registry/new_purchase.html', context)
+
+def new_product(request):
+    """Add a new product."""
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = ProductForm()
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    # Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'shopping_registry/new_product.html', context)

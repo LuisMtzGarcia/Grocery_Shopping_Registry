@@ -1,0 +1,36 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+    <h1>
+        Registra un nuevo producto:
+    </h1>
+
+    <form action="{% url 'shopping_registry:new_product' %}" method='post'>
+        {% csrf_token %}
+
+        {{ form.non_fields_errors }}
+
+        <div class="fieldWrapper">
+            {{ form.category.errors }}
+            <label for="{{ form.category.id_category }}">
+                Categoria:                 
+            </label>
+            {{ form.category }}
+            <p>Registra nueva categoria</p>
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_name }}">
+                Nombre del producto:
+            </label>
+            {{ form.name }}
+        </div>
+
+        <br>
+
+        <button name="submit">
+            Registrar producto
+        </button>
+    </form>
+{% endblock content %}
