@@ -19,4 +19,8 @@ urlpatterns = [
     # Detail page for a month's shopping trips.
     # Example: /2021/12/
     path('<int:year>/<int:month>/', views.MonthView, name='MonthView'),
+    # Page for adding a new category.
+    path('new_category/', views.new_category, name='new_category'),
+    # Page for adding a new purchase.
+    path('new_purchase/', views.new_purchase, name='new_purchase'),
 ]

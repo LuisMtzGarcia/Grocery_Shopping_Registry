@@ -1,0 +1,12 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+    <p>
+        Agrega una nueva categoria:
+    </p>
+    <form action="{% url 'shopping_registry:new_category' %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Añadir categoria</button>
+    </form>
+{% endblock content %}

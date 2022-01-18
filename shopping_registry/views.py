@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core import serializers
 from django.db.models import Sum
 
 from .models import Date, Product, Category, Purchase
+from .forms import CategoryForm, PurchaseForm
 
 import plotly.graph_objects as go
 
@@ -226,3 +227,35 @@ def Months(request, year):
     # Find a way to turn the int value to a month datetime.
     context = {'months': months, 'dates':datetimes, 'year': year}
     return render(request, 'shopping_registry/months.html', context)
+
+def new_category(request):
+    """Add a new category."""
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = CategoryForm()
+    else:
+        # POST data submitted; process data.
+        form = CategoryForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    # Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'shopping_registry/new_category.html', context)
+
+def new_purchase(request):
+    """Add a new purchase."""
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = PurchaseForm()
+    else:
+        # POST data submitted; process data.
+        form = PurchaseForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    # Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'shopping_registry/new_purchase.html', context)
