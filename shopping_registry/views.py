@@ -22,6 +22,7 @@ def dates(request):
     context = {'dates': dates}
     return render(request, 'shopping_registry/dates.html', context)
 
+@login_required
 def date(request, date_id):
     """Show a single date and its details."""
     date = Date.objects.get(id=date_id)
@@ -130,6 +131,7 @@ def date(request, date_id):
         'bar_graph': bar_graph, 'pie_graph': pie_graph}
     return render(request, 'shopping_registry/date.html', context)
 
+@login_required
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
     # QuerySet to store the filtered Dates.
@@ -206,6 +208,7 @@ def MonthView(request, year, month):
         'pie_graph':pie_graph}
     return render(request, 'shopping_registry/month_view.html', context)
 
+@login_required
 def Years(request):
     """Shows all years with registered purchases."""
     dates = Date.objects.order_by('date_trip')
@@ -216,6 +219,7 @@ def Years(request):
     context = {'years': years}
     return render(request, 'shopping_registry/years.html', context)
 
+@login_required
 def Months(request, year):
     """Shows all the months with registered purchases in the selected month."""
     dates = Date.objects.order_by('date_trip')
@@ -232,10 +236,12 @@ def Months(request, year):
     context = {'months': months, 'dates':datetimes, 'year': year}
     return render(request, 'shopping_registry/months.html', context)
 
+@login_required
 def registering_instructions(request):
     """Page that links to the PurchaseForm and includes instructions."""
     return render(request, 'shopping_registry/instrucciones_registro.html')
 
+@login_required
 def new_category(request):
     """Add a new category."""
     if request.method != 'POST':
@@ -252,6 +258,7 @@ def new_category(request):
     context = {'form': form}
     return render(request, 'shopping_registry/new_category.html', context)
 
+@login_required
 def new_purchase(request):
     """Add a new purchase."""
     if request.method != 'POST':
@@ -268,6 +275,7 @@ def new_purchase(request):
     context = {'form': form}
     return render(request, 'shopping_registry/new_purchase.html', context)
 
+@login_required
 def new_product(request):
     """Add a new product."""
     if request.method != 'POST':
@@ -281,6 +289,7 @@ def new_product(request):
     context = {'form': form}
     return render(request, 'shopping_registry/new_product.html', context)
 
+@login_required
 def new_date(request):
     """Add a new date."""
     if request.method != 'POST':
