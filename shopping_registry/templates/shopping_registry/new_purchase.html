@@ -4,7 +4,11 @@
     <h1>
         Registra una nueva compra:
     </h1>
-
+    <a href="{% url 'shopping_registry:registering_instructions' %}">
+        Instrucciones
+    </a>
+    <br>
+    <br>
     <form action="{% url 'shopping_registry:new_purchase' %}" method='post'>
         {% csrf_token %}
 
