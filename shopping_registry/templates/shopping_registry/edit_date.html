@@ -1,0 +1,15 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+
+<p><a href="{% url 'shopping_registry:date' date.id %}">{{ date }}</a></p>
+
+<p>Editar fecha:</p>
+
+<form accept="{% url 'shopping_registry:edit_date' date.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Guardar cambios</button>
+</form>
+
+{% endblock content %}

@@ -136,6 +136,24 @@ def date(request, date_id):
     return render(request, 'shopping_registry/date.html', context)
 
 @login_required
+def edit_date(request, date_id):
+    """Edit an existing date."""
+    date = Date.objects.get(id=date_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current entry.
+        form = DateForm(instance=date)
+    else:
+        # POST data submitted; process data.
+        form = DateForm(instance=date, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    context = {'date': date, 'form': form}
+    return render(request, 'shopping_registry/edit_date.html', context)
+
+@login_required
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
     # QuerySet to store the filtered Dates.

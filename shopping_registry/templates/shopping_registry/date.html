@@ -5,9 +5,12 @@
 <p>
     Visita: {{ date }}
 </p>
-<a href="{% url 'shopping_registry:new_purchase' %}">
-    Registra una nueva compra
-</a>
+<p>
+    <a href="{% url 'shopping_registry:edit_date' date.id %}">Editar fecha</a>
+    -
+    <a href="{% url 'shopping_registry:new_purchase' %}">Registra una nueva compra</a>
+</p>
+
 <p>
     Compras:
 </p>
