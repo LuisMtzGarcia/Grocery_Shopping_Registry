@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     """Categories to classify the items."""
     name = models.CharField(max_length=100)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'categories'
@@ -15,6 +17,7 @@ class Product(models.Model):
     """A product the user pruchases and registers."""
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'products'
@@ -26,6 +29,7 @@ class Product(models.Model):
 class Date(models.Model):
     """The purchase date of a group of products in a trip to the supermarket."""
     date_trip = models.DateField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'dates'
@@ -42,6 +46,7 @@ class Purchase(models.Model):
     date_purchase = models.ForeignKey(Date, on_delete=models.CASCADE)
     # Compras a granel / Bulk purchases
     bulk = models.BooleanField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'purchases'
