@@ -16,9 +16,15 @@
                 Producto: 
             </label>
             {{ form.product }}
-            <p>Registra nuevo producto</p>
+            <br>
+            <br>
+            <a href="{% url 'shopping_registry:new_product' %}">
+                Registra un nuevo producto
+            </a>
         </div>
 
+        <br>
+        
         <div class="fieldWrapper">
             {{ form.quantity.errors }}
             <label for="{{ form.quantity.id_quantity }}">

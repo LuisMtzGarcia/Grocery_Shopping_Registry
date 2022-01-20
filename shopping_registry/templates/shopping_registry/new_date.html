@@ -1,0 +1,25 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+    <h1>
+        Registra una nueva fecha:
+    </h1>
+
+    <form action="{% url 'shopping_registry:new_date' %}" method='post'>
+        {% csrf_token %}
+
+        {{ form.non_fields_errors }}
+
+        <div class="fieldWrapper">
+            {{ form.date_trip.errors }}
+            <label for="{{ form.date_trip.id_date_trip }}">
+                Fecha de la categoria:
+            </label>
+            {{ form.date_trip }}
+        </div>
+        
+        <button name="submit">
+            Registrar fecha
+        </button>
+    </form>
+{% endblock content %}

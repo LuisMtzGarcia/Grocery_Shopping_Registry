@@ -3,7 +3,7 @@ from django.core import serializers
 from django.db.models import Sum
 
 from .models import Date, Product, Category, Purchase
-from .forms import CategoryForm, PurchaseForm, ProductForm
+from .forms import CategoryForm, PurchaseForm, ProductForm, DateForm
 
 import plotly.graph_objects as go
 
@@ -240,6 +240,7 @@ def new_category(request):
         form = CategoryForm(data=request.POST)
         if form.is_valid():
             form.save()
+            # CHECK THIS
             return redirect('shopping_registry:new_product')
 
     # Display a blank or invalid form.
@@ -256,6 +257,7 @@ def new_purchase(request):
         form = PurchaseForm(data=request.POST)
         if form.is_valid():
             form.save()
+            # CHECK THIS
             return redirect('shopping_registry:dates')
 
     # Display a blank or invalid form.
@@ -269,8 +271,22 @@ def new_product(request):
         form = ProductForm()
         if form.is_valid():
             form.save()
+            # CHECK THIS
             return redirect('shopping_registry:dates')
 
     # Display a blank or invalid form.
     context = {'form': form}
     return render(request, 'shopping_registry/new_product.html', context)
+
+def new_date(request):
+    """Add a new date."""
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = DateForm()
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    # Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'shopping_registry/new_date.html', context)
