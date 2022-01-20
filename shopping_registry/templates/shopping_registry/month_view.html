@@ -5,14 +5,8 @@
     Todas las compras del mes {{ date|date:"F Y" }}
 </h1>
 <p>
-    Gasto total: ${{ total }}
+    Fechas:
 </p>
-<ul>
-    {% for product, total in products_total.items %}
-        <li>{{ product }} : ${{ total }}</li>
-    {% endfor %}
-</ul>
-
 <ul>
     {% for date in dates %}
         <li>
@@ -22,6 +16,16 @@
         </li>
     {% endfor %}
 </ul>
+<p>
+    Gasto total: ${{ total }}
+</p>
+<ul>
+    {% for product, total in products_total.items %}
+        <li>{{ product }} : ${{ total }}</li>
+    {% endfor %}
+</ul>
+
+
 <p>
     {% if bar_graph %}
     <div style="width:600; height:500;">
