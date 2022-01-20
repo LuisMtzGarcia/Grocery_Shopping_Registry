@@ -272,7 +272,7 @@ def new_product(request):
         if form.is_valid():
             form.save()
             # CHECK THIS
-            return redirect('shopping_registry:dates')
+            return redirect('shopping_registry:new_purchase')
 
     # Display a blank or invalid form.
     context = {'form': form}
@@ -285,7 +285,7 @@ def new_date(request):
         form = DateForm()
         if form.is_valid():
             form.save()
-            return redirect('shopping_registry:dates')
+            return redirect('shopping_registry:new_purchase')
 
     # Display a blank or invalid form.
     context = {'form': form}
