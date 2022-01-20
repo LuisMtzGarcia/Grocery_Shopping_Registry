@@ -8,6 +8,8 @@ app_name = 'shopping_registry'
 urlpatterns = [
     # Home page
     path('', views.index, name='index'),
+    # Page that displays instructions and links to the new_product view.
+    path('instructions/', views.registering_instructions, name='registering_instructions'),
     # Page that shows all purchases.
     path('dates/', views.dates, name="dates"),
     # Detail page for a single purchase.

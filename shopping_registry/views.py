@@ -230,6 +230,10 @@ def Months(request, year):
     context = {'months': months, 'dates':datetimes, 'year': year}
     return render(request, 'shopping_registry/months.html', context)
 
+def registering_instructions(request):
+    """Page that links to the PurchaseForm and includes instructions."""
+    return render(request, 'shopping_registry/instrucciones_registro.html')
+
 def new_category(request):
     """Add a new category."""
     if request.method != 'POST':
@@ -240,7 +244,6 @@ def new_category(request):
         form = CategoryForm(data=request.POST)
         if form.is_valid():
             form.save()
-            # CHECK THIS
             return redirect('shopping_registry:new_product')
 
     # Display a blank or invalid form.
@@ -257,7 +260,6 @@ def new_purchase(request):
         form = PurchaseForm(data=request.POST)
         if form.is_valid():
             form.save()
-            # CHECK THIS
             return redirect('shopping_registry:dates')
 
     # Display a blank or invalid form.
@@ -271,7 +273,6 @@ def new_product(request):
         form = ProductForm()
         if form.is_valid():
             form.save()
-            # CHECK THIS
             return redirect('shopping_registry:new_purchase')
 
     # Display a blank or invalid form.

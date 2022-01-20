@@ -1,0 +1,15 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+    <h1>
+        Registrar un viaje al super
+    </h1>
+    <h3>
+        Instrucciones:
+    </h3>
+    <ul>
+        <li>Toma tu ticket</li>
+        <li>Registra cada producto, la cantidad comprada y el precio total como una compra.</li>
+    </ul>
+    <a href="{% url 'shopping_registry:new_purchase' %}">Registrar compra</a>
+{% endblock content %}
