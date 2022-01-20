@@ -18,5 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # include() works like an import of URLs.
+    path('users/', include('users.urls')),
     path('', include('shopping_registry.urls')),
 ]

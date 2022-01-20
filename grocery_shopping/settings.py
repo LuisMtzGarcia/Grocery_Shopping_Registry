@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My apps
     'shopping_registry',
+    'users',
 
     # Default Django apps
     'django.contrib.admin',
