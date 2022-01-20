@@ -10,9 +10,9 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        <button name="submit">Log in</button>
+        <button name="submit">Ingresa</button>
         <input type="hidden" name="next" 
-            value="{% url 'shopping_registry:index' %}">
+            value="{% url 'shopping_registry:index' %}" />
     </form>
 
 {% endblock content %}

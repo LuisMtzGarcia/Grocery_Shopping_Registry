@@ -5,9 +5,11 @@
     <a href="{% url 'shopping_registry:registering_instructions' %}">
         Registrar una nueva compra
     </a> -
-    {% if user.is_authenthicated %}
+    {% if user.is_authenticated %}
         Hola, {{ user.username }}.
+        <a href="{% url 'users:logout' %}">Cerrar sesión</a>
     {% else %}
+        <a href="{% url 'users:register' %}">Regístrate</a> -
         <a href="{% url 'users:login' %}">Ingresa</a>
     {% endif %}
 </p>

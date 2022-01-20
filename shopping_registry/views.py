@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.db.models import Sum
 
@@ -14,6 +15,7 @@ def index(request):
     """The home page for Grocery Registry."""
     return render(request, 'shopping_registry/index.html')
 
+@login_required
 def dates(request):
     """Shows all dates."""
     dates = Date.objects.order_by('date_trip')

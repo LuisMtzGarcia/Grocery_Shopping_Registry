@@ -1,0 +1,13 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'users:register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button name="submit">Regístrate</button>
+        <input type="hidden" name="next" value="{% url 'shopping_registry:index' %}" />
+    </form>
+
+{% endblock content %}
