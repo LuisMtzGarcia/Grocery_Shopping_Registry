@@ -18,7 +18,7 @@ def index(request):
 @login_required
 def dates(request):
     """Shows all dates."""
-    dates = Date.objects.order_by('date_trip')
+    dates = Date.objects.filter(owner=request.user).order_by('date_trip')
     context = {'dates': dates}
     return render(request, 'shopping_registry/dates.html', context)
 
@@ -136,7 +136,7 @@ def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
     # QuerySet to store the filtered Dates.
     dates = Date.objects.filter(date_trip__year=year,
-        date_trip__month=month)
+        date_trip__month=month, owner=request.user)
     # Stores the total spent in the given month.
     total = 0
     # Stores the products bought and the total spent on them.
@@ -211,7 +211,7 @@ def MonthView(request, year, month):
 @login_required
 def Years(request):
     """Shows all years with registered purchases."""
-    dates = Date.objects.order_by('date_trip')
+    dates = Date.objects.filter(owner=request.user).order_by('date_trip')
     years = []
     for date in dates:
         if date.date_trip.year not in years:
@@ -222,7 +222,7 @@ def Years(request):
 @login_required
 def Months(request, year):
     """Shows all the months with registered purchases in the selected month."""
-    dates = Date.objects.order_by('date_trip')
+    dates = Date.objects.filter(owner=request.user).order_by('date_trip')
     months = []
     for date in dates:
         if date.date_trip.month not in months:
