@@ -4,7 +4,12 @@
     <a href="{% url 'shopping_registry:years' %}">Checa tu gasto mensual</a> -
     <a href="{% url 'shopping_registry:registering_instructions' %}">
         Registrar una nueva compra
-    </a>
+    </a> -
+    {% if user.is_authenthicated %}
+        Hola, {{ user.username }}.
+    {% else %}
+        <a href="{% url 'users:login' %}">Ingresa</a>
+    {% endif %}
 </p>
 
 {% block content %}{% endblock content %}
