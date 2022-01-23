@@ -307,7 +307,9 @@ def new_purchase(request):
         # POST data submitted; process data.
         form = PurchaseForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_purchase = form.save(commit=False)
+            new_purchase.owner = request.user
+            new_purchase.save()
             return redirect('shopping_registry:dates')
 
     # Display a blank or invalid form.
