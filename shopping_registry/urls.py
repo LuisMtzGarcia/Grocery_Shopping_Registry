@@ -17,6 +17,10 @@ urlpatterns = [
     path('dates/<int:date_id>/', views.date, name='date'),
     # Page for editing a date.
     path('editar/fecha/<int:date_id>', views.edit_date, name='edit_date'),
+    # Page to confirm the deletion of a single date.
+    path('borrar/confirmar/<int:date_id>', views.erase_date_confirmation, name='erase_date_confirmation'),
+    # Page for deleting a single date.
+    path('borrar/fecha/<int:date_id>', views.erase_date, name='erase_date'),
     # Page for editing a purchase.
     # Falta terminar esto
     #path('editar/compra/<int:compra_id>', views.edit_purchase, name='edit_purchase'),

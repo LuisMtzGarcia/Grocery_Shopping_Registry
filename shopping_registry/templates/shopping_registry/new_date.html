@@ -5,19 +5,12 @@
         Registra una nueva fecha:
     </h1>
 
+    <p>
+        Escribe la fecha en formato AAAA-MM-DD
+    </p>
     <form action="{% url 'shopping_registry:new_date' %}" method='post'>
         {% csrf_token %}
-
-        {{ form.non_fields_errors }}
-
-        <div class="fieldWrapper">
-            {{ form.date_trip.errors }}
-            <label for="{{ form.date_trip.id_date_trip }}">
-                Fecha de la categoria:
-            </label>
-            {{ form.date_trip }}
-        </div>
-        
+        {{ form.as_p }}        
         <button name="submit">
             Registrar fecha
         </button>

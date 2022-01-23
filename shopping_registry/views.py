@@ -154,6 +154,23 @@ def edit_date(request, date_id):
     return render(request, 'shopping_registry/edit_date.html', context)
 
 @login_required
+def erase_date_confirmation(request, date_id):
+    """Confirm the erasure of a date."""
+    date = Date.objects.get(id=date_id)
+
+    context = {'date': date}
+    return render(request, 'shopping_registry/erase_date_confirmation.html', context)
+
+@login_required
+def erase_date(request, date_id):
+    """Erase an existing date."""
+    date = Date.objects.get(id=date_id)
+    date_erase = Date.objects.get(id=date_id).delete()
+
+    context = {'date': date}
+    return render(request, 'shopping_registry/erase_date.html', context)
+
+@login_required
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
     # QuerySet to store the filtered Dates.
@@ -317,8 +334,13 @@ def new_date(request):
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = DateForm()
+    else:
+        # POST data submitted; process data.
+        form = DateForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_date = form.save(commit=False)
+            new_date.owner = request.user
+            new_date.save()
             return redirect('shopping_registry:new_purchase')
 
     # Display a blank or invalid form.

@@ -55,8 +55,14 @@
                 Fecha de la compra:
             </label>
             {{ form.date_purchase }}
-            <p>Registra una nueva fecha</p>
+            <br>
+            <br>
+            <a href="{% url 'shopping_registry:new_date' %}">
+                Registra una nueva fecha
+            </a>
         </div>
+
+        <br>
 
         <div class="fieldWrapper">
             {{ form.bulk.errors }}
