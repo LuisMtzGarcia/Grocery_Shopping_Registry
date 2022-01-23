@@ -290,7 +290,9 @@ def new_category(request):
         # POST data submitted; process data.
         form = CategoryForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_category = form.save(commit=False)
+            new_category.owner = request.user
+            new_category.save()
             return redirect('shopping_registry:new_product')
 
     # Display a blank or invalid form.
