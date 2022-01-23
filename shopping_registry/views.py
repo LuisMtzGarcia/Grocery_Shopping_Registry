@@ -320,8 +320,13 @@ def new_product(request):
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = ProductForm()
+    else:
+        # POST data submitted; process data.
+        form = ProductForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_product = form.save(commit=False)
+            new_product.owner = request.user
+            new_product.save()
             return redirect('shopping_registry:new_purchase')
 
     # Display a blank or invalid form.
