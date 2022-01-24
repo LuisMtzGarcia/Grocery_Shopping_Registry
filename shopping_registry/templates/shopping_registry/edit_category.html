@@ -5,6 +5,11 @@
     <h1>
         Editar la categoría: {{ category }}
     </h1>
+
+    <a href="{% url 'shopping_registry:delete_category_confirmation' category.id %}">
+        Eliminar categoría
+    </a>
+
     <form action="{% url 'shopping_registry:new_category' %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}

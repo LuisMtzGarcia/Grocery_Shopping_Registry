@@ -1,0 +1,12 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+
+<h1>La categoría {{ category }} ha sido borrada junto con los siguientes productos:</h1>
+<ul>
+    {% for product in products %}
+        <li>{{ product }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

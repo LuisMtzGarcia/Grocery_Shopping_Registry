@@ -260,6 +260,25 @@ def delete_product(request, product_id):
     return render(request, 'shopping_registry/delete_product.html', context)
 
 @login_required
+def delete_category_confirmation(request, category_id):
+    """Confirm the deletion of a category."""
+    category = Category.objects.get(id=category_id)
+    products = category.product_set.all()
+
+    context = {'category': category, 'products': products}
+    return render(request, 'shopping_registry/delete_category_confirmation.html', context)
+
+@login_required
+def delete_category(request, category_id):
+    """Delete a single category."""
+    category = Category.objects.get(id=category_id)
+    products = category.product_set.all()
+    category_erase = Category.objects.get(id=category_id).delete()
+
+    context = {'category': category, 'products': products}
+    return render(request, 'shopping_registry/delete_category.html', context)    
+
+@login_required
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
     # QuerySet to store the filtered Dates.
