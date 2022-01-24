@@ -27,10 +27,13 @@ urlpatterns = [
     path('editar/producto/<int:product_id>', views.edit_product, 
         name='edit_product'),
     # Page to confirm the deletion of a single date.
-    path('borrar/confirmar/<int:date_id>', views.erase_date_confirmation, 
+    path('confirmar/fecha/<int:date_id>', views.erase_date_confirmation, 
         name='erase_date_confirmation'),
     # Page for deleting a single date.
     path('borrar/fecha/<int:date_id>', views.erase_date, name='erase_date'),
+    # Page to confirm the deletion of a single purchase.
+    path('confirmar/compra/<int:purchase_id>', views.delete_purchase_confirmation, 
+        name='delete_purchase_confirmation'),
     # Page for deleting a single purchase.
     path('borrar/compra/<int:purchase_id>', views.delete_purchase, 
         name='delete_purchase'),
@@ -49,5 +52,4 @@ urlpatterns = [
     path('registrar_producto/', views.new_product, name='new_product'),
     # Page for adding a new date.
     path('registrar_fecha/', views.new_date, name='new_date'),
-    # Pasar la id de la fecha o compra o etc a otra view dentro de la view
 ]

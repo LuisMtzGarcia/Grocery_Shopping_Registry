@@ -209,7 +209,7 @@ def edit_product(request, product_id):
 
 @login_required
 def erase_date_confirmation(request, date_id):
-    """Confirm the erasure of a date."""
+    """Confirm the deletion of a date."""
     date = Date.objects.get(id=date_id)
 
     context = {'date': date}
@@ -217,12 +217,29 @@ def erase_date_confirmation(request, date_id):
 
 @login_required
 def erase_date(request, date_id):
-    """Erase an existing date."""
+    """Delete an existing date."""
     date = Date.objects.get(id=date_id)
     date_erase = Date.objects.get(id=date_id).delete()
 
     context = {'date': date}
     return render(request, 'shopping_registry/erase_date.html', context)
+
+@login_required
+def delete_purchase_confirmation(request, purchase_id):
+    """Confirm the deletion of a purchase."""
+    purchase = Purchase.objects.get(id=purchase_id)
+
+    context = {'purchase': purchase}
+    return render(request, 'shopping_registry/delete_purchase_confirmation.html', context)    
+
+@login_required
+def delete_purchase(request, purchase_id):
+    """Delete a single purchase."""
+    purchase = Purchase.objects.get(id=purchase_id)
+    purchase_erase = Purchase.objects.get(id=purchase_id).delete()
+
+    context = {'purchase': purchase}
+    return render(request, 'shopping_registry/delete_purchase.html', context)
 
 @login_required
 def MonthView(request, year, month):
