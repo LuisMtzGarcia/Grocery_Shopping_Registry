@@ -1,0 +1,15 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+
+<h1>¡Lea con atención!</h1>
+
+<h2>Esta tratando de borrar el producto {{ product }}. ¿Seguro?</h2>
+
+<p>Esto eliminara todas las compras vinculadas a este producto.</p>
+
+<a href="{% url 'shopping_registry:delete_product' product.id %}">
+    Si, deseo borrar el producto.
+</a>
+
+{% endblock content %}

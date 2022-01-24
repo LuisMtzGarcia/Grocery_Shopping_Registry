@@ -5,11 +5,27 @@
     <h1>
         Editar el producto: {{ product }}
     </h1>
+
+    <p>
+        <a href="{% url 'shopping_registry:delete_product_confirmation' product.id %}">
+            Eliminar producto
+        </a>
+    </p>
     
     <form action="{% url 'shopping_registry:new_product' %}" method='post'>
         {% csrf_token %}
 
         {{ form.non_fields_errors }}
+
+        <div class="fieldWrapper">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_name }}">
+                Nombre del producto:
+            </label>
+            {{ form.name }}
+        </div>
+
+        <br>
 
         <div class="fieldWrapper">
             {{ form.category.errors }}
@@ -29,15 +45,7 @@
 
         <br>
         
-        <div class="fieldWrapper">
-            {{ form.name.errors }}
-            <label for="{{ form.name.id_name }}">
-                Nombre del producto:
-            </label>
-            {{ form.name }}
-        </div>
 
-        <br>
 
         <button name="submit">
             Registrar producto

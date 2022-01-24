@@ -230,7 +230,8 @@ def delete_purchase_confirmation(request, purchase_id):
     purchase = Purchase.objects.get(id=purchase_id)
 
     context = {'purchase': purchase}
-    return render(request, 'shopping_registry/delete_purchase_confirmation.html', context)    
+    return render(request, 'shopping_registry/delete_purchase_confirmation.html', 
+        context)    
 
 @login_required
 def delete_purchase(request, purchase_id):
@@ -240,6 +241,23 @@ def delete_purchase(request, purchase_id):
 
     context = {'purchase': purchase}
     return render(request, 'shopping_registry/delete_purchase.html', context)
+
+@login_required
+def delete_product_confirmation(request, product_id):
+    """Confirm the deletion of a product."""
+    product = Product.objects.get(id=product_id)
+
+    context = {'product': product}
+    return render(request, 'shopping_registry/delete_product_confirmation.html', context)
+
+@login_required
+def delete_product(request, product_id):
+    """Delete a single product."""
+    product = Product.objects.get(id=product_id)
+    product_erase = Product.objects.get(id=product_id).delete()
+
+    context = {'product': product}
+    return render(request, 'shopping_registry/delete_product.html', context)
 
 @login_required
 def MonthView(request, year, month):

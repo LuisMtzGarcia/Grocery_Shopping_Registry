@@ -29,14 +29,20 @@ urlpatterns = [
     # Page to confirm the deletion of a single date.
     path('confirmar/fecha/<int:date_id>', views.erase_date_confirmation, 
         name='erase_date_confirmation'),
-    # Page for deleting a single date.
-    path('borrar/fecha/<int:date_id>', views.erase_date, name='erase_date'),
     # Page to confirm the deletion of a single purchase.
     path('confirmar/compra/<int:purchase_id>', views.delete_purchase_confirmation, 
         name='delete_purchase_confirmation'),
+    # Page to confirm the deletion of a single product.
+    path('confirmar/producto/<int:product_id>', views.delete_product_confirmation,
+        name='delete_product_confirmation'),
+    # Page for deleting a single date.
+    path('borrar/fecha/<int:date_id>', views.erase_date, name='erase_date'),
     # Page for deleting a single purchase.
     path('borrar/compra/<int:purchase_id>', views.delete_purchase, 
         name='delete_purchase'),
+    # Pafe for deleting a single product.
+    path('borrar/producto/<int:product_id>', views.delete_product, 
+        name='delete_product'),
     # Page that displays all years with registered purchases.
     path('years/', views.Years, name='years'),
     # Page that displays the months in a year.
