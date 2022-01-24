@@ -181,13 +181,31 @@ def edit_category(request, category_id):
         form = CategoryForm(instance=category)
     else:
         # POST data submitted; process data.
-        form = CategoryForm(instancec=category, data=request.POST)
+        form = CategoryForm(instance=category, data=request.POST)
         if form.is_valid():
             form.save()
             return redirect('shopping_registry:dates')
 
     context = {'category': category, 'form': form}
     return render(request, 'shopping_registry/edit_category.html', context)
+
+@login_required
+def edit_product(request, product_id):
+    """Edit an existing product."""
+    product = Product.objects.get(id=product_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current product.
+        form = ProductForm(instance=product)
+    else:
+        # POST data submitted; process data.
+        form = ProductForm(instance=product, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    context = {'product': product, 'form': form}
+    return render(request, 'shopping_registry/edit_product.html', context)
 
 @login_required
 def erase_date_confirmation(request, date_id):

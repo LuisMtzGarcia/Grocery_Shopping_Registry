@@ -47,6 +47,7 @@
 <p>
     Información detallada: 
     <br>
+    Para editar algún producto, dale click en su nombre.
     <br>
     Productos con precio por unidad o 100gr:
 </p>
@@ -63,7 +64,12 @@
             {% elif value2 in categories %}
                 <li>Categoria: {{ value2 }}</li>
             {% else %}
-                <li>Producto: {{ value2 }}</li>
+                <li>
+                    Producto: 
+                    <a href="{% url 'shopping_registry:edit_product' value2.id %}">
+                        {{ value2 }}
+                    </a>
+                </li>
             {% endif %}
         {% endfor %}
     {% empty %}

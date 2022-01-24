@@ -21,7 +21,9 @@
 </p>
 <ul>
     {% for product, total in products_total.items %}
-        <li>{{ product }} : ${{ total }}</li>
+        <li>
+            {{ product }} : ${{ total }}
+        </li>
     {% endfor %}
 </ul>
 
