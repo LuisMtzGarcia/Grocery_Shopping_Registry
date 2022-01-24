@@ -18,15 +18,22 @@ urlpatterns = [
     # Page for editing a date.
     path('editar/fecha/<int:date_id>', views.edit_date, name='edit_date'),
     # Page for editing a purchase.
-    path('editar/compra/<int:purchase_id>', views.edit_purchase, name='edit_purchase'),
+    path('editar/compra/<int:purchase_id>', views.edit_purchase, 
+        name='edit_purchase'),
     # Page for editing a category.
-    path('editar/categoria/<int:category_id>', views.edit_category, name='edit_category'),
+    path('editar/categoria/<int:category_id>', views.edit_category, 
+        name='edit_category'),
     # Page for editing a product.
-    path('editar/producto/<int:product_id>', views.edit_product, name='edit_product'),
+    path('editar/producto/<int:product_id>', views.edit_product, 
+        name='edit_product'),
     # Page to confirm the deletion of a single date.
-    path('borrar/confirmar/<int:date_id>', views.erase_date_confirmation, name='erase_date_confirmation'),
+    path('borrar/confirmar/<int:date_id>', views.erase_date_confirmation, 
+        name='erase_date_confirmation'),
     # Page for deleting a single date.
     path('borrar/fecha/<int:date_id>', views.erase_date, name='erase_date'),
+    # Page for deleting a single purchase.
+    path('borrar/compra/<int:purchase_id>', views.delete_purchase, 
+        name='delete_purchase'),
     # Page that displays all years with registered purchases.
     path('years/', views.Years, name='years'),
     # Page that displays the months in a year.
