@@ -74,12 +74,15 @@
     Gasto por categoría de productos:
 </p>
 <ul>
-    {% for key, value in category_spent.items %}
+    {% for category, total in category_spent.items %}
         <li>
-            Categoría: {{ key }}
+            Categoría: 
+            <a href="{% url 'shopping_registry:edit_category' category.id %}">
+                {{ category }}
+            </a>
         </li>
         <li>
-            Total: ${{ value }}
+            Total: ${{ total }}
         </li>
         <br>
     {% empty %}

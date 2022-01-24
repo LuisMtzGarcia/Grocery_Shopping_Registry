@@ -3,7 +3,7 @@
 {% block content %}
 
     <h1>
-        Edita la compra:
+        Edita la compra: {{ purchase }}
     </h1>
     <a href="{% url 'shopping_registry:registering_instructions' %}">
         Instrucciones
@@ -76,7 +76,7 @@
         <br>
 
         <button name="submit">
-            Editar compra
+            Guardar cambios
         </button>        
     </form>    
 

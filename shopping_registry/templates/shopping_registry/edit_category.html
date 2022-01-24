@@ -1,0 +1,14 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+
+    <h1>
+        Editar la categoría: {{ category }}
+    </h1>
+    <form action="{% url 'shopping_registry:new_category' %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Guardar cambios</button>
+    </form>
+
+{% endblock content %}

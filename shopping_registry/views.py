@@ -159,7 +159,7 @@ def edit_purchase(request, purchase_id):
     purchase = Purchase.objects.get(id=purchase_id)
 
     if request.method != 'POST':
-        # Initial request; pre-fill form with the currenty purchase.
+        # Initial request; pre-fill form with the current purchase.
         form = PurchaseForm(instance=purchase)
     else:
         # POST data submitted; process data.
@@ -170,6 +170,24 @@ def edit_purchase(request, purchase_id):
 
     context = {'purchase': purchase, 'form': form}
     return render(request, 'shopping_registry/edit_purchase.html', context)
+
+@login_required
+def edit_category(request, category_id):
+    """Edit an existing category."""
+    category = Category.objects.get(id=category_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current category.
+        form = CategoryForm(instance=category)
+    else:
+        # POST data submitted; process data.
+        form = CategoryForm(instancec=category, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    context = {'category': category, 'form': form}
+    return render(request, 'shopping_registry/edit_category.html', context)
 
 @login_required
 def erase_date_confirmation(request, date_id):
