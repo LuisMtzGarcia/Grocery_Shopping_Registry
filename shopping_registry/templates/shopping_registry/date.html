@@ -12,15 +12,26 @@
     -
     <a href="{% url 'shopping_registry:erase_date_confirmation' date.id %}">Eliminar esta fecha</a>
 </p>
-
+<p>
+    Para editar o eliminar una compra, dale click.
+</p>
 <p>
     Compras:
 </p>
 <ul>
     {% for purchase in purchases %}
-        <li>{{ purchase }}</li>
+        <li>
+            <a href="{% url 'shopping_registry:edit_purchase' purchase.id %}">
+                {{ purchase }}
+            </a>
+        </li>
     {% empty %}
-        <li>Aún no se han registrado compras para esta visita.</li>
+        <li>
+            Aún no se han registrado compras para esta visita. 
+            <a href="{% url 'shopping_registry:new_purchase' %}">
+                Registra una.
+            </a>
+        </li>
     {% endfor %}
 </ul>
 <p>

@@ -141,7 +141,7 @@ def edit_date(request, date_id):
     date = Date.objects.get(id=date_id)
 
     if request.method != 'POST':
-        # Initial request; pre-fill form with the current entry.
+        # Initial request; pre-fill form with the current date.
         form = DateForm(instance=date)
     else:
         # POST data submitted; process data.
@@ -152,6 +152,24 @@ def edit_date(request, date_id):
 
     context = {'date': date, 'form': form}
     return render(request, 'shopping_registry/edit_date.html', context)
+
+@login_required
+def edit_purchase(request, purchase_id):
+    """Edit an existing purchase."""
+    purchase = Purchase.objects.get(id=purchase_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the currenty purchase.
+        form = PurchaseForm(instance=purchase)
+    else:
+        # POST data submitted; process data.
+        form = PurchaseForm(instance=purchase, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('shopping_registry:dates')
+
+    context = {'purchase': purchase, 'form': form}
+    return render(request, 'shopping_registry/edit_purchase.html', context)
 
 @login_required
 def erase_date_confirmation(request, date_id):

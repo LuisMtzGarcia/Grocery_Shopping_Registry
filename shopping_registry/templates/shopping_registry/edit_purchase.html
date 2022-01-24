@@ -1,0 +1,83 @@
+{% extends "shopping_registry/base.html" %}
+
+{% block content %}
+
+    <h1>
+        Edita la compra:
+    </h1>
+    <a href="{% url 'shopping_registry:registering_instructions' %}">
+        Instrucciones
+    </a>
+    <br>
+    <br>
+    <form action="{% url 'shopping_registry:new_purchase' %}" method='post'>
+        {% csrf_token %}
+
+        {{ form.non_fields_errors }}
+
+        <div class="fieldWrapper">
+            {{ form.product.errors }}
+            <label for="{{ form.product.id_product }}">
+                Producto: 
+            </label>
+            {{ form.product }}
+            <br>
+            <br>
+            <a href="{% url 'shopping_registry:new_product' %}">
+                Registra un nuevo producto
+            </a>
+        </div>
+
+        <br>
+        
+        <div class="fieldWrapper">
+            {{ form.quantity.errors }}
+            <label for="{{ form.quantity.id_quantity }}">
+                Cantidad: 
+            </label>
+            {{ form.quantity }}
+        </div>
+
+        <br>
+
+        <div class="fieldWrapper">
+            {{ form.price.errors }}
+            <label for="{{ form.price.id_price }}">
+                Precio total: 
+            </label>
+            {{ form.price }}
+        </div>
+
+        <br>
+
+        <div class="fieldWrapper">
+            {{ form.date_purchase.errors }}
+            <label for="{{ form.date_purchase.id_date_purchase }}">
+                Fecha de la compra:
+            </label>
+            {{ form.date_purchase }}
+            <br>
+            <br>
+            <a href="{% url 'shopping_registry:new_date' %}">
+                Registra una nueva fecha
+            </a>
+        </div>
+
+        <br>
+
+        <div class="fieldWrapper">
+            {{ form.bulk.errors }}
+            <label for="{{ form.bulk.id_bulk }}">
+                Llena la casilla si fue compra a granel: 
+            </label>
+            {{ form.bulk }}
+        </div>
+
+        <br>
+
+        <button name="submit">
+            Editar compra
+        </button>        
+    </form>    
+
+{% endblock content %}
