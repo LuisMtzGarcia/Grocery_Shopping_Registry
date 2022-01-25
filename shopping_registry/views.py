@@ -19,7 +19,7 @@ def index(request):
 @login_required
 def dates(request):
     """Shows all dates."""
-    dates = Date.objects.filter(owner=request.user).order_by('date_trip')
+    dates = Date.objects.filter(owner=request.user).order_by('date_trip').reverse()
     context = {'dates': dates}
     return render(request, 'shopping_registry/dates.html', context)
 

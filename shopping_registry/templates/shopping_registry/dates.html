@@ -1,17 +1,33 @@
 {% extends "shopping_registry/base.html" %}
 
+{% block page_header %}
+    <h1>
+        Fechas: 
+    </h1>
+{% endblock page_header %}
+
 {% block content %}
 
-<p>Viajes al súper: </p>
+<h3>
+    <a href="{% url 'shopping_registry:registering_instructions' %}">
+        Registrar una nueva compra
+    </a>
+    <br>
+    <br>
+</h3>
 
-<ul>
-    {% for date in dates %}
-        <li>
-            <a href="{% url 'shopping_registry:date' date.id %}">{{ date }}</a>
-        </li>
-    {% empty %}
-        <li>Aún no se ha registrado ninguna ida.</li>
-    {% endfor %}
-</ul>
+{% for date in dates %}
+    <div class="card mb-3">
+        <h4 class="card-header text-center">
+            <a href="{% url 'shopping_registry:date' date.id %}">
+                {{ date.date_trip }}
+            </a>
+        </h4>
+    </div>
+{% empty %}
+    <h3>
+        Aún no se ha registrado ninguna visita. 
+    </h3>
+{% endfor %}
 
 {% endblock content %}

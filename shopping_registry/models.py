@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Category(models.Model):
     """Categories to classify the items."""
@@ -36,7 +37,7 @@ class Date(models.Model):
 
     def __str__(self):
         """Return a string representation of the date."""
-        return f"{self.date_trip}"
+        return f"{self.date_trip.strftime('%d-%b-%y')}"
 
 class Purchase(models.Model):
     """The purchase of a product."""

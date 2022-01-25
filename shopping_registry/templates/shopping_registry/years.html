@@ -1,17 +1,19 @@
 {% extends 'shopping_registry/base.html' %}
 
+{% block page_header %}
+    <h1>
+        Elige un año:
+    </h1>
+{% endblock page_header %}
+
 {% block content %}
-<h1>
-    Elige un año:
-</h1>
-<ul>
+
     {% for year in years %}
-        <li>
-            <h2>
-                <a href="{% url 'shopping_registry:months' year %}">{{ year }}</a>
-            </h2>
-        </li>
+        <h2>
+            <a href="{% url 'shopping_registry:months' year %}">
+                {{ year }}
+            </a>
+        </h2>
     {% endfor %}
-</ul>
 
 {% endblock content%}
