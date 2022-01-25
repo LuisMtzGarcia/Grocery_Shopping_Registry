@@ -1,17 +1,83 @@
-<p>
-    <a href="{% url 'shopping_registry:index' %}">Registro Súper</a> - 
-    <a href="{% url 'shopping_registry:dates' %}">Visitas al Súper</a> -
-    <a href="{% url 'shopping_registry:years' %}">Checa tu gasto mensual</a> -
-    <a href="{% url 'shopping_registry:registering_instructions' %}">
-        Registrar una nueva compra
-    </a> -
-    {% if user.is_authenticated %}
-        Hola, {{ user.username }}.
-        <a href="{% url 'users:logout' %}">Cerrar sesión</a>
-    {% else %}
-        <a href="{% url 'users:register' %}">Regístrate</a> -
-        <a href="{% url 'users:login' %}">Ingresa</a>
-    {% endif %}
-</p>
+{% load django_bootstrap5 %}
 
-{% block content %}{% endblock content %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+        shrink-to-fit=no">
+    <title>Registro super</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+        <a class="navbar-brand" href="{% url 'shopping_registry:index' %}">
+            Registro Súper
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" 
+            data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler">
+            </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shopping_registry:dates' %}">
+                        Visitas al Súper
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shopping_registry:years' %}">
+                        Checa tu gasto mensual
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shopping_registry:registering_instructions' %}">
+                        Registrar una nueva compra
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="navbar-text">
+                            Hola, {{ user.username }}.
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:logout' %}">
+                            Cerrar sesión
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:register' %}">
+                            Regístrate
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">
+                            Ingresa
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="pb-2 mb-2 border-bottom">
+            {% block page_header %}
+            {% endblock page_header %}
+        </div>
+        <div>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </main>
+</body>
+</html>
