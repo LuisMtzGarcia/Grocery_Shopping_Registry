@@ -1,16 +1,20 @@
 {% extends "shopping_registry/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block page_header %}
+    <h2>
+        Iniciar sesión.
+    </h2>
+{% endblock page_header %}
 
 {% block content %}
 
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
-    <form method="post" action="{% url 'users:login' %}">
+    <form method="post" action="{% url 'users:login' %}" class="form">
         {% csrf_token %}
-        {{ form.as_p }}
 
-        <button name="submit">Ingresa</button>
+        {% bootstrap_form form %}
+
+        <button name="submit" class="btn btn-primary">Inicia sesión</button>
         <input type="hidden" name="next" 
             value="{% url 'shopping_registry:index' %}" />
     </form>

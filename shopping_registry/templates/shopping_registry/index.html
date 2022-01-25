@@ -1,10 +1,16 @@
 {% extends "shopping_registry/base.html" %}
 
-{% block content %}
-
-<p>Registro de compras de Súper</p>
-
-<p>Este programa te ayuda a registrar todas tus compras del Súper y analizar
-tus gastos.</p>
-
-{% endblock content %}
+{% block page_header %}
+<div class="mt-4 p-5 bg-primary text-white rounded">
+    <h1 class="display-3">
+        Registro de compras de Súper
+    </h1>
+    <p class="lead">
+        Este programa te ayuda a registrar todas tus compras del Súper y analizar tus gastos.
+    </p>
+    <a class="btn btn-lg btn-secondary" href="{% url 'users:register' %}"
+        role="button">
+        Regístrate &raquo;
+    </a>
+</div>
+{% endblock page_header %}
