@@ -157,6 +157,7 @@ def edit_date(request, date_id):
 def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = Purchase.objects.get(id=purchase_id)
+    date_id = purchase.date_purchase.id
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current purchase.
@@ -166,7 +167,7 @@ def edit_purchase(request, purchase_id):
         form = PurchaseForm(instance=purchase, data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('shopping_registry:dates')
+            return redirect('shopping_registry:date', date_id=date_id)
 
     context = {'purchase': purchase, 'form': form}
     return render(request, 'shopping_registry/edit_purchase.html', context)
