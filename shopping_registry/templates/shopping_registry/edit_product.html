@@ -12,7 +12,7 @@
         </a>
     </p>
     
-    <form action="{% url 'shopping_registry:new_product' %}" method='post'>
+    <form action="{% url 'shopping_registry:edit_product' product.id %}" method='post'>
         {% csrf_token %}
 
         {{ form.non_fields_errors }}
