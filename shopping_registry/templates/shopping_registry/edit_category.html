@@ -10,7 +10,7 @@
         Eliminar categoría
     </a>
 
-    <form action="{% url 'shopping_registry:new_category' %}" method='post'>
+    <form action="{% url 'shopping_registry:edit_category' category.id %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
         <button name="submit">Guardar cambios</button>
