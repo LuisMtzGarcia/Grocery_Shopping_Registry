@@ -8,12 +8,18 @@
 
 {% block content %}
 
-    {% for year in years %}
-        <h2>
+{% for year in years %}
+    <div class="card mb-3">
+        <h4 class="card-header text-center">
             <a href="{% url 'shopping_registry:months' year %}">
                 {{ year }}
             </a>
-        </h2>
-    {% endfor %}
+        </h4>
+    </div>
+{% empty %}
+    <h3>
+        Aún no se ha registrado ninguna visita. 
+    </h3>
+{% endfor %}
 
 {% endblock content%}

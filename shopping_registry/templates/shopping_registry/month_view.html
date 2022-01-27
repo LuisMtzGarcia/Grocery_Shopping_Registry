@@ -1,9 +1,16 @@
 {% extends 'shopping_registry/base.html' %}
 
-{% block content %}
-<h1>
-    Todas las compras del mes {{ date|date:"F Y" }}
+{% block page_header %}
+<h1 class="display-5">
+    Todas las compras del mes: 
+    <br>
+    <div class="text-center fw-bold">
+        {{ date|date:"F Y" }}
+    </div>
 </h1>
+{% endblock page_header %}
+
+{% block content %}
 <p>
     Fechas:
 </p>

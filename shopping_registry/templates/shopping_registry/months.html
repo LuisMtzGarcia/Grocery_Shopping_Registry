@@ -1,19 +1,25 @@
 {% extends 'shopping_registry/base.html' %}
 
-{% block content %}
+{% block page_header %}
 <h1>
     Elige un mes:
 </h1>
-<ul>
-    {% for date in dates %}
-        <li>
-            <h2>
-                <a href="{% url 'shopping_registry:MonthView' year date.month %}">
-                    {{ date|date:"F" }}
-                </a>
-            </h2>
-        </li>
-    {% endfor %}
-</ul>
+{% endblock page_header %}
+
+{% block content %}
+
+{% for date in dates %}
+    <div class="card mb-3">
+        <h4 class="card-header text-center">
+            <a href="{% url 'shopping_registry:MonthView' year date.month %}">
+                {{ date|date:"F" }}
+            </a>
+        </h4>
+    </div>
+{% empty %}
+    <h3>
+        Aún no se ha registrado ninguna visita. 
+    </h3>
+{% endfor %}
 
 {% endblock content%}
