@@ -9,9 +9,13 @@
 {% endblock page_header %}
 
 {% block content %}
-<p>
-    Fechas:
-</p>
+<div class="bd-heading sticky-xl-top align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Fechas:
+    </h3>
+</div>
+
+<!-- Displays all the dates registered in the month. -->
 <div class="list-group">
     {% for date in dates %}
         <a href="{% url 'shopping_registry:date' date.id %}" 
@@ -24,15 +28,37 @@
 <p>
     Gasto total: ${{ total }}
 </p>
-<ul>
-    {% for product, total in products_total.items %}
-        <li>
-            {{ product }} : ${{ total }}
-        </li>
-    {% endfor %}
-</ul>
+<div class="bd-heading sticky-xl-top align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Gasto por producto
+    </h3>
+</div>
 
-
+<!-- Table to display the product and the total spent. -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Producto
+            </th>
+            <th scope="col">
+                Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for product, total in products_total.items %}
+            <tr>
+            <td>
+                {{ product }}
+            </td>
+            <td>
+                ${{ total }}
+            </td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
 <p>
     {% if bar_graph %}
     <div style="width:600; height:500;">
