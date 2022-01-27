@@ -12,15 +12,15 @@
 <p>
     Fechas:
 </p>
-<ul>
+<div class="list-group">
     {% for date in dates %}
-        <li>
-            <a href="{% url 'shopping_registry:date' date.id %}">
-                {{ date.date_trip|date:"d-m-Y" }}
-            </a>
-        </li>
+        <a href="{% url 'shopping_registry:date' date.id %}" 
+            class="list-group-item list-group-item-action text-center">
+            {{ date.date_trip|date:"d-m-Y" }}
+        </a>
     {% endfor %}
-</ul>
+</div>
+<br>
 <p>
     Gasto total: ${{ total }}
 </p>
