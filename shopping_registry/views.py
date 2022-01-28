@@ -352,8 +352,8 @@ def MonthView(request, year, month):
     pie_graph = pie_chart.to_html()
 
     context = {'date': date, 'dates': dates, 'total':total, 
-        'products_total': products_total, 'bar_graph': bar_graph, 
-        'pie_graph':pie_graph}
+        'products_total': products_total, 'categories_total': categories_total,
+        'bar_graph': bar_graph, 'pie_graph':pie_graph}
     return render(request, 'shopping_registry/month_view.html', context)
 
 @login_required

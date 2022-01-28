@@ -1,7 +1,7 @@
 {% extends 'shopping_registry/base.html' %}
 
 {% block page_header %}
-<h1 class="display-5">
+<h1 class="display-2">
     <div class="text-center fw-bold">
         {{ date|date:"F Y" }}
     </div>
@@ -11,7 +11,7 @@
 {% block content %}
 
 <!-- Displays the total spent in the selected month. -->
-<div class="bd-heading sticky-xl-top align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
         Gasto total:
     </h3>
@@ -24,7 +24,7 @@
 
 <!-- Displays all the dates registered in the month. -->
 <br>
-<div class="bd-heading sticky-xl-top align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
         Fechas:
     </h3>
@@ -41,7 +41,7 @@
 
 <!-- Table to display the product and the total spent. -->
 <br>
-<div class="bd-heading sticky-xl-top align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
         Gasto por producto
     </h3>
@@ -70,11 +70,42 @@
             {% endfor %}
     </tbody>
 </table>
+<!-- Table to display the total spent per category of products. -->
+<br>
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Gasto por categoría
+    </h3>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Categoría
+            </th>
+            <th scope="col">
+                Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category, total in categories_total.items %}
+        <tr>
+            <td>
+                {{ category }}
+            </td>
+            <td>
+                ${{ total }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 <!-- Graphs -->
 <br>
-<div class="bd-heading sticky-xl-top align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
-        Visualización
+        Gasto total por producto
     </h3>
 </div>
 <p>
@@ -84,6 +115,12 @@
     </div>
     {% endif %}
 </p>
+<br>
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Gasto total por categoría
+    </h3>
+</div>
 <p>
     {% if pie_graph %}
     <div style="width:600; height:500;">
