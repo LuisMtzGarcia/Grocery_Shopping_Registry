@@ -1,12 +1,20 @@
 {% extends "shopping_registry/base.html" %}
 
-{% block content %}
-    <h1>
+{% block page_header %}
+<h1 class="display-5">
+    <div class="text-center fw-bold">
         Registra una nueva compra:
-    </h1>
-    <a href="{% url 'shopping_registry:registering_instructions' %}">
+    </div>
+</h1>
+{% endblock page_header %}
+
+{% block content %}
+<div class="d-grid gap-2 col-4 mx-auto">
+    <a href="{% url 'shopping_registry:registering_instructions' %}"
+        class="btn btn-secondary" role="button">
         Instrucciones
     </a>
+</div>
     <br>
     <br>
     <form action="{% url 'shopping_registry:new_purchase' %}" method='post'>

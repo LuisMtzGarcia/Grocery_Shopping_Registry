@@ -11,12 +11,21 @@
         <p class="lead mb-4">
             Este programa te ayuda a registrar todas tus compras del Súper y analizar tus gastos.
         </p>
+        {% if user.is_authenticated %}
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a class="btn btn-lg btn-primary px-4 gap-3" href="{% url 'shopping_registry:new_purchase' %}"
+                role="button">
+                Registra una compra &raquo;
+            </a>            
+        </div>
+        {% else %}
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <a class="btn btn-lg btn-primary px-4 gap-3" href="{% url 'users:register' %}"
                 role="button">
                 Regístrate &raquo;
             </a>            
         </div>
+        {% endif %}
     </div>
 </div>
 {% endblock page_header %}
