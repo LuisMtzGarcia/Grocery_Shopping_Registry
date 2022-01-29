@@ -1,24 +1,36 @@
 {% extends 'shopping_registry/base.html' %}
 
 {% block page_header %}
-<h2>
-    Día: {{ date.date_trip|date:"j N Y" }}
-</h2>
+<h1 class="display-2">
+    <div class="text-center fw-bold">
+        {{ date.date_trip|date:"j N Y" }}
+    </div>
+</h1>
 {% endblock page_header %}
 
 {% block content %}
-<p>
-    <a href="{% url 'shopping_registry:edit_date' date.id %}">Editar fecha</a>
-    -
-    <a href="{% url 'shopping_registry:new_purchase' %}">Registra una nueva compra</a>
-    -
-    <a href="{% url 'shopping_registry:erase_date_confirmation' date.id %}">Eliminar esta fecha</a>
-</p>
-<p>
+<!-- Buttons with functions related to the date. -->
+<div class="d-grid gap-2 d-md-block text-center">
+    <a href="{% url 'shopping_registry:edit_date' date.id %}" class="btn btn-primary btn-sm" role="button">
+        Editar fecha
+    </a>
+    <a href="{% url 'shopping_registry:erase_date_confirmation' date.id %}" class="btn btn-primary btn-sm" role="button">
+        Eliminar fecha
+    </a>
+    <a href="{% url 'shopping_registry:new_purchase' %}" class="btn btn-primary btn-sm" role="button">
+        Registrar compra
+    </a>
+</div>
+
+<!-- The purchases linked to the date. -->
+<br>
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Compras:
+    </h3>
+</div>
+<p class="lead">
     Para editar o eliminar una compra, dale click.
-</p>
-<p>
-    Compras:
 </p>
 <ul>
     {% for purchase in purchases %}
