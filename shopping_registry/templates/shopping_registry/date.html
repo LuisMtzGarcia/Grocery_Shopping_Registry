@@ -34,6 +34,7 @@
         ${{ total }}
     </div>
 </h1>
+
 <!-- The purchases linked to the date. -->
 <br>
 <div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
@@ -42,8 +43,60 @@
     </h3>
 </div>
 <p class="lead">
-    Para editar o eliminar una compra, dale click.
+    Para editar o eliminar un producto, da click al nombre.
 </p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Producto
+            </th>
+            <th scope="col">
+                Cantidad
+            </th>
+            <th scope="col">
+                Total
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchase in purchases %}
+        <tr>
+            <td>
+                <a href="{% url 'shopping_registry:edit_product' purchase.product.id %}">
+                    {{ purchase.product }}
+                </a>
+            </td>
+            <td>
+                {% if purchase.bulk == True %}
+                    {{ purchase.quantity }} gr.
+                {% else %}
+                    {{ purchase.quantity }}
+                {% endif %}
+            </td>
+            <td>
+                ${{ purchase.price }}
+            </td>
+            <td>
+                <a href="{% url 'shopping_registry:edit_purchase' purchase.id %}"
+                    class="btn btn-secondary" role="button">
+                    Editar
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
+
 <div class="list-group">
     {% for purchase in purchases %}
         <a href="{% url 'shopping_registry:edit_purchase' purchase.id %}"
@@ -54,7 +107,6 @@
         <p class="fw-bold">
             Aún no se han registrado compras para esta visita.
         </p>
-         
     {% endfor %}
 </div>
 
