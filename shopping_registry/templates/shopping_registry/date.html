@@ -22,6 +22,18 @@
     </a>
 </div>
 
+<!-- Displays the total spent in the selected date. -->
+<br>
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Gasto total:
+    </h3>
+</div>
+<h1 class="display-5">
+    <div class="text-center">
+        ${{ total }}
+    </div>
+</h1>
 <!-- The purchases linked to the date. -->
 <br>
 <div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
@@ -32,25 +44,20 @@
 <p class="lead">
     Para editar o eliminar una compra, dale click.
 </p>
-<ul>
+<div class="list-group">
     {% for purchase in purchases %}
-        <li>
-            <a href="{% url 'shopping_registry:edit_purchase' purchase.id %}">
-                {{ purchase }}
-            </a>
-        </li>
+        <a href="{% url 'shopping_registry:edit_purchase' purchase.id %}"
+            class="list-group-item list-group-item-action text-center">
+            {{ purchase }}
+        </a>
     {% empty %}
-        <li>
-            Aún no se han registrado compras para esta visita. 
-            <a href="{% url 'shopping_registry:new_purchase' %}">
-                Registra una.
-            </a>
-        </li>
+        <p class="fw-bold">
+            Aún no se han registrado compras para esta visita.
+        </p>
+         
     {% endfor %}
-</ul>
-<p>
-    Total de la visita: ${{ total }}
-</p>
+</div>
+
 <p>
     {% if bar_graph %}
     <div style="width:600; height:500;">
