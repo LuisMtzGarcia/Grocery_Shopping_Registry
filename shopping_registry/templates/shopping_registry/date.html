@@ -92,24 +92,6 @@
     </tbody>
 </table>
 
-
-
-
-
-
-<div class="list-group">
-    {% for purchase in purchases %}
-        <a href="{% url 'shopping_registry:edit_purchase' purchase.id %}"
-            class="list-group-item list-group-item-action text-center">
-            {{ purchase }}
-        </a>
-    {% empty %}
-        <p class="fw-bold">
-            Aún no se han registrado compras para esta visita.
-        </p>
-    {% endfor %}
-</div>
-
 <p>
     {% if bar_graph %}
     <div style="width:600; height:500;">
