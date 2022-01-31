@@ -11,9 +11,11 @@
 {% block content %}
     <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm" role="group" aria-label="Function buttons">
         <a href="{% url 'shopping_registry:delete_product_confirmation' product.id %}"
-            class="btn btn-primary" role="button">
+            class="btn btn-danger" role="button">
             Eliminar producto
         </a>
+        <br>
+        <br>
     </div>
     
     <form action="{% url 'shopping_registry:edit_product' product.id %}" method='post'>
@@ -21,15 +23,15 @@
 
         {{ form.non_fields_errors }}
 
-        <div class="fieldWrapper">
+        <div class="mb-3">
             {{ form.name.errors }}
-            <label for="{{ form.name.id_name }}">
+            <label for="{{ form.name.id_name }}" class="form-label">
                 Nombre del producto:
             </label>
-            {{ form.name }}
+            <div>
+                {{ form.name }}
+            </div>         
         </div>
-
-        <br>
 
         <div class="fieldWrapper">
             {{ form.category.errors }}
