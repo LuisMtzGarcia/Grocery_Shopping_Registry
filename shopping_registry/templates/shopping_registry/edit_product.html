@@ -9,16 +9,12 @@
 {% endblock page_header %}
 
 {% block content %}
-
-    <h1>
-        Editar el producto: {{ product }}
-    </h1>
-
-    <p>
-        <a href="{% url 'shopping_registry:delete_product_confirmation' product.id %}">
+    <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm" role="group" aria-label="Function buttons">
+        <a href="{% url 'shopping_registry:delete_product_confirmation' product.id %}"
+            class="btn btn-primary" role="button">
             Eliminar producto
         </a>
-    </p>
+    </div>
     
     <form action="{% url 'shopping_registry:edit_product' product.id %}" method='post'>
         {% csrf_token %}
@@ -52,11 +48,9 @@
         </div>
 
         <br>
-        
-
 
         <button name="submit">
-            Registrar producto
+            Guardar cambios
         </button>
     </form>    
 
