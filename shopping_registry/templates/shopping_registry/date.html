@@ -107,12 +107,15 @@
     {% for key2, value2 in value.items %}
         <!-- Checks for bulk value. -->
         {% if value2 == True %}
-            <li class="list-group-item">Precio 100 gramos:
+            <li class="list-group-item">
+                Precio p/100 gramos:
         {% elif value2 == False %}
-            <li class="list-group-item">Precio por unidad:
+            <li class="list-group-item">
+                Precio p/unidad:
         <!-- Checks if the value is the price. -->
         {% elif value2 > 0 %}
-            ${{ value2 }}</li>
+                ${{ value2 }}
+            </li>
         <!-- Checks if the value is the category name. -->
         {% elif value2 in categories %}
             <li class="list-group-item">
@@ -136,7 +139,13 @@
     </h1>
 {% endfor %}
 
-<!-- Graphs for the date's purchases. -->
+<!-- Graphs for the date's products. -->
+<br>
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Gasto total por producto:
+    </h3>
+</div>
 <p>
     {% if bar_graph %}
     <div style="width:600; height:500;">
@@ -145,9 +154,13 @@
     {% endif %}
 </p>
 
-<p>
-    Gasto por categoría de productos:
-</p>
+<!-- Total spent per category. -->
+<br>
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Gasto total por categoría
+    </h3>
+</div>
 <ul>
     {% for category, total in category_spent.items %}
         <li>
@@ -166,6 +179,7 @@
         </li>
     {% endfor %}
 </ul>
+<!-- Graph for total spent per category. -->
 <p>
     {% if pie_graph %}
     <div style="width:600; height:500;">
@@ -177,6 +191,5 @@
     </p>
     {% endif %}
 </p>
-
 
 {% endblock content %}
