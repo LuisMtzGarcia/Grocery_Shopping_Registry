@@ -175,7 +175,7 @@ def edit_purchase(request, purchase_id):
 @login_required
 def edit_category(request, category_name):
     """Edit an existing category."""
-    category = Category.objects.filter(name=category_name)
+    category = Category.objects.get(name=category_name)
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current category.

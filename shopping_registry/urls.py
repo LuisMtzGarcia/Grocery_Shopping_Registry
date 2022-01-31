@@ -29,7 +29,7 @@ urlpatterns = [
     path('editar/compra/<int:purchase_id>', views.edit_purchase, 
         name='edit_purchase'),
     # Page for editing a category.
-    path('editar/categoria/<int:category_id>', views.edit_category, 
+    path('editar/categoria/<str:category_name>', views.edit_category, 
         name='edit_category'),
     # Page for editing a product.
     path('editar/producto/<int:product_id>', views.edit_product, 
