@@ -92,6 +92,51 @@
     </tbody>
 </table>
 
+<!-- Individual prices for products. -->
+<br>
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+    <h3>
+        Costo p/unidad o 100 gr.:
+    </h3>
+</div>
+
+{% for key, value in dictionary.items %}
+    <div class="card" style="width: 18rem; text-align:center; width: 300px;
+        margin: 0 auto;">
+        <ul class="list-group list-group-flush">
+    {% for key2, value2 in value.items %}
+        <!-- Checks for bulk value. -->
+        {% if value2 == True %}
+            <li class="list-group-item">Precio 100 gramos:
+        {% elif value2 == False %}
+            <li class="list-group-item">Precio por unidad:
+        <!-- Checks if the value is the price. -->
+        {% elif value2 > 0 %}
+            ${{ value2 }}</li>
+        <!-- Checks if the value is the category name. -->
+        {% elif value2 in categories %}
+            <li class="list-group-item">
+                Categoria: {{ value2 }}
+            </li>
+        <!-- The product name. -->
+        {% else %}
+            <div class="card-header">
+                <b>
+                    {{ value2 }}
+                </b>
+            </div>
+        {% endif %}
+    {% endfor %}
+        </ul>
+    </div>
+    <br>
+{% empty %}
+    <h1>
+        Aun no se han registrado productos.
+    </h1>
+{% endfor %}
+
+<!-- Graphs for the date's purchases. -->
 <p>
     {% if bar_graph %}
     <div style="width:600; height:500;">
@@ -99,38 +144,7 @@
     </div>
     {% endif %}
 </p>
-<p>
-    Información detallada: 
-    <br>
-    Para editar algún producto, dale click en su nombre.
-    <br>
-    Productos con precio por unidad o 100gr:
-</p>
-<ul>
-    {% for key, value in dictionary.items %}
-        {% for key2, value2 in value.items %}
-            {% if value2 == True %}
-                <li>Precio 100 gramos: 
-            {% elif value2 == False %}
-                <li>Precio por unidad: 
-            {% elif value2 > 0 %}
-                ${{ value2 }}</li>
-                <br>
-            {% elif value2 in categories %}
-                <li>Categoria: {{ value2 }}</li>
-            {% else %}
-                <li>
-                    Producto: 
-                    <a href="{% url 'shopping_registry:edit_product' value2.id %}">
-                        {{ value2 }}
-                    </a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    {% empty %}
-        <li>Aún no se han registrado productos.</li>
-    {% endfor %}
-</ul>
+
 <p>
     Gasto por categoría de productos:
 </p>
