@@ -4,7 +4,7 @@ from django.http import Http404
 from django.core import serializers
 from django.db.models import Sum
 
-from .models import Date, Product, Category, Purchase
+from .models import Product, Category, Purchase
 from .forms import CategoryForm, PurchaseForm, ProductForm, DateForm
 
 import plotly.graph_objects as go
@@ -19,7 +19,16 @@ def index(request):
 @login_required
 def dates(request):
     """Shows all dates."""
-    dates = Date.objects.filter(owner=request.user).order_by('date_trip').reverse()
+    # Initializes the list to store the dates with registered purchases.
+    dates = []
+    # Stores the purchases of the user to extract the dates.
+    purchases = Purchase.objects.filter(owner=request.user).order_by('date_purchase')
+    # Extracts the dates of the purchases.
+    for purchase in purchases:
+        if purchase.date_purchase not in dates:
+            dates.append(purchase.date_purchase)
+    # Code to cleanup, moving to remove the Date model.
+    #dates = Date.objects.filter(owner=request.user).order_by('date_trip').reverse()
     context = {'dates': dates}
     return render(request, 'shopping_registry/dates.html', context)
 

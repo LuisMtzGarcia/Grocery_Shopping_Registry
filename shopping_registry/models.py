@@ -44,7 +44,7 @@ class Purchase(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    date_purchase = models.ForeignKey(Date, on_delete=models.CASCADE)
+    date_purchase = models.DateField()
     # Compras a granel / Bulk purchases
     bulk = models.BooleanField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
