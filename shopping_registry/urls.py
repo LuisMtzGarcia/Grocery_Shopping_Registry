@@ -14,7 +14,7 @@ urlpatterns = [
     # Page that shows all purchases.
     path('dates/', views.dates, name="dates"),
     # Detail page for a single date.
-    path('dates/<int:date_id>/', views.date, name='date'),
+    path(r'^dates/(?P<date>\d{4}-\d{2}-\d{2})/$', views.date, name='date'),
     # Page for adding a new category.
     path('registrar_categoria/', views.new_category, name='new_category'),
     # Page for adding a new purchase.

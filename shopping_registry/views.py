@@ -33,13 +33,16 @@ def dates(request):
     return render(request, 'shopping_registry/dates.html', context)
 
 @login_required
-def date(request, date_id):
+def date(request, date):
     """Show a single date and its details."""
+    """
     date = Date.objects.get(id=date_id)
     # Make sure the date belongs to the current user.
     if date.owner != request.user:
         raise Http404
     purchases = date.purchase_set.order_by('product')
+    """
+    purchases = Purchase.objects.filter(date_purchase=date)
     all_products = Product.objects.all()
     # Stores the total purchase price
     total = 0

@@ -19,7 +19,7 @@
 {% for date in dates %}
     <div class="card mb-3">
         <h4 class="card-header text-center">
-            <a href="">
+            <a href="{% url 'shopping_registry:date' date %}">
                 {{ date }}
             </a>
         </h4>
