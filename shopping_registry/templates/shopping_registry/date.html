@@ -3,7 +3,7 @@
 {% block page_header %}
 <h1 class="display-2">
     <div class="text-center fw-bold">
-        {{ date.date_trip|date:"j N Y" }}
+        {{ date }}
     </div>
 </h1>
 {% endblock page_header %}
@@ -11,10 +11,10 @@
 {% block content %}
 <!-- Buttons with functions related to the date. -->
 <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm" role="group" aria-label="Function buttons">
-    <a href="{% url 'shopping_registry:edit_date' date.id %}" class="btn btn-primary" role="button">
+    <a href="" class="btn btn-primary" role="button">
         Editar fecha
     </a>
-    <a href="{% url 'shopping_registry:erase_date_confirmation' date.id %}" class="btn btn-primary" role="button">
+    <a href="" class="btn btn-primary" role="button">
         Eliminar fecha
     </a>
     <a href="{% url 'shopping_registry:new_purchase' %}" class="btn btn-primary" role="button">

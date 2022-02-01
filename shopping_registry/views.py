@@ -35,6 +35,7 @@ def dates(request):
 @login_required
 def date(request, date):
     """Show a single date and its details."""
+    # Cleanup code, moving to delete Date model.
     """
     date = Date.objects.get(id=date_id)
     # Make sure the date belongs to the current user.
@@ -42,7 +43,8 @@ def date(request, date):
         raise Http404
     purchases = date.purchase_set.order_by('product')
     """
-    purchases = Purchase.objects.filter(date_purchase=date)
+    # Gets all the purchases made on the selected date.
+    purchases = Purchase.objects.filter(date_purchase=date, owner=request.user)
     all_products = Product.objects.all()
     # Stores the total purchase price
     total = 0
