@@ -153,24 +153,6 @@ def date(request, date):
     return render(request, 'shopping_registry/date.html', context)
 
 @login_required
-def edit_date(request, date_id):
-    """Edit an existing date."""
-    date = Date.objects.get(id=date_id)
-
-    if request.method != 'POST':
-        # Initial request; pre-fill form with the current date.
-        form = DateForm(instance=date)
-    else:
-        # POST data submitted; process data.
-        form = DateForm(instance=date, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('shopping_registry:dates')
-
-    context = {'date': date, 'form': form}
-    return render(request, 'shopping_registry/edit_date.html', context)
-
-@login_required
 def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = Purchase.objects.get(id=purchase_id)

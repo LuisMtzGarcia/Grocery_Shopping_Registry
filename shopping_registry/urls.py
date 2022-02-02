@@ -23,8 +23,6 @@ urlpatterns = [
     path('registrar_producto/', views.new_product, name='new_product'),
     # Page for adding a new date.
     path('registrar_fecha/', views.new_date, name='new_date'),
-    # Page for editing a date.
-    path('editar/fecha/<int:date_id>', views.edit_date, name='edit_date'),
     # Page for editing a purchase.
     path('editar/compra/<int:purchase_id>', views.edit_purchase, 
         name='edit_purchase'),
