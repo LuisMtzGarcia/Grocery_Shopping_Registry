@@ -380,11 +380,16 @@ def MonthView(request, year, month):
 @login_required
 def Years(request):
     """Shows all years with registered purchases."""
-    dates = Date.objects.filter(owner=request.user).order_by('date_trip')
+    # Code to cleanup, dependency on Date model.
+    #dates = Date.objects.filter(owner=request.user).order_by('date_trip')
+    # Stores all the purchases made by the user.
+    purchases = Purchase.objects.filter(owner=request.user).order_by('date_purchase')
+    # List to store the years with registered purchases.
     years = []
-    for date in dates:
-        if date.date_trip.year not in years:
-            years.append(date.date_trip.year)
+    for purchase in purchases:
+        # Verifies if the year is already stored.
+        if purchase.date_purchase.year not in years:
+            years.append(purchase.date_purchase.year)
     context = {'years': years}
     return render(request, 'shopping_registry/years.html', context)
 
