@@ -396,13 +396,24 @@ def Years(request):
 @login_required
 def Months(request, year):
     """Shows all the months with registered purchases in the selected month."""
+    # Code to cleanup, Date model dependency.
+    """
     dates = Date.objects.filter(owner=request.user).order_by('date_trip')
     months = []
     for date in dates:
         if date.date_trip.month not in months:
             if date.date_trip.year == year:
                 months.append(date.date_trip.month)
-
+    """
+    # Stores all the purchases registered by the User.
+    purchases = Purchase.objects.filter(owner=request.user).order_by('date_purchase')
+    # List to store all the months.
+    months = []
+    for purchase in purchases:
+        # Verifies if the month hasn't been stored yet.
+        if purchase.date_purchase.month not in months:
+            months.append(purchase.date_purchase.month)
+    # Stores the month and year together as a datetime value.
     datetimes = []
     for month in months:
         datetimes.append(datetime.datetime(year, month, 1).date())
