@@ -303,18 +303,32 @@ def delete_category(request, category_id):
 @login_required
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
+    # Cleanup code
+    """
     # QuerySet to store the filtered Dates.
     dates = Date.objects.filter(date_trip__year=year,
         date_trip__month=month, owner=request.user)
+    """
+    # QuerySet to store the filtered purchases.
+    purchases = Purchase.objects.filter(date_purchase__year=year, 
+        date_purchase__month=month, owner=request.user)
     # Stores the total spent in the given month.
     total = 0
     # Stores the products bought and the total spent on them.
     products_total = {}
     # Stores the categories of the bought products and the total spent.
     categories_total = {}
+    # Cleanup code
+    """
     # Initializes the 'purchases' variable and stores an empty QuerySet.
-    purchases = Date.objects.none()
-
+    purchases = Purchase.objects.none()
+    """
+    for purchase in purchases:
+        total += purchase.price
+        # Initializes dictionaries.
+        products_total[purchase.product.name] = 0
+        categories_total[purchase.product.category.name] = 0
+    """
     for date in dates:
         # Calculates total spent in the given month.
         total_price = date.purchase_set.order_by('product').aggregate(Sum('price'))
@@ -324,15 +338,16 @@ def MonthView(request, year, month):
             total += total_price['price__sum']
         # Stores all purchases in the purchases variable as a QuerySet.
         purchases = purchases | date.purchase_set.order_by('product')
-
+    """
     # Rounds the total to 2 decimal places.
     total = round(total, 2)
-
+    # Cleanup code
+    """
     for purchase in purchases:
             # Initializes dictionaries.
             products_total[purchase.product.name] = 0
             categories_total[purchase.product.category.name] = 0
-    
+    """
     for purchase in purchases:
             # Calculates total per product.
             products_total[purchase.product.name] += purchase.price
@@ -418,7 +433,7 @@ def Months(request, year):
     for month in months:
         datetimes.append(datetime.datetime(year, month, 1).date())
     # Find a way to turn the int value to a month datetime.
-    context = {'months': months, 'dates':datetimes, 'year': year}
+    context = {'months': months, 'dates': datetimes, 'year': year}
     return render(request, 'shopping_registry/months.html', context)
 
 @login_required
