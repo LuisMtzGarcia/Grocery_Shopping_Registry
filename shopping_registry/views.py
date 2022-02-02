@@ -43,6 +43,8 @@ def date(request, date):
         raise Http404
     purchases = date.purchase_set.order_by('product')
     """
+    # Stores the date as a string.
+    date_string = date
     # Gets all the purchases made on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date, owner=request.user)
     # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
@@ -144,7 +146,7 @@ def date(request, date):
     pie_chart = go.Figure(data=Pie)
     pie_graph = pie_chart.to_html()
 
-    context = {'date': date, 'purchases': purchases, 'total':total, 
+    context = {'date': date, 'date_string': date_string, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
         'categories': categories, 'category_spent': category_spent, 
         'bar_graph': bar_graph, 'pie_graph': pie_graph}
@@ -224,11 +226,14 @@ def edit_product(request, product_id):
     return render(request, 'shopping_registry/edit_product.html', context)
 
 @login_required
-def erase_date_confirmation(request, date_id):
+def erase_date_confirmation(request, date_string):
     """Confirm the deletion of a date."""
-    date = Date.objects.get(id=date_id)
+    # Gets all the purchases made on the selected date.
+    purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
+    # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
+    date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
 
-    context = {'date': date}
+    context = {'date': date, 'purchases': purchases}
     return render(request, 'shopping_registry/erase_date_confirmation.html', context)
 
 @login_required

@@ -35,7 +35,7 @@ urlpatterns = [
     path('editar/producto/<int:product_id>', views.edit_product, 
         name='edit_product'),
     # Page to confirm the deletion of a single date.
-    path('confirmar/fecha/<int:date_id>', views.erase_date_confirmation, 
+    path(r'^confirmar/borrar/(?P<date_string>\d{4}-\d{2}-\d{2})/$', views.erase_date_confirmation, 
         name='erase_date_confirmation'),
     # Page to confirm the deletion of a single purchase.
     path('confirmar/compra/<int:purchase_id>', views.delete_purchase_confirmation, 

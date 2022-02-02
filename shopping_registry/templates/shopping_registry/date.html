@@ -11,7 +11,7 @@
 {% block content %}
 <!-- Buttons with functions related to the date. -->
 <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm" role="group" aria-label="Function buttons">
-    <a href="" class="btn btn-primary" role="button">
+    <a href="{% url 'shopping_registry:erase_date_confirmation' date_string %}" class="btn btn-primary" role="button">
         Eliminar fecha
     </a>
     <a href="{% url 'shopping_registry:new_purchase' %}" class="btn btn-primary" role="button">
