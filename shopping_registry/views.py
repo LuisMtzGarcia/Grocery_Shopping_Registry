@@ -45,7 +45,8 @@ def date(request, date):
     """
     # Gets all the purchases made on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date, owner=request.user)
-    all_products = Product.objects.all()
+    # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
+    date = datetime.datetime.strptime(date, '%Y-%m-%d')
     # Stores the total purchase price
     total = 0
     # Stores the products

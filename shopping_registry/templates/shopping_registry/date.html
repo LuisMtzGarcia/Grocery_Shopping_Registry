@@ -3,7 +3,7 @@
 {% block page_header %}
 <h1 class="display-2">
     <div class="text-center fw-bold">
-        {{ date }}
+        {{ date|date:"j N Y" }}
     </div>
 </h1>
 {% endblock page_header %}
