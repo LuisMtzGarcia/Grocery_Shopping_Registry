@@ -4,7 +4,7 @@
 
 <h1>¡Lea con atención!</h1>
 
-<h2>Esta tratando de borrar la fecha {{ date }}. ¿Seguro?</h2>
+<h2>Esta tratando de eliminar todas las compras realizadas el día {{ date }}. ¿Seguro?</h2>
 
 <p>Esto eliminara todas las compras vinculadas a esta fecha.</p>
 
@@ -12,8 +12,8 @@
     {{ purchases }}
 </p>
 
-<a href="">
-    Si, deseo borrar la fecha.
+<a href="{% url 'shopping_registry:erase_date' date_string %}">
+    Si, deseo borrarlas.
 </a>
 
 {% endblock content %}

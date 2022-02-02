@@ -47,7 +47,7 @@ urlpatterns = [
     path('confirmar/categoria/<int:category_id>', views.delete_category_confirmation,
         name='delete_category_confirmation'),
     # Page for deleting a single date.
-    path('borrar/fecha/<int:date_id>', views.erase_date, name='erase_date'),
+    path(r'^borrar/(?P<date_string>\d{4}-\d{2}-\d{2})/$', views.erase_date, name='erase_date'),
     # Page for deleting a single purchase.
     path('borrar/compra/<int:purchase_id>', views.delete_purchase, 
         name='delete_purchase'),

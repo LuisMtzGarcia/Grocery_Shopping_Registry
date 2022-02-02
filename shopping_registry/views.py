@@ -233,16 +233,17 @@ def erase_date_confirmation(request, date_string):
     # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
 
-    context = {'date': date, 'purchases': purchases}
+    context = {'date': date, 'purchases': purchases, 'date_string': date_string}
     return render(request, 'shopping_registry/erase_date_confirmation.html', context)
 
 @login_required
-def erase_date(request, date_id):
+def erase_date(request, date_string):
     """Delete an existing date."""
-    date = Date.objects.get(id=date_id)
-    date_erase = Date.objects.get(id=date_id).delete()
+    date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
+    purchases_erase = purchases.delete()
 
-    context = {'date': date}
+    context = {'date': date, 'purchase': purchases}
     return render(request, 'shopping_registry/erase_date.html', context)
 
 @login_required
