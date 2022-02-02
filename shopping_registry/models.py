@@ -27,17 +27,6 @@ class Product(models.Model):
         """Return the name of the product in a string."""
         return f"{self.name}"
 
-class Date(models.Model):
-    """The purchase date of a group of products in a trip to the supermarket."""
-    date_trip = models.DateField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural = 'dates'
-
-    def __str__(self):
-        """Return a string representation of the date."""
-        return f"{self.date_trip.strftime('%d-%b-%y')}"
 
 class Purchase(models.Model):
     """The purchase of a product."""

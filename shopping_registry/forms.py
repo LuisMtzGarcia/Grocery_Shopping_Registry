@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Category, Purchase, Product, Date
+from .models import Category, Purchase, Product
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -20,9 +20,3 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ['category', 'name']
         labels = {'category': 'Categoria', 'name': 'Nombre'}
-
-class DateForm(forms.ModelForm):
-    class Meta:
-        model = Date
-        fields = ['date_trip']
-        labels = {'date_trip': 'Fecha de la compra'}

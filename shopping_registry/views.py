@@ -5,7 +5,7 @@ from django.core import serializers
 from django.db.models import Sum
 
 from .models import Product, Category, Purchase
-from .forms import CategoryForm, PurchaseForm, ProductForm, DateForm
+from .forms import CategoryForm, PurchaseForm, ProductForm
 
 import plotly.graph_objects as go
 
