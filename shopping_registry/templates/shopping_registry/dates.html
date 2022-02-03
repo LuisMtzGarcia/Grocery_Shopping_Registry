@@ -8,25 +8,24 @@
 
 {% block content %}
 
-<h3>
-    <a href="{% url 'shopping_registry:registering_instructions' %}">
-        Registrar una nueva compra
+<!-- Buttons with functions related to the date. -->
+<div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm mb-3" role="group" aria-label="Function buttons">
+    <a href="{% url 'shopping_registry:registering_instructions' %}" class="btn btn-primary" role="button">
+        Registrar compra
     </a>
-    <br>
-    <br>
-</h3>
+</div>
 
 {% for date in dates %}
     <div class="card mb-3">
         <h4 class="card-header text-center">
-            <a href="{% url 'shopping_registry:date' date %}">
+            <a href="{% url 'shopping_registry:date' date %}" class="">
                 {{ date }}
             </a>
         </h4>
     </div>
 {% empty %}
-    <h3>
-        Aún no se ha registrado ninguna visita. 
+    <h3 class="text-muted text-center mb-3">
+        Aún no se ha registrado ninguna compra. 
     </h3>
 {% endfor %}
 
