@@ -34,15 +34,7 @@ def dates(request):
 
 @login_required
 def date(request, date):
-    """Show a single date and its details."""
-    # Cleanup code, moving to delete Date model.
-    """
-    date = Date.objects.get(id=date_id)
-    # Make sure the date belongs to the current user.
-    if date.owner != request.user:
-        raise Http404
-    purchases = date.purchase_set.order_by('product')
-    """
+    """Shows all the information for a day's purchases."""
     # Stores the date as a string.
     date_string = date
     # Gets all the purchases made on the selected date.
@@ -209,8 +201,8 @@ def edit_product(request, product_id):
 
 @login_required
 def erase_date_confirmation(request, date_string):
-    """Confirm the deletion of a date."""
-    # Gets all the purchases made on the selected date.
+    """Confirm the deletion of the purchases done on the selected date."""
+    # Gets all the purchases done on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
     # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
@@ -220,7 +212,7 @@ def erase_date_confirmation(request, date_string):
 
 @login_required
 def erase_date(request, date_string):
-    """Delete an existing date."""
+    """Delete all the purchases done on the selected date."""
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
     purchases_erase = purchases.delete()
@@ -230,7 +222,7 @@ def erase_date(request, date_string):
 
 @login_required
 def delete_purchase_confirmation(request, purchase_id):
-    """Confirm the deletion of a purchase."""
+    """Confirms the deletion of a purchase."""
     purchase = Purchase.objects.get(id=purchase_id)
 
     context = {'purchase': purchase}
@@ -239,7 +231,7 @@ def delete_purchase_confirmation(request, purchase_id):
 
 @login_required
 def delete_purchase(request, purchase_id):
-    """Delete a single purchase."""
+    """Deletes a single purchase."""
     purchase = Purchase.objects.get(id=purchase_id)
     purchase_erase = Purchase.objects.get(id=purchase_id).delete()
 
@@ -248,7 +240,7 @@ def delete_purchase(request, purchase_id):
 
 @login_required
 def delete_product_confirmation(request, product_id):
-    """Confirm the deletion of a product."""
+    """Confirms the deletion of a product."""
     product = Product.objects.get(id=product_id)
 
     context = {'product': product}
@@ -256,7 +248,7 @@ def delete_product_confirmation(request, product_id):
 
 @login_required
 def delete_product(request, product_id):
-    """Delete a single product."""
+    """Deletes a single product."""
     product = Product.objects.get(id=product_id)
     product_erase = Product.objects.get(id=product_id).delete()
 
@@ -265,7 +257,7 @@ def delete_product(request, product_id):
 
 @login_required
 def delete_category_confirmation(request, category_id):
-    """Confirm the deletion of a category."""
+    """Confirms the deletion of a category."""
     category = Category.objects.get(id=category_id)
     products = category.product_set.all()
 
@@ -274,7 +266,7 @@ def delete_category_confirmation(request, category_id):
 
 @login_required
 def delete_category(request, category_id):
-    """Delete a single category."""
+    """Deletes a single category."""
     category = Category.objects.get(id=category_id)
     products = category.product_set.all()
     category_erase = Category.objects.get(id=category_id).delete()
@@ -285,12 +277,6 @@ def delete_category(request, category_id):
 @login_required
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
-    # Cleanup code
-    """
-    # QuerySet to store the filtered Dates.
-    dates = Date.objects.filter(date_trip__year=year,
-        date_trip__month=month, owner=request.user)
-    """
     # QuerySet to store the filtered purchases.
     purchases = Purchase.objects.filter(date_purchase__year=year, 
         date_purchase__month=month, owner=request.user)
@@ -300,36 +286,17 @@ def MonthView(request, year, month):
     products_total = {}
     # Stores the categories of the bought products and the total spent.
     categories_total = {}
-    # Cleanup code
-    """
-    # Initializes the 'purchases' variable and stores an empty QuerySet.
-    purchases = Purchase.objects.none()
-    """
+
     for purchase in purchases:
+        # Calculates the total spent in the month.
         total += purchase.price
         # Initializes dictionaries.
         products_total[purchase.product.name] = 0
         categories_total[purchase.product.category.name] = 0
-    """
-    for date in dates:
-        # Calculates total spent in the given month.
-        total_price = date.purchase_set.order_by('product').aggregate(Sum('price'))
-        if total_price['price__sum'] is None:
-            pass
-        else:
-            total += total_price['price__sum']
-        # Stores all purchases in the purchases variable as a QuerySet.
-        purchases = purchases | date.purchase_set.order_by('product')
-    """
+
     # Rounds the total to 2 decimal places.
     total = round(total, 2)
-    # Cleanup code
-    """
-    for purchase in purchases:
-            # Initializes dictionaries.
-            products_total[purchase.product.name] = 0
-            categories_total[purchase.product.category.name] = 0
-    """
+
     for purchase in purchases:
             # Calculates total per product.
             products_total[purchase.product.name] += purchase.price
@@ -377,8 +344,6 @@ def MonthView(request, year, month):
 @login_required
 def Years(request):
     """Shows all years with registered purchases."""
-    # Code to cleanup, dependency on Date model.
-    #dates = Date.objects.filter(owner=request.user).order_by('date_trip')
     # Stores all the purchases made by the user.
     purchases = Purchase.objects.filter(owner=request.user).order_by('date_purchase')
     # List to store the years with registered purchases.
@@ -393,15 +358,6 @@ def Years(request):
 @login_required
 def Months(request, year):
     """Shows all the months with registered purchases in the selected month."""
-    # Code to cleanup, Date model dependency.
-    """
-    dates = Date.objects.filter(owner=request.user).order_by('date_trip')
-    months = []
-    for date in dates:
-        if date.date_trip.month not in months:
-            if date.date_trip.year == year:
-                months.append(date.date_trip.month)
-    """
     # Stores all the purchases registered by the User.
     purchases = Purchase.objects.filter(owner=request.user).order_by('date_purchase')
     # List to store all the months.
