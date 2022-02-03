@@ -479,22 +479,3 @@ def new_product(request):
     # Display a blank or invalid form.
     context = {'form': form}
     return render(request, 'shopping_registry/new_product.html', context)
-
-@login_required
-def new_date(request):
-    """Add a new date."""
-    if request.method != 'POST':
-        # No data submitted; create a blank form.
-        form = DateForm()
-    else:
-        # POST data submitted; process data.
-        form = DateForm(data=request.POST)
-        if form.is_valid():
-            new_date = form.save(commit=False)
-            new_date.owner = request.user
-            new_date.save()
-            return redirect('shopping_registry:new_purchase')
-
-    # Display a blank or invalid form.
-    context = {'form': form}
-    return render(request, 'shopping_registry/new_date.html', context)
