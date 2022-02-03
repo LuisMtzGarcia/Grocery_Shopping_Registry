@@ -14,7 +14,7 @@ urlpatterns = [
     # Page that shows all purchases.
     path('dates/', views.dates, name="dates"),
     # Detail page for a single date.
-    path(r'^dates/(?P<date>\d{4}-\d{2}-\d{2})/$', views.date, name='date'),
+    path(r'^dates/(<date>\d{4}-\d{2}-\d{2})/', views.date, name='date'),
     # Page for adding a new category.
     path('registrar_categoria/', views.new_category, name='new_category'),
     # Page for adding a new purchase.
@@ -31,7 +31,7 @@ urlpatterns = [
     path('editar/producto/<int:product_id>', views.edit_product, 
         name='edit_product'),
     # Page to confirm the deletion of a single date.
-    path(r'^confirmar/borrar/(?P<date_string>\d{4}-\d{2}-\d{2})/$', views.erase_date_confirmation, 
+    path(r'^confirmar/borrar/(<date_string>\d{4}-\d{2}-\d{2})/', views.erase_date_confirmation, 
         name='erase_date_confirmation'),
     # Page to confirm the deletion of a single purchase.
     path('confirmar/compra/<int:purchase_id>', views.delete_purchase_confirmation, 
@@ -42,8 +42,8 @@ urlpatterns = [
     # Page to confirm the deletion of a single category.
     path('confirmar/categoria/<int:category_id>', views.delete_category_confirmation,
         name='delete_category_confirmation'),
-    # Page for deleting a single date.
-    path(r'^borrar/(?P<date_string>\d{4}-\d{2}-\d{2})/$', views.erase_date, name='erase_date'),
+    # Page for deleting all the purchases made on the selected date.
+    path(r'^borrar/(<date_string>\d{4}-\d{2}-\d{2})/', views.erase_date, name='erase_date'),
     # Page for deleting a single purchase.
     path('borrar/compra/<int:purchase_id>', views.delete_purchase, 
         name='delete_purchase'),
