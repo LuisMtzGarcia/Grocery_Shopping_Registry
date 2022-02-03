@@ -1,12 +1,24 @@
 {% extends "shopping_registry/base.html" %}
 
+{% block page_header %}
+<h1 class="display-5">
+    <div class="text-center fw-bold">
+        Registra una nueva categoría:
+    </div>
+</h1>
+{% endblock page_header %}
+
 {% block content %}
-    <p>
-        Agrega una nueva categoria:
-    </p>
-    <form action="{% url 'shopping_registry:new_category' %}" method='post'>
+    <form action="{% url 'shopping_registry:new_category' %}" method='post'
+        class="mt-5">
         {% csrf_token %}
+
         {{ form.as_p }}
-        <button name="submit">Añadir categoria</button>
+
+        <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-lg">
+            <button name="submit" class="btn btn-success btn-lg mt-5">
+                Registrar categoría
+            </button>
+        </div>
     </form>
 {% endblock content %}

@@ -31,9 +31,9 @@
 </div>
 <div class="list-group">
     {% for date in dates %}
-        <a href="{% url 'shopping_registry:date' date.id %}" 
+        <a href="{% url 'shopping_registry:date' date %}" 
             class="list-group-item list-group-item-action text-center">
-            {{ date.date_trip|date:"d-m-Y" }}
+            {{ date }}
         </a>
     {% endfor %}
 </div>

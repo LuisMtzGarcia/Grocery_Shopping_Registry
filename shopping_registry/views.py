@@ -282,6 +282,8 @@ def MonthView(request, year, month):
         date_purchase__month=month, owner=request.user)
     # Stores the total spent in the given month.
     total = 0
+    # Stores the dates with registered purchases.
+    dates = []
     # Stores the products bought and the total spent on them.
     products_total = {}
     # Stores the categories of the bought products and the total spent.
@@ -293,6 +295,9 @@ def MonthView(request, year, month):
         # Initializes dictionaries.
         products_total[purchase.product.name] = 0
         categories_total[purchase.product.category.name] = 0
+        # Converts the dates into strings and stores it.
+        if purchase.date_purchase.strftime('%Y-%m-%d') not in dates:
+            dates.append(purchase.date_purchase.strftime('%Y-%m-%d'))
 
     # Rounds the total to 2 decimal places.
     total = round(total, 2)
