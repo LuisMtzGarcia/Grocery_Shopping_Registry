@@ -9,14 +9,11 @@
 {% endblock page_header %}
 
 {% block content %}
-<div class="d-grid gap-2 col-4 mx-auto">
-    <a href="{% url 'shopping_registry:registering_instructions' %}"
-        class="btn btn-secondary" role="button">
-        Instrucciones
-    </a>
-</div>
-    <br>
-    <br>
+    <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm mb-5" role="group" aria-label="Function buttons">
+        <a href="{% url 'shopping_registry:registering_instructions' %}" class="btn btn-secondary" role="button">
+            Instrucciones
+        </a>
+    </div>
     <form action="{% url 'shopping_registry:new_purchase' %}" method='post'>
         {% csrf_token %}
 
