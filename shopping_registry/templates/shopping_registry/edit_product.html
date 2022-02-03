@@ -44,16 +44,19 @@
             
             <br>
             
-            <a href="{% url 'shopping_registry:new_category' %}">
+            <a href="{% url 'shopping_registry:new_category' %}" 
+                class="btn btn-secondary btn-sm" role="button">
                 Registrar nueva categoria
             </a>
         </div>
 
         <br>
 
-        <button name="submit">
-            Guardar cambios
-        </button>
+        <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-lg">
+            <button name="submit" class="btn btn-success btn-lg">
+                Guardar cambios
+            </button>
+        </div>
     </form>    
 
 {% endblock content %}
