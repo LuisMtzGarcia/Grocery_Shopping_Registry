@@ -1,7 +1,13 @@
 {% extends "shopping_registry/base.html" %}
 
-{% block content %}
+{% block page_header %}
+    <h1 class="display-5">
+        <div class="text-center fw-bold">
+            Las compras realizadas el {{ date|date:"j N Y" }} han sido borradas.
+        </div>
+    </h1>
+{% endblock page_header %}
 
-<h1>La fecha {{ date }} ha sido borrada.</h1>
+{% block content %}
 
 {% endblock content %}
