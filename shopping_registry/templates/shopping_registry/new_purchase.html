@@ -30,7 +30,8 @@
             {{ form.product }}
             <br>
             <br>
-            <a href="{% url 'shopping_registry:new_product' %}">
+            <a href="{% url 'shopping_registry:new_product' %}" 
+                class="btn btn-secondary btn-sm" role="button">
                 Registra un nuevo producto
             </a>
         </div>
@@ -77,8 +78,10 @@
 
         <br>
 
-        <button name="submit">
-            Registrar compra
-        </button>        
+        <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-lg">
+            <button name="submit" class="btn btn-success btn-lg mt-5">
+                Registrar compra
+            </button>
+        </div>      
     </form>
 {% endblock content %}
