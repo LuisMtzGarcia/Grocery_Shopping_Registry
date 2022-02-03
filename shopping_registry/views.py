@@ -27,8 +27,7 @@ def dates(request):
     for purchase in purchases:
         if purchase.date_purchase not in dates:
             dates.append(purchase.date_purchase)
-    # Code to cleanup, moving to remove the Date model.
-    #dates = Date.objects.filter(owner=request.user).order_by('date_trip').reverse()
+
     context = {'dates': dates}
     return render(request, 'shopping_registry/dates.html', context)
 
