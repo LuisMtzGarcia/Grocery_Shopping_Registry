@@ -1,20 +1,22 @@
 {% extends "shopping_registry/base.html" %}
 
+{% block page_header %}
+<h1 class="display-5">
+    <div class="text-center fw-bold">
+        ¡Lea con atención!
+    </div>
+</h1>
+{% endblock page_header %}
+
 {% block content %}
 
-<h1>¡Lea con atención!</h1>
+<p class="lead">
+    Esta tratando de eliminar todas las compras realizadas el día {{ date|date:"j N Y" }}. <strong>¿Seguro/a?</strong> 
+</p>
 
-<h2>Esta tratando de eliminar todas las compras realizadas el día {{ date }}. ¿Seguro?</h2>
-
-<p>Esto eliminara todas las compras vinculadas a esta fecha:</p>
+<p>Esto eliminara todas las compras realizadas en esta fecha:</p>
 
 <!-- The purchases linked to the date. -->
-<br>
-<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
-    <h3>
-        
-    </h3>
-</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -53,12 +55,14 @@
     </tbody>
 </table>
 
-<a href="{% url 'shopping_registry:erase_date' date_string %}">
-    Si, deseo borrarlas.
-</a>
-<br>
-<a href="{% url 'shopping_registry:date' date_string %}">
-    No, quiero regresar.
-</a>
+    <!-- Buttons with functions related to the template. -->
+    <div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm mb-5" role="group" aria-label="Function buttons">
+        <a href="{% url 'shopping_registry:erase_date' date_string %}" class="btn btn-danger" role="button">
+            Si, deseo borrarlas.
+        </a>
+        <a href="{% url 'shopping_registry:date' date_string %}" class="btn btn-secondary" role="button">
+            No, quiero regresar.
+        </a>
+    </div>
 
 {% endblock content %}
