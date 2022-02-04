@@ -34,12 +34,17 @@ def dates(request):
 @login_required
 def date(request, date):
     """Shows all the information for a day's purchases."""
-    # Stores the date as a string.
-    date_string = date
+    # Checks if the date parameter is a datetime value to initialize variables.
+    if isinstance(date, datetime.date):
+        # Stores the date as a string.
+        date_string = datetime.datetime.strftime(date, '%Y-%m-%d')
+    else:
+        # Stores the date as a string.
+        date_string = date
+        # If the date is string, converts it into datetime value.
+        date = datetime.datetime.strptime(date, '%Y-%m-%d')
     # Gets all the purchases made on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date, owner=request.user)
-    # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
-    date = datetime.datetime.strptime(date, '%Y-%m-%d')
     # Stores the total purchase price
     total = 0
     # Stores the products
