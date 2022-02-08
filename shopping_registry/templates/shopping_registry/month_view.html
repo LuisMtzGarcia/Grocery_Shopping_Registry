@@ -10,8 +10,27 @@
 
 {% block content %}
 
+<!-- Buttons with functions related to the MonthView. -->
+<div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm" role="group" aria-label="Function buttons">
+    <a href="#Gasto-total" role="button" class="btn btn-primary">
+        Gasto total
+    </a>
+    <a href="#Fechas" role="button" class="btn btn-primary">
+        Fechas
+    </a>
+    <a href="#Gasto-producto" role="button" class="btn btn-primary">
+        Gasto por producto
+    </a>
+    <a href="#Gasto-categoria" role="button" class="btn btn-primary">
+        Gasto por categoría
+    </a>
+    <a href="#Graficas" role="button" class="btn btn-primary">
+        Gráficas
+    </a>
+</div>
+
 <!-- Displays the total spent in the selected month. -->
-<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2" id="Gasto-total">
     <h3>
         Gasto total:
     </h3>
@@ -24,7 +43,7 @@
 
 <!-- Displays all the dates registered in the month. -->
 <br>
-<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div id="Fechas" class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
         Fechas:
     </h3>
@@ -41,7 +60,7 @@
 
 <!-- Table to display the product and the total spent. -->
 <br>
-<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div id="Gasto-producto" class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
         Gasto por producto:
     </h3>
@@ -72,7 +91,7 @@
 </table>
 <!-- Table to display the total spent per category of products. -->
 <br>
-<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div id="Gasto-categoria" class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
         Gasto por categoría:
     </h3>
@@ -105,7 +124,7 @@
 </table>
 <!-- Graphs -->
 <br>
-<div class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
+<div id="Graficas" class="bd-heading align-self-start mb-3 mt-x1-0 mb-x1-2">
     <h3>
         Gasto total por producto:
     </h3>
