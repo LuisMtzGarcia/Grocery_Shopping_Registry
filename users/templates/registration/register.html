@@ -1,11 +1,11 @@
 {% extends "shopping_registry/base.html" %}
 
 {% block page_header %}
-<h1 class="display-2">
-    <div class="text-center fw-bold">
-        Regístrate
-    </div>
-</h1>
+    <h1 class="display-2">
+        <div class="text-center fw-bold">
+            Regístrate
+        </div>
+    </h1>
 {% endblock page_header %}
 
 {% block content %}
@@ -14,7 +14,7 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        <button name="submit">Regístrate</button>
+        <button class="btn btn-success" name="submit">Regístrate</button>
         <input type="hidden" name="next" value="{% url 'shopping_registry:index' %}" />
     </form>
 
