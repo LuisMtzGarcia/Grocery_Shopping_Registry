@@ -21,7 +21,11 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'dates',
             },
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='purchase',
+            name='date_purchase',
+        ),
+        migrations.AddField(
             model_name='purchase',
             name='date_purchase',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shopping_registry.date'),
