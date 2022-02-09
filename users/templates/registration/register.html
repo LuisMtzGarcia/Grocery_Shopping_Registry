@@ -1,5 +1,13 @@
 {% extends "shopping_registry/base.html" %}
 
+{% block page_header %}
+<h1 class="display-2">
+    <div class="text-center fw-bold">
+        Regístrate
+    </div>
+</h1>
+{% endblock page_header %}
+
 {% block content %}
 
     <form method="post" action="{% url 'users:register' %}">
