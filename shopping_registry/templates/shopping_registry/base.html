@@ -19,50 +19,86 @@
 
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 border">
-        <a class="navbar-brand" href="{% url 'shopping_registry:index' %}">
-            <img src="https://i.imgur.com/LiV0Dlk.png" alt="" width="30" height="24"
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a href="{% url 'shopping_registry:index' %}" class="navbar-brand">
+                <img src="https://i.imgur.com/LiV0Dlk.png" alt="" width="30" height="24"
                 class="d-inline-block align-text-top">
-            Registro Súper
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon">
-            </span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shopping_registry:dates' %}">
-                        Visitas al Súper
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shopping_registry:years' %}">
-                        Checa tu gasto mensual
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shopping_registry:registering_instructions' %}">
-                        Registrar una nueva compra
-                    </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <span class="navbar-text">
-                            Hola, {{ user.username }}.
-                        </span>
+                Registro Súper
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- Dropdown with visualization functions. -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Compras
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" 
+                                    href="{% url 'shopping_registry:dates' %}">
+                                    Por día
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" 
+                                    href="{% url 'shopping_registry:years' %}">
+                                    Por mes
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+                    <!-- Dropdown with register functions. -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" 
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Registrar
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" 
+                                    href="{% url 'shopping_registry:new_product' %}">
+                                    Producto
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" 
+                                    href="{% url 'shopping_registry:new_category' %}">
+                                    Categoría
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" 
+                                    href="{% url 'shopping_registry:registering_instructions' %}">
+                                    Compra
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Login and Logout functions. -->
+                    {% if user.is_authenticated %}
+                    <span class="navbar-text">
+                        Hola, {{ user.username }}
+                    </span>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:logout' %}">
                             Cerrar sesión
                         </a>
                     </li>
-                {% else %}
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:register' %}">
                             Regístrate
@@ -73,8 +109,9 @@
                             Ingresa
                         </a>
                     </li>
-                {% endif %}
-            </ul>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 
