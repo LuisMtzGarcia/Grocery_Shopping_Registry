@@ -153,11 +153,12 @@ def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
+    # Make sure the user isn't using the test account.
+    if request.user.username == 'supercuenta':
+        raise Http404    
+
     # Make sure the purchase belongs to the current user.
     if purchase.owner != request.user:
-        raise Http404
-
-    if request.user.username == 'supercuenta':
         raise Http404
 
     date = purchase.date_purchase
