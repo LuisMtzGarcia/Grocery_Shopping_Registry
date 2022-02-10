@@ -243,7 +243,11 @@ def erase_date(request, date_string):
 @login_required
 def delete_purchase_confirmation(request, purchase_id):
     """Confirms the deletion of a purchase."""
-    purchase = Purchase.objects.get(id=purchase_id)
+    purchase = get_object_or_404(Purchase, id=purchase_id)
+
+    # Make sure the category belongs to the current user.
+    if purchase.owner != request.user:
+        raise Http404
 
     context = {'purchase': purchase}
     return render(request, 'shopping_registry/delete_purchase_confirmation.html', 
