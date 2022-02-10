@@ -176,7 +176,7 @@ def edit_purchase(request, purchase_id):
 def edit_category(request, category_name):
     """Edit an existing category."""
     category = get_object_or_404(Category, name=category_name)
-    
+
     # Make sure the category belongs to the current user.
     if category.owner != request.user:
         raise Http404
@@ -230,8 +230,11 @@ def erase_date_confirmation(request, date_string):
 @login_required
 def erase_date(request, date_string):
     """Delete all the purchases done on the selected date."""
+    # Date_string is stored in string format 'YYYY-MM-DD', converted to datetime value.
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    # Gets all the purchases done on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
+    # Erases all the queryied purchases.
     purchases_erase = purchases.delete()
 
     context = {'date': date, 'purchase': purchases}
