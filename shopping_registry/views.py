@@ -153,7 +153,7 @@ def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Make sure the topic belongs to the current user.
+    # Make sure the purchase belongs to the current user.
     if purchase.owner != request.user:
         raise Http404
 
