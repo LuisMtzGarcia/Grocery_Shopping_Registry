@@ -298,7 +298,13 @@ def delete_product(request, product_id):
 @login_required
 def delete_category_confirmation(request, category_id):
     """Confirms the deletion of a category."""
-    category = Category.objects.get(id=category_id)
+    category = get_object_or_404(Category, id=category_id)
+
+    # Make sure the category belongs to the current user.
+    if category.owner != request.user:
+        raise Http404
+
+    # Queryies the products related to the category.
     products = category.product_set.all()
 
     context = {'category': category, 'products': products}
@@ -307,9 +313,17 @@ def delete_category_confirmation(request, category_id):
 @login_required
 def delete_category(request, category_id):
     """Deletes a single category."""
-    category = Category.objects.get(id=category_id)
+    category = get_object_or_404(Category, id=category_id)
+
+    # Make sure the category belongs to the current user.
+    if category.owner != request.user:
+        raise Http404
+
+    # Queryies the products related to the category.
     products = category.product_set.all()
-    category_erase = Category.objects.get(id=category_id).delete()
+
+    # Deletes the category.
+    category_erase = category.delete()
 
     context = {'category': category, 'products': products}
     return render(request, 'shopping_registry/delete_category.html', context)    
