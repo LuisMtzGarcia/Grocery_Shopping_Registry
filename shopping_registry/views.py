@@ -256,8 +256,14 @@ def delete_purchase_confirmation(request, purchase_id):
 @login_required
 def delete_purchase(request, purchase_id):
     """Deletes a single purchase."""
-    purchase = Purchase.objects.get(id=purchase_id)
-    purchase_erase = Purchase.objects.get(id=purchase_id).delete()
+    purchase = get_object_or_404(Purchase, id=purchase_id)
+
+    # Make sure the category belongs to the current user.
+    if purchase.owner != request.user:
+        raise Http404
+
+    # Deletes the queryied purchase.
+    purchase_erase = purchase.delete()
 
     context = {'purchase': purchase}
     return render(request, 'shopping_registry/delete_purchase.html', context)
