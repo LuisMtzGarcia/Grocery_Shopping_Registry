@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.core import serializers
@@ -151,7 +151,10 @@ def date(request, date):
 @login_required
 def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
-    purchase = Purchase.objects.get(id=purchase_id)
+    purchase = get_object_or_404(Purchase, id=purchase_id)
+    # Make sure the topic belongs to the current user.
+    if purchase.owner != request.user:
+        raise Http404
     date = purchase.date_purchase
 
     if request.method != 'POST':
