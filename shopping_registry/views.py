@@ -157,6 +157,9 @@ def edit_purchase(request, purchase_id):
     if purchase.owner != request.user:
         raise Http404
 
+    if request.user.username == 'supercuenta':
+        raise Http404
+
     date = purchase.date_purchase
 
     if request.method != 'POST':
