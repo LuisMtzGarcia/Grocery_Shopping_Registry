@@ -152,9 +152,11 @@ def date(request, date):
 def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
+
     # Make sure the topic belongs to the current user.
     if purchase.owner != request.user:
         raise Http404
+        
     date = purchase.date_purchase
 
     if request.method != 'POST':
@@ -173,7 +175,10 @@ def edit_purchase(request, purchase_id):
 @login_required
 def edit_category(request, category_name):
     """Edit an existing category."""
-    category = Category.objects.get(name=category_name)
+    category = get_object_or_404(Category, name=category_name)
+    # Make sure the category belongs to the current user.
+    if category.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current category.
