@@ -181,6 +181,10 @@ def edit_category(request, category_name):
     """Edit an existing category."""
     category = get_object_or_404(Category, name=category_name)
 
+    # Make sure the user isn't using the test account.
+    if request.user.username == 'supercuenta':
+        raise Http404
+
     # Make sure the category belongs to the current user.
     if category.owner != request.user:
         raise Http404
