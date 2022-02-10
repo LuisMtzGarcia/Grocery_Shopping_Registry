@@ -245,7 +245,7 @@ def delete_purchase_confirmation(request, purchase_id):
     """Confirms the deletion of a purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Make sure the category belongs to the current user.
+    # Make sure the purchase belongs to the current user.
     if purchase.owner != request.user:
         raise Http404
 
@@ -258,7 +258,7 @@ def delete_purchase(request, purchase_id):
     """Deletes a single purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Make sure the category belongs to the current user.
+    # Make sure the purchase belongs to the current user.
     if purchase.owner != request.user:
         raise Http404
 
@@ -271,7 +271,11 @@ def delete_purchase(request, purchase_id):
 @login_required
 def delete_product_confirmation(request, product_id):
     """Confirms the deletion of a product."""
-    product = Product.objects.get(id=product_id)
+    product = get_object_or_404(Product, id=product_id)
+
+    # Make sure the product belongs to the current user.
+    if product.owner != request.user:
+        raise Http404
 
     context = {'product': product}
     return render(request, 'shopping_registry/delete_product_confirmation.html', context)
@@ -279,8 +283,14 @@ def delete_product_confirmation(request, product_id):
 @login_required
 def delete_product(request, product_id):
     """Deletes a single product."""
-    product = Product.objects.get(id=product_id)
-    product_erase = Product.objects.get(id=product_id).delete()
+    product = get_object_or_404(Product, id=product_id)
+
+    # Make sure the product belongs to the current user.
+    if product.owner != request.user:
+        raise Http404
+    
+    # Deletes the queryied product.
+    product_erase = product.delete()
 
     context = {'product': product}
     return render(request, 'shopping_registry/delete_product.html', context)
