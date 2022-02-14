@@ -288,12 +288,8 @@ def delete_product_confirmation(request, product_id):
     """Confirms the deletion of a product."""
     product = get_object_or_404(Product, id=product_id)
 
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
-
-    # Make sure the product belongs to the current user.
-    if product.owner != request.user:
-        raise Http404
+    # Checks if user is using test account and is the owner of the object.
+    check_account(request.user.username, product)
 
     context = {'product': product}
     return render(request, 'shopping_registry/delete_product_confirmation.html', context)
