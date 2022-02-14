@@ -17,6 +17,12 @@ def test_account(username):
     if username == 'supercuenta':
         raise Http404
 
+def check_account(username, object):
+    """Checks if the user is using the test account and if they're the owner of 
+        the object."""
+    if username == 'supercuenta' or username != object.owner:
+        raise Http404
+
 def index(request):
     """The home page for Grocery Registry."""
     return render(request, 'shopping_registry/index.html')
@@ -158,12 +164,9 @@ def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)   
-
-    # Make sure the purchase belongs to the current user.
-    if purchase.owner != request.user:
-        raise Http404
+    # Make sure the user isn't using the test account and is the owner of the
+    # object.
+    check_account(request.user.username, purchase)
 
     date = purchase.date_purchase
 
@@ -534,7 +537,7 @@ def new_product(request):
     """Add a new product."""
     # Make sure the  user isn't using the test account.
     test_account(request.user.username)
-    
+
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = ProductForm()
