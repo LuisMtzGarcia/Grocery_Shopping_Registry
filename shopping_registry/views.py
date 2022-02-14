@@ -299,13 +299,9 @@ def delete_product(request, product_id):
     """Deletes a single product."""
     product = get_object_or_404(Product, id=product_id)
 
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
+    # Checks if user is using test account and is the owner of the object.
+    check_account(request.user.username, product)
 
-    # Make sure the product belongs to the current user.
-    if product.owner != request.user:
-        raise Http404
-    
     # Deletes the queryied product.
     product_erase = product.delete()
 
