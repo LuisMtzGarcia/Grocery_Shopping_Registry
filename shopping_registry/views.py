@@ -21,7 +21,12 @@ def test_account(username):
 def check_account(username, object):
     """Checks if the user is using the test account and if they're the owner of 
         the object."""
-    if username == 'supercuenta' or username != object.owner:
+    # Test account check.
+    if username == 'supercuenta':
+        raise PermissionDenied
+
+    # Owner of the object check.
+    if username != object.owner:
         raise Http404
 
 def index(request):
