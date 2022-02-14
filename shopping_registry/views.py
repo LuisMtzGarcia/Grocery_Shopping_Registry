@@ -16,7 +16,7 @@ import datetime
 def test_account(username):
     """Checks if the user is using the test account."""
     if username == 'supercuenta':
-        raise Http404
+        raise PermissionDenied
 
 def check_account(username, object):
     """Checks if the user is using the test account and if they're the owner of 
