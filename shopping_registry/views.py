@@ -16,6 +16,7 @@ def test_account(username):
     """Checks if the user is using the test account."""
     if username == 'supercuenta':
         raise Http404
+
 def index(request):
     """The home page for Grocery Registry."""
     return render(request, 'shopping_registry/index.html')
@@ -157,9 +158,8 @@ def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Make sure the user isn't using the test account.
-    if request.user.username == 'supercuenta':
-        raise Http404    
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)   
 
     # Make sure the purchase belongs to the current user.
     if purchase.owner != request.user:
