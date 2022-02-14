@@ -233,8 +233,12 @@ def edit_product(request, product_id):
 @login_required
 def erase_date_confirmation(request, date_string):
     """Confirm the deletion of the purchases done on the selected date."""
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
+    
     # Gets all the purchases done on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
+
     # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
 
