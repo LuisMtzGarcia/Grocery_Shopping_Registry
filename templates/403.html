@@ -1,7 +1,14 @@
 {% extends 'shopping_registry/base.html' %}
 
 {% block page_header %}
-    <h2 class="display-2">
-        No tienes el permiso para hacer esto. (403)
-    </h2>
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-2 fw-bold">
+        (403)
+    </h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="display-6 lead mb-4">
+            Tu cuenta no tiene el permiso para hacer esto.
+        </p>
+    </div>
+</div>
 {% endblock page_header %}
