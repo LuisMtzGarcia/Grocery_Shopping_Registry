@@ -284,6 +284,9 @@ def delete_purchase(request, purchase_id):
     """Deletes a single purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
+
     # Make sure the purchase belongs to the current user.
     if purchase.owner != request.user:
         raise Http404
