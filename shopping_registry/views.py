@@ -26,7 +26,7 @@ def check_account(username, object):
         raise PermissionDenied
 
     # Owner of the object check.
-    if username != object.owner:
+    if username != object.owner.username:
         raise Http404
 
 def index(request):
