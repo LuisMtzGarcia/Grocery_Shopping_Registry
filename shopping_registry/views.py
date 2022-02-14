@@ -512,7 +512,7 @@ def new_purchase(request):
     """Add a new purchase."""
     # Make sure the  user isn't using the test account.
     test_account(request.user.username)
-    
+
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = PurchaseForm()
@@ -532,6 +532,9 @@ def new_purchase(request):
 @login_required
 def new_product(request):
     """Add a new product."""
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
+    
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = ProductForm()
