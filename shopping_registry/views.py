@@ -302,6 +302,9 @@ def delete_product_confirmation(request, product_id):
     """Confirms the deletion of a product."""
     product = get_object_or_404(Product, id=product_id)
 
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
+
     # Make sure the product belongs to the current user.
     if product.owner != request.user:
         raise Http404
