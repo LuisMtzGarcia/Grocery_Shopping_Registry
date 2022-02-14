@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.core import serializers
+from django.core.exceptions import PermissionDenied
 from django.db.models import Sum
 
 from .models import Product, Category, Purchase
