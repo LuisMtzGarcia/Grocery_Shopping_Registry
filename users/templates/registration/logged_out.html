@@ -1,9 +1,14 @@
 {% extends "shopping_registry/base.html" %}
 
-{% block content %}
-
-    <p>
-        Has cerrado la sesión. Gracias por visitar!
-    </p>
-
-{% endblock content %}
+{% block page_header %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-2 fw-bold">
+        ¡Vuelve pronto!
+    </h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="display-6 lead mb-4">
+            Has cerrado la sesión.
+        </p>
+    </div>
+</div>
+{% endblock page_header %}
