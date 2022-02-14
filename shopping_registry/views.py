@@ -335,6 +335,9 @@ def delete_category_confirmation(request, category_id):
     """Confirms the deletion of a category."""
     category = get_object_or_404(Category, id=category_id)
 
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
+
     # Make sure the category belongs to the current user.
     if category.owner != request.user:
         raise Http404
