@@ -490,7 +490,7 @@ def new_category(request):
     """Add a new category."""
     # Make sure the  user isn't using the test account.
     test_account(request.user.username)
-    
+
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = CategoryForm()
@@ -510,6 +510,9 @@ def new_category(request):
 @login_required
 def new_purchase(request):
     """Add a new purchase."""
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
+    
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = PurchaseForm()
