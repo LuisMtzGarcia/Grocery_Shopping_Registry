@@ -164,8 +164,7 @@ def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Make sure the user isn't using the test account and is the owner of the
-    # object.
+    # Checks if user is using test account and is the owner of the object.
     check_account(request.user.username, purchase)
 
     date = purchase.date_purchase
@@ -188,12 +187,8 @@ def edit_category(request, category_name):
     """Edit an existing category."""
     category = get_object_or_404(Category, name=category_name)
 
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
-
-    # Make sure the category belongs to the current user.
-    if category.owner != request.user:
-        raise Http404
+    # Checks if user is using test account and is the owner of the object.
+    check_account(request.user.username, category)
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current category.
