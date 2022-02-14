@@ -250,7 +250,7 @@ def erase_date(request, date_string):
     """Delete all the purchases done on the selected date."""
     # Make sure the  user isn't using the test account.
     test_account(request.user.username)
-    
+
     # Date_string is stored in string format 'YYYY-MM-DD', converted to datetime value.
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
 
@@ -267,6 +267,9 @@ def erase_date(request, date_string):
 def delete_purchase_confirmation(request, purchase_id):
     """Confirms the deletion of a purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
+
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
 
     # Make sure the purchase belongs to the current user.
     if purchase.owner != request.user:
