@@ -8,18 +8,17 @@
 
 {% block content %}
 
-{% for year in years %}
-    <div class="card mb-3">
-        <h4 class="card-header text-center">
-            <a href="{% url 'shopping_registry:months' year %}">
-                {{ year }}
-            </a>
-        </h4>
-    </div>
-{% empty %}
-    <h3>
-        Aún no se ha registrado ninguna visita. 
-    </h3>
-{% endfor %}
+<div class="list-group">
+    {% for year in years %}
+        <a href="{% url 'shopping_registry:months' year %}" 
+            class="list-group-item list-group-item-action text-center display-6">
+            {{ year }}
+        </a>
+    {% empty %}
+        <p class="list-group-item list-group-item-action text-center display-6">
+            Aún no se ha registrado ninguna visita.
+        </p>
+    {% endfor %}
+</div>
 
 {% endblock content%}
