@@ -1,7 +1,48 @@
 {% extends 'shopping_registry/base.html' %}
 
 {% block page_header %}
+<h1 class="display-5">
+    <div class="text-center fw-bold">
+        Demostración del sitio
+    </div>
+</h1>
 {% endblock page_header %}
 
 {% block content %}
+<h2>
+    Instrucciones:
+</h2>
+    <ul>
+        <li>
+            Ingresa a la cuenta de demostración:
+        </li>
+            <ul>
+                <li>
+                    Usuario: supercuenta
+                </li>
+                <li>
+                    Contraseña: contra123
+                </li>
+            </ul>
+        <li>
+            Esta cuenta ya tiene cuentas registradas y podras hacer uso de las
+            funciones de visualización del sitio.
+        </li>
+        <li>
+            No tiene permisos para registrar, editar o eliminar compras.
+        </li>
+        <li>
+            Para ver la información de las compras, haz click  en el botón de 
+            'Compras' en la barra superior del sitio.
+        </li>
+        <li>
+            Elige una de las opciones de visualización.
+        </li>
+    </ul>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a href="{% url 'users:login' %}" 
+            class="btn btn-primary btn-lg" role="button">
+            Ingresa a la cuenta
+        </a>
+    </div>
 {% endblock content %}
