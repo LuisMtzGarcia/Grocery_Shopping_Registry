@@ -459,6 +459,9 @@ def Months(request, year):
 @login_required
 def registering_instructions(request):
     """Page that links to the PurchaseForm and includes instructions."""
+    # Make sure the  user isn't using the test account.
+    test_account(request.user.username)
+    
     return render(request, 'shopping_registry/instrucciones_registro.html')
 
 @login_required
