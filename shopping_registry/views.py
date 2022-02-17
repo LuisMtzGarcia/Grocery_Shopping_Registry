@@ -461,8 +461,14 @@ def registering_instructions(request):
     """Page that links to the PurchaseForm and includes instructions."""
     # Make sure the  user isn't using the test account.
     test_account(request.user.username)
-    
+
     return render(request, 'shopping_registry/instrucciones_registro.html')
+
+def test_account_instructions(request):
+    """Page that links to the log-in form and includes instructions regarding the
+    use of the test account."""
+
+    return render(request, 'shopping_registry/instrucciones_demostracion.html')
 
 @login_required
 def new_category(request):
