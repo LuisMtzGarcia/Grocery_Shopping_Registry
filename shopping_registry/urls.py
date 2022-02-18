@@ -11,6 +11,9 @@ urlpatterns = [
     # Page that displays instructions and links to the new_product view.
     path('instrucciones/registro', views.registering_instructions, 
         name='registering_instructions'),
+    # Page that displays instructions for the use of the demo account.
+    path('instrucciones/demo', views.test_account_instructions, 
+        name='demo_instructions'),
     # Page that shows all purchases.
     path('dates/', views.dates, name="dates"),
     # Detail page for a single date.
