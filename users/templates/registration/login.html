@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    <form method="post" action="{% url 'users:login' %}" class="form">
+    <form method="post" action="{% url 'users:login' %}" class="form mb-5">
         {% csrf_token %}
 
         {% bootstrap_form form %}
@@ -18,5 +18,16 @@
         <input type="hidden" name="next" 
             value="{% url 'shopping_registry:index' %}" />
     </form>
+    <p class="lead">
+        Cuenta de demostración:
+        <ul class="mb-5">
+            <li>
+                Usuario: <em>supercuenta</em>
+            </li>
+            <li>
+                Contraseña: <em>contra123</em>
+            </li>
+        </ul>
+    </p>
 
 {% endblock content %}
