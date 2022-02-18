@@ -15,14 +15,14 @@ import datetime
 
 def demo_account(username):
     """Checks if the user is using the demo account."""
-    if username == 'supercuenta2':
+    if username == 'supercuenta':
         raise PermissionDenied
 
 def check_account(username, object):
     """Checks if the user is using the demo account and if they're the owner of 
         the object."""
     # Demo account check.
-    if username == 'supercuenta2':
+    if username == 'supercuenta':
         raise PermissionDenied
 
     # Owner of the object check.
