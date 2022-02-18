@@ -13,15 +13,15 @@ import plotly.graph_objects as go
 import json
 import datetime
 
-def test_account(username):
-    """Checks if the user is using the test account."""
+def demo_account(username):
+    """Checks if the user is using the demo account."""
     if username == 'supercuenta':
         raise PermissionDenied
 
 def check_account(username, object):
-    """Checks if the user is using the test account and if they're the owner of 
+    """Checks if the user is using the demo account and if they're the owner of 
         the object."""
-    # Test account check.
+    # Demo account check.
     if username == 'supercuenta':
         raise PermissionDenied
 
@@ -170,7 +170,7 @@ def edit_purchase(request, purchase_id):
     """Edit an existing purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, purchase)
 
     date = purchase.date_purchase
@@ -193,7 +193,7 @@ def edit_category(request, category_name):
     """Edit an existing category."""
     category = get_object_or_404(Category, name=category_name)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, category)
 
     if request.method != 'POST':
@@ -214,7 +214,7 @@ def edit_product(request, product_id):
     """Edit an existing product."""
     product = get_object_or_404(Product, id=product_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, product)
 
     if request.method != 'POST':
@@ -233,8 +233,8 @@ def edit_product(request, product_id):
 @login_required
 def erase_date_confirmation(request, date_string):
     """Confirm the deletion of the purchases done on the selected date."""
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
+    # Make sure the  user isn't using the demo account.
+    demo_account(request.user.username)
 
     # Gets all the purchases done on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
@@ -248,8 +248,8 @@ def erase_date_confirmation(request, date_string):
 @login_required
 def erase_date(request, date_string):
     """Delete all the purchases done on the selected date."""
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
+    # Make sure the  user isn't using the demo account.
+    demo_account(request.user.username)
 
     # Date_string is stored in string format 'YYYY-MM-DD', converted to datetime value.
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
@@ -268,7 +268,7 @@ def delete_purchase_confirmation(request, purchase_id):
     """Confirms the deletion of a purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, purchase)
 
     context = {'purchase': purchase}
@@ -280,7 +280,7 @@ def delete_purchase(request, purchase_id):
     """Deletes a single purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, purchase)
 
     # Deletes the queryied purchase.
@@ -294,7 +294,7 @@ def delete_product_confirmation(request, product_id):
     """Confirms the deletion of a product."""
     product = get_object_or_404(Product, id=product_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, product)
 
     context = {'product': product}
@@ -305,7 +305,7 @@ def delete_product(request, product_id):
     """Deletes a single product."""
     product = get_object_or_404(Product, id=product_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, product)
 
     # Deletes the queryied product.
@@ -319,7 +319,7 @@ def delete_category_confirmation(request, category_id):
     """Confirms the deletion of a category."""
     category = get_object_or_404(Category, id=category_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, category)
 
     # Queryies the products related to the category.
@@ -333,7 +333,7 @@ def delete_category(request, category_id):
     """Deletes a single category."""
     category = get_object_or_404(Category, id=category_id)
 
-    # Checks if user is using test account and is the owner of the object.
+    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, category)
 
     # Queryies the products related to the category.
@@ -459,22 +459,22 @@ def Months(request, year):
 @login_required
 def registering_instructions(request):
     """Page that links to the PurchaseForm and includes instructions."""
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
+    # Make sure the  user isn't using the demo account.
+    demo_account(request.user.username)
 
     return render(request, 'shopping_registry/instrucciones_registro.html')
 
-def test_account_instructions(request):
+def demo_account_instructions(request):
     """Page that links to the log-in form and includes instructions regarding the
-    use of the test account."""
+    use of the demo account."""
 
     return render(request, 'shopping_registry/instrucciones_demostracion.html')
 
 @login_required
 def new_category(request):
     """Add a new category."""
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
+    # Make sure the  user isn't using the demo account.
+    demo_account(request.user.username)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -495,8 +495,8 @@ def new_category(request):
 @login_required
 def new_purchase(request):
     """Add a new purchase."""
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
+    # Make sure the  user isn't using the demo account.
+    demo_account(request.user.username)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -517,8 +517,8 @@ def new_purchase(request):
 @login_required
 def new_product(request):
     """Add a new product."""
-    # Make sure the  user isn't using the test account.
-    test_account(request.user.username)
+    # Make sure the  user isn't using the demo account.
+    demo_account(request.user.username)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.

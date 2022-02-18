@@ -12,7 +12,7 @@ urlpatterns = [
     path('instrucciones/registro', views.registering_instructions, 
         name='registering_instructions'),
     # Page that displays instructions for the use of the demo account.
-    path('instrucciones/demo', views.test_account_instructions, 
+    path('instrucciones/demo', views.demo_account_instructions, 
         name='demo_instructions'),
     # Page that shows all purchases.
     path('dates/', views.dates, name="dates"),
