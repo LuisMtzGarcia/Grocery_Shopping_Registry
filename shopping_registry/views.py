@@ -510,7 +510,10 @@ def new_purchase(request):
             new_purchase = form.save(commit=False)
             new_purchase.owner = request.user
             new_purchase.save()
-            return redirect('shopping_registry:dates')
+            if 'register' in request.POST:
+                return redirect('shopping_registry:dates')
+            elif 'redirect' in request.POST:
+                return redirect('shopping_registry:new_purchase')
 
     # Display a blank or invalid form.
     context = {'form': form}
