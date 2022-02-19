@@ -61,35 +61,10 @@
                     </li>
 
                     <!-- Dropdown with register functions. -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" 
-                            id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shopping_registry:registering_instructions' %}">
                             Registrar
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" 
-                                    href="{% url 'shopping_registry:new_product' %}">
-                                    Producto
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" 
-                                    href="{% url 'shopping_registry:new_category' %}">
-                                    Categoría
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item" 
-                                    href="{% url 'shopping_registry:registering_instructions' %}">
-                                    Compra
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
                     <!-- Login and Logout functions. -->
