@@ -25,12 +25,16 @@
                 Producto: 
             </label>
             {{ form.product }}
-            <br>
-            <br>
-            <a href="{% url 'shopping_registry:new_product' %}" 
-                class="btn btn-secondary btn-sm" role="button">
-                Registra un nuevo producto
-            </a>
+        </div>
+
+        <br>
+
+        <div class="fieldWrapper">
+            {{ form.category.errors }}
+            <label for="{{ form.category.id_category }}">
+                Categoría: 
+            </label>
+            {{ form.product }}
         </div>
 
         <br>

@@ -5,8 +5,8 @@ from django.core import serializers
 from django.core.exceptions import PermissionDenied
 from django.db.models import Sum
 
-from .models import Product, Category, Purchase
-from .forms import CategoryForm, PurchaseForm, ProductForm
+from .models import Purchase
+from .forms import PurchaseForm
 
 import plotly.graph_objects as go
 
@@ -101,10 +101,10 @@ def date(request, date):
     for x in range(0, len(products)):
         # Stores the categories of the products, checks if the category has been
         # previously added, omits it if it has.
-        if products[x].category not in categories:
-            categories.append(products[x].category)
+        if purchases[x].category not in categories:
+            categories.append(purchases[x].category)
         # Creating dictionary to store the total spent per category
-        category_spent[products[x].category] = 0
+        category_spent[purchases[x].category] = 0
         # Check for bulk status and calculate pricer per unit.
         if bulk[x] == True:
             # If it was a bulk purchase, multiply by 100 to display the price per
@@ -115,46 +115,48 @@ def date(request, date):
         # Rounds the value to 2 decimal places.
         ind_prices[x] = round(ind_prices[x], 2)
         # Generates a dictionary to store a product's details.
-        if products[x] in dictionary:
-            dictionary[x]
-        dictionary[x] = {'Nombre': products[x], 'Categoria': products[x].category,
+        dictionary[x] = {'Nombre': purchases[x], 'Categoria': purchases[x].category,
             'Bulk': bulk[x], 'Precio': ind_prices[x]}
 
     # Calculating total spent per category
     for purchase in purchases:
-        category_spent[purchase.product.category] += purchase.price
+        category_spent[purchase.category] += purchase.price
 
     # Product and Price visualization
+    """
     # Serialize into JSON the product list QuerySet.
     product_json = serializers.serialize("json", products)
     # Converts JSON into a dict.
     product_dict = json.loads(product_json)
     # List to store the products name to use as tags for the graph.
     product_names = [product['fields']['name'] for product in product_dict]
+    """
     # Convert the prices list QuerySet to a list of floats.
     prices_float = [float(price) for price in prices]
 
     # Generate the Bar chart.
-    Bar = go.Bar(x=product_names, y=prices_float)
+    Bar = go.Bar(x=products, y=prices_float)
     layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
         yaxis={'title':'Costo'})
     figure = go.Figure(data=[Bar],layout=layout)
     bar_graph = figure.to_html()
 
     # Total spent per category visualization
+    """
     # Serialize into JSON the category list QuerySet.
     category_json = serializers.serialize("json", categories)
     # Converts JSON into a dict.
     category_dict = json.loads(category_json)
     # List to store the categories name.
     category_names = [category['fields']['name'] for category in category_dict]
+    """
     # Obtains the values from the category_spent dict and stores them.
     category_values = category_spent.values()
     # List to read and store the values per category and convert them to float.
     total_cat_spent = [value for value in category_values]
 
     # Generate the Pie chart.
-    Pie = go.Pie(labels=category_names, values=total_cat_spent, hole=.3, 
+    Pie = go.Pie(labels=categories, values=total_cat_spent, hole=.3, 
         title_text="Categorias")
     pie_chart = go.Figure(data=Pie)
     pie_graph = pie_chart.to_html()
@@ -364,8 +366,8 @@ def MonthView(request, year, month):
         # Calculates the total spent in the month.
         total += purchase.price
         # Initializes dictionaries.
-        products_total[purchase.product.name] = 0
-        categories_total[purchase.product.category.name] = 0
+        products_total[purchase.product] = 0
+        categories_total[purchase.category] = 0
         # Stores the dates.
         if purchase.date_purchase not in dates:
             dates.append(purchase.date_purchase)
@@ -381,9 +383,9 @@ def MonthView(request, year, month):
 
     for purchase in purchases:
             # Calculates total per product.
-            products_total[purchase.product.name] += purchase.price
+            products_total[purchase.product] += purchase.price
             # Calculates total per category.
-            categories_total[purchase.product.category.name] += purchase.price
+            categories_total[purchase.category] += purchase.price
 
     # Stores the datetime value to export to the template.
     date = datetime.datetime(year, month, 1)

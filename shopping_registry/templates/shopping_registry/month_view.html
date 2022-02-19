@@ -111,9 +111,7 @@
         {% for category, total in categories_total.items %}
         <tr>
             <td>
-                <a href="{% url 'shopping_registry:edit_category' category %}">
-                    {{ category }}
-                </a>
+                {{ category }}
             </td>
             <td>
                 ${{ total }}

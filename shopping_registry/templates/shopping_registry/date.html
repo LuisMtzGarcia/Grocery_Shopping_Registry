@@ -64,9 +64,7 @@
         {% for purchase in purchases %}
         <tr>
             <td>
-                <a href="{% url 'shopping_registry:edit_product' purchase.product.id %}">
-                    {{ purchase.product }}
-                </a>
+                {{ purchase.product }}
             </td>
             <td>
                 {% if purchase.bulk == True %}
@@ -111,9 +109,7 @@
         {% for category, total in category_spent.items %}
         <tr>
             <td>
-                <a href="{% url 'shopping_registry:edit_category' category %}">
-                    {{ category }}
-                </a>
+                {{ category }}
             </td>
             <td>
                 ${{ total }}
