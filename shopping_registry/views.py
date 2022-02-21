@@ -191,48 +191,6 @@ def edit_purchase(request, purchase_id):
     return render(request, 'shopping_registry/edit_purchase.html', context)
 
 @login_required
-def edit_category(request, category_name):
-    """Edit an existing category."""
-    category = get_object_or_404(Category, name=category_name)
-
-    # Checks if user is using demo account and is the owner of the object.
-    check_account(request.user.username, category)
-
-    if request.method != 'POST':
-        # Initial request; pre-fill form with the current category.
-        form = CategoryForm(instance=category)
-    else:
-        # POST data submitted; process data.
-        form = CategoryForm(instance=category, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('shopping_registry:dates')
-
-    context = {'category': category, 'form': form}
-    return render(request, 'shopping_registry/edit_category.html', context)
-
-@login_required
-def edit_product(request, product_id):
-    """Edit an existing product."""
-    product = get_object_or_404(Product, id=product_id)
-
-    # Checks if user is using demo account and is the owner of the object.
-    check_account(request.user.username, product)
-
-    if request.method != 'POST':
-        # Initial request; pre-fill form with the current product.
-        form = ProductForm(instance=product)
-    else:
-        # POST data submitted; process data.
-        form = ProductForm(instance=product, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('shopping_registry:dates')
-
-    context = {'product': product, 'form': form}
-    return render(request, 'shopping_registry/edit_product.html', context)
-
-@login_required
 def erase_date_confirmation(request, date_string):
     """Confirm the deletion of the purchases done on the selected date."""
     # Make sure the  user isn't using the demo account.
@@ -290,62 +248,6 @@ def delete_purchase(request, purchase_id):
 
     context = {'purchase': purchase}
     return render(request, 'shopping_registry/delete_purchase.html', context)
-
-@login_required
-def delete_product_confirmation(request, product_id):
-    """Confirms the deletion of a product."""
-    product = get_object_or_404(Product, id=product_id)
-
-    # Checks if user is using demo account and is the owner of the object.
-    check_account(request.user.username, product)
-
-    context = {'product': product}
-    return render(request, 'shopping_registry/delete_product_confirmation.html', context)
-
-@login_required
-def delete_product(request, product_id):
-    """Deletes a single product."""
-    product = get_object_or_404(Product, id=product_id)
-
-    # Checks if user is using demo account and is the owner of the object.
-    check_account(request.user.username, product)
-
-    # Deletes the queryied product.
-    product_erase = product.delete()
-
-    context = {'product': product}
-    return render(request, 'shopping_registry/delete_product.html', context)
-
-@login_required
-def delete_category_confirmation(request, category_id):
-    """Confirms the deletion of a category."""
-    category = get_object_or_404(Category, id=category_id)
-
-    # Checks if user is using demo account and is the owner of the object.
-    check_account(request.user.username, category)
-
-    # Queryies the products related to the category.
-    products = category.product_set.all()
-
-    context = {'category': category, 'products': products}
-    return render(request, 'shopping_registry/delete_category_confirmation.html', context)
-
-@login_required
-def delete_category(request, category_id):
-    """Deletes a single category."""
-    category = get_object_or_404(Category, id=category_id)
-
-    # Checks if user is using demo account and is the owner of the object.
-    check_account(request.user.username, category)
-
-    # Queryies the products related to the category.
-    products = category.product_set.all()
-
-    # Deletes the category.
-    category_erase = category.delete()
-
-    context = {'category': category, 'products': products}
-    return render(request, 'shopping_registry/delete_category.html', context)    
 
 @login_required
 def MonthView(request, year, month):
@@ -473,28 +375,6 @@ def demo_account_instructions(request):
     return render(request, 'shopping_registry/instrucciones_demostracion.html')
 
 @login_required
-def new_category(request):
-    """Add a new category."""
-    # Make sure the  user isn't using the demo account.
-    demo_account(request.user.username)
-
-    if request.method != 'POST':
-        # No data submitted; create a blank form.
-        form = CategoryForm()
-    else:
-        # POST data submitted; process data.
-        form = CategoryForm(data=request.POST)
-        if form.is_valid():
-            new_category = form.save(commit=False)
-            new_category.owner = request.user
-            new_category.save()
-            return redirect('shopping_registry:new_product')
-
-    # Display a blank or invalid form.
-    context = {'form': form}
-    return render(request, 'shopping_registry/new_category.html', context)
-
-@login_required
 def new_purchase(request):
     """Add a new purchase."""
     # Make sure the  user isn't using the demo account.
@@ -510,6 +390,7 @@ def new_purchase(request):
             new_purchase = form.save(commit=False)
             new_purchase.owner = request.user
             new_purchase.save()
+            # Clears the form incase the user wants to register antoher purchase.
             form = PurchaseForm()
             if 'register' in request.POST:
                 return redirect('shopping_registry:dates')
@@ -519,25 +400,3 @@ def new_purchase(request):
     # Display a blank or invalid form.
     context = {'form': form}
     return render(request, 'shopping_registry/new_purchase.html', context)
-
-@login_required
-def new_product(request):
-    """Add a new product."""
-    # Make sure the  user isn't using the demo account.
-    demo_account(request.user.username)
-
-    if request.method != 'POST':
-        # No data submitted; create a blank form.
-        form = ProductForm()
-    else:
-        # POST data submitted; process data.
-        form = ProductForm(data=request.POST)
-        if form.is_valid():
-            new_product = form.save(commit=False)
-            new_product.owner = request.user
-            new_product.save()
-            return redirect('shopping_registry:new_purchase')
-
-    # Display a blank or invalid form.
-    context = {'form': form}
-    return render(request, 'shopping_registry/new_product.html', context)
