@@ -1,9 +1,17 @@
 {% extends "shopping_registry/base.html" %}
 
+{% block page_header %}
+<h1 class="display-5">
+    <div class="text-center fw-bold">
+        Compra eliminada
+    </div>
+</h1>
+{% endblock page_header %}
+
 {% block content %}
 
 <h1>
-    La compra {{ purchase }} ha sido borrado.
+    La compra {{ purchase }} ha sido eliminada.
 </h1>
 
 {% endblock content %}
