@@ -21,62 +21,73 @@
 
         {{ form.non_fields_errors }}
 
-        <div class="fieldWrapper">
+        <div class="fieldWrapper input-group mb-3">
             {{ form.product.errors }}
-            <label for="{{ form.product.id_product }}">
+            <label for="{{ form.product.id_product }}" class="input-group-text">
                 Producto: 
             </label>
-            {{ form.product }}
+            <input id="{{ form.product.id_product }}" type="text" 
+                class="form-control" name="product" required>
         </div>
 
         <br>
 
-        <div class="fieldWrapper">
+        <div class="fieldWrapper input-group mb-3">
             {{ form.category.errors }}
-            <label for="{{ form.category.id_category }}">
+            <label for="{{ form.category.id_category }}" class="input-group-text">
                 Categoría: 
             </label>
-            {{ form.category }}
+            <input id="{{ form.category.id_category }}" type="text"  
+            class="form-control" name="category" required>
         </div>
 
         <br>
         
-        <div class="fieldWrapper">
+        <div class="fieldWrapper input-group mb-3">
             {{ form.quantity.errors }}
-            <label for="{{ form.quantity.id_quantity }}">
+            <label for="{{ form.quantity.id_quantity }}" class="input-group-text">
                 Cantidad: 
             </label>
-            {{ form.quantity }}
+            <input id="{{ form.category.id_quantity }}" type="text"  
+            class="form-control" name="quantity" required>
         </div>
 
         <br>
 
-        <div class="fieldWrapper">
+        <div class="fieldWrapper input-group mb-3">
             {{ form.price.errors }}
-            <label for="{{ form.price.id_price }}">
+            <label for="{{ form.price.id_price }}" class="input-group-text">
                 Precio total: 
             </label>
-            {{ form.price }}
+            <span class="input-group-text">
+                $
+            </span>
+            <input id="{{ form.category.id_price }}" type="text"  
+            class="form-control" name="price" required>
         </div>
 
         <br>
 
-        <div class="fieldWrapper">
+        <div class="fieldWrapper input-group mb-3">
             {{ form.date_purchase.errors }}
-            <label for="{{ form.date_purchase.id_date_purchase }}">
+            <label for="{{ form.date_purchase.id_date_purchase }}" class="input-group-text">
                 Fecha de la compra:
             </label>
-            {{ form.date_purchase }}
+            <input id="{{ form.category.id_date_purchase }}" type="text"  
+            class="form-control" name="date_purchase" required>
         </div>
 
         <br>
 
-        <div class="fieldWrapper">
+        <div class="fieldWrapper input-group mb-3">
             {{ form.bulk.errors }}
-            <label for="{{ form.bulk.id_bulk }}">
+            <label for="{{ form.bulk.id_bulk }}" class="input-group-text">
                 Llena la casilla si fue compra a granel: 
             </label>
-            {{ form.bulk }}
+            <div class="input-group-text">
+                <input id="{{ form.category.id_bulk }}" type="checkbox" name="bulk"
+                    value="" class="form-check-input">
+            </div>
         </div>
 
         <br>
