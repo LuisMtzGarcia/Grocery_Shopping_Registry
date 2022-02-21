@@ -13,18 +13,21 @@
         </p>
         {% if user.is_authenticated %}
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a class="btn btn-lg btn-primary px-4 gap-3" href="{% url 'shopping_registry:new_purchase' %}"
+            <a class="btn btn-lg btn-primary px-4 gap-3" 
+                href="{% url 'shopping_registry:registering_instructions' %}"
                 role="button">
                 Registra una compra &raquo;
             </a>            
         </div>
         {% else %}
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a class="btn btn-lg btn-primary px-4 gap-3" href="{% url 'users:register' %}"
+            <a class="btn btn-lg btn-primary px-4 gap-3" 
+                href="{% url 'users:register' %}"
                 role="button">
                 Regístrate &raquo;
             </a>
-            <a class="btn btn-lg btn-primary px-4 gap-3" href="#">
+            <a class="btn btn-lg btn-primary px-4 gap-3" 
+                href="{% url 'users:login' %}">
                 Demostración &raquo;
             </a>            
         </div>
