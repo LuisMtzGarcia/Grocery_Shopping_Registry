@@ -1,15 +1,22 @@
 {% extends "shopping_registry/base.html" %}
 
-{% block content %}
+{% block page_header %}
+<h1 class="display-5">
+    <div class="text-center fw-bold">
+        ¡Lea con atención!
+    </div>
+</h1>
+{% endblock page_header %}
 
-<h1>¡Lea con atención!</h1>
+{% block content %}
 
 <h2>Esta tratando de borrar la compra {{ purchase }}. ¿Seguro?</h2>
 
-<p>Esto eliminara definitivamente esta compra.</p>
-
-<a href="{% url 'shopping_registry:delete_purchase' purchase.id %}">
-    Si, deseo borrar la compra.
-</a>
+    <div class="d-grid gap-2 col-6 mx-auto mt-5">
+        <a href="{% url 'shopping_registry:delete_purchase' purchase.id %}" 
+            class="btn btn-danger btn-lg" role="button">
+            Si, deseo borrar la compra.
+        </a>
+    </div>
 
 {% endblock content %}
