@@ -10,13 +10,6 @@
 
 {% block content %}
 
-<!-- Buttons with functions related to the date. -->
-<div class="d-grid gap-2 d-md-block text-center btn-group btn-group-sm mb-3" role="group" aria-label="Function buttons">
-    <a href="{% url 'shopping_registry:registering_instructions' %}" class="btn btn-primary" role="button">
-        Registrar compra
-    </a>
-</div>
-
 <div class="list-group">
     {% for date in dates %}
         <a href="{% url 'shopping_registry:date' date %}" 
