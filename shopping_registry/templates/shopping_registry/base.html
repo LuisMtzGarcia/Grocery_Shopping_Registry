@@ -36,7 +36,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    
+
+                    {% if user.is_authenticated %}
                     <!-- Dropdown with visualization functions. -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
@@ -68,7 +69,6 @@
                     </li>
 
                     <!-- Login and Logout functions. -->
-                    {% if user.is_authenticated %}
                     <span class="navbar-text">
                         Hola, {{ user.username }}
                     </span>
@@ -77,6 +77,7 @@
                             Cerrar sesión
                         </a>
                     </li>
+
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:register' %}">
