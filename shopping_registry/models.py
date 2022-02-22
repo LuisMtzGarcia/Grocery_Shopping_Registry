@@ -7,7 +7,7 @@ class Purchase(models.Model):
     product = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     quantity = models.IntegerField()
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    price = models.DecimalField(max_digits=7, decimal_places=2)
     date_purchase = models.DateField()
     # Compras a granel / Bulk purchases
     bulk = models.BooleanField()
