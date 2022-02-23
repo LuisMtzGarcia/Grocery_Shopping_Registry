@@ -389,21 +389,16 @@ def new_purchase(request):
         # POST data submitted; process data.
         form = PurchaseForm(data=request.POST)
         if form.is_valid():
+            date = form['date_purchase'].value()
             new_purchase = form.save(commit=False)
             new_purchase.owner = request.user
             new_purchase.save()
             # Clears the form incase the user wants to register antoher purchase.
             form = PurchaseForm()
             if 'saveAnother' in request.POST:
-                #date = new_purchase.
+                # Find way to store date value in form to display it again.
                 next = redirect('shopping_registry:new_purchase')
             return next
-            """
-            if 'register' in request.POST:
-                return redirect('shopping_registry:new_purchase')
-            elif 'redirect' in request.POST:
-                return redirect('shopping_registry:dates')
-            """
 
     # Display a blank or invalid form.
     context = {'form': form}
