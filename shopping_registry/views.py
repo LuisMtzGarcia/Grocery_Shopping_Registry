@@ -380,6 +380,8 @@ def new_purchase(request):
     # Make sure the  user isn't using the demo account.
     demo_account(request.user.username)
 
+    next = redirect('shopping_registry:dates')
+
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = PurchaseForm()
@@ -392,10 +394,16 @@ def new_purchase(request):
             new_purchase.save()
             # Clears the form incase the user wants to register antoher purchase.
             form = PurchaseForm()
+            if 'saveAnother' in request.POST:
+                #date = new_purchase.
+                next = redirect('shopping_registry:new_purchase')
+            return next
+            """
             if 'register' in request.POST:
-                return redirect('shopping_registry:dates')
-            elif 'redirect' in request.POST:
                 return redirect('shopping_registry:new_purchase')
+            elif 'redirect' in request.POST:
+                return redirect('shopping_registry:dates')
+            """
 
     # Display a blank or invalid form.
     context = {'form': form}
