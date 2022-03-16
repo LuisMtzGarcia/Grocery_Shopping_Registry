@@ -3,11 +3,13 @@
 {% block page_header %}
     <h1 class="display-5">
         <div class="text-center fw-bold">
-            Las compras realizadas el {{ date|date:"j N Y" }} han sido borradas.
+            {{ date|date:"j N Y" }}
         </div>
     </h1>
 {% endblock page_header %}
 
 {% block content %}
-
+<p class="lead text-center">
+    Todas las compras realizadas este día fueron eliminadas. 
+</p>
 {% endblock content %}
