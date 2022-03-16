@@ -177,17 +177,28 @@ def edit_purchase(request, purchase_id):
 
     date = purchase.date_purchase
 
+    # Passes the data to the form template.
+    formatedDate = date.strftime("%Y-%m-%d")
+
+    initial_dict = {
+        "date_purchase" : formatedDate,
+        "bulk": purchase.bulk,
+    }
+
     if request.method != 'POST':
         # Initial request; pre-fill form with the current purchase.
-        form = PurchaseForm(instance=purchase)
+        form = PurchaseForm(instance=purchase, initial=initial_dict)
     else:
         # POST data submitted; process data.
-        form = PurchaseForm(instance=purchase, data=request.POST)
+        form = PurchaseForm(data=request.POST, instance=purchase)
+
         if form.is_valid():
-            form.save()
+            edited_purchase = form.save(commit=False)
+            edited_purchase.owner = request.user
+            edited_purchase.save()
             return redirect('shopping_registry:date', date=date)
 
-    context = {'purchase': purchase, 'form': form}
+    context = {'purchase': purchase, 'form': form, 'date': formatedDate}
     return render(request, 'shopping_registry/edit_purchase.html', context)
 
 @login_required
