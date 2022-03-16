@@ -90,8 +90,13 @@
                 Llena la casilla si fue compra a granel: 
             </label>
             <div class="input-group-text">
+                {% if purchase.bulk == True %}
+                <input type="checkbox" name="bulk" id="id_bulk" 
+                    class="form-check-input" checked>
+                {% else %}
                 <input type="checkbox" name="bulk" id="id_bulk" 
                     class="form-check-input">
+                {% endif %}
             </div>
         </div>
 
@@ -101,7 +106,8 @@
             <button name="submit" class="btn btn-success btn-lg mt-5">
                 Guardar cambios
             </button>
-        </div>         
+        </div>
+        
     </form>    
 
 {% endblock content %}

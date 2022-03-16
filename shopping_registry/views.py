@@ -182,7 +182,7 @@ def edit_purchase(request, purchase_id):
 
     initial_dict = {
         "date_purchase" : formatedDate,
-        "bulk": purchase.bulk,
+        "bulk": True,
     }
 
     if request.method != 'POST':
