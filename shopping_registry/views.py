@@ -22,7 +22,7 @@ def check_account(username, object):
     """Checks if the user is using the demo account and if they're the owner of 
         the object."""
     # Demo account check.
-    if username == 'supercuenta':
+    if username == '2supercuenta':
         raise PermissionDenied
 
     # Owner of the object check.
