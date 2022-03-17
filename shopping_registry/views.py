@@ -178,7 +178,7 @@ def edit_purchase(request, purchase_id):
     date = purchase.date_purchase
 
     # Passes the data to the form template.
-    formatedDate = date.strftime("%Y-%m-%d")
+    formatedDate = date.strftime("%m/%d/%Y")
 
     initial_dict = {
         "date_purchase" : formatedDate,
