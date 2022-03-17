@@ -15,7 +15,7 @@ import datetime
 
 def demo_account(username):
     """Checks if the user is using the demo account."""
-    if username == 'supercuenta':
+    if username == '2supercuenta':
         raise PermissionDenied
 
 def check_account(username, object):
