@@ -27,7 +27,8 @@
                 Producto: 
             </label>
             <input id="{{ form.product.id_product }}" type="text" 
-                class="form-control" name="product" required>
+                class="form-control" name="product" placeholder="Nombre del producto" 
+                required>
         </div>
 
         <br>
@@ -38,7 +39,8 @@
                 Categoría: 
             </label>
             <input id="{{ form.category.id_category }}" type="text"  
-            class="form-control" name="category" required>
+            class="form-control" name="category" 
+            placeholder="Puede ser 'comida', 'ropa', etc." required>
         </div>
 
         <br>
@@ -50,7 +52,8 @@
             </label>
             <input id="{{ form.category.id_quantity }}" type="text"  
             class="form-control" name="quantity" 
-            placeholder="En gramos si es compra a granel" required>
+            placeholder="En gramos si es compra a granel, 1 kilo es igual a 1000 gramos" 
+            required>
         </div>
 
         <br>
