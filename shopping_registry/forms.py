@@ -6,5 +6,5 @@ class PurchaseForm(forms.ModelForm):
     class Meta:
         model = Purchase
         fields = ['product', 'category', 'quantity', 'price', 'date_purchase', 'bulk']
-        labels = {'product': 'Producto', 'quantity': 'Cantidad', 'price': 'Precio',
+        labels = {'product': 'Producto','category': 'Categoria', 'quantity': 'Cantidad', 'price': 'Precio',
             'date_purchase': 'Fecha de compra', 'bulk': 'Granel'}

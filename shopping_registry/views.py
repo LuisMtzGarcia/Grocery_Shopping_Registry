@@ -101,10 +101,10 @@ def date(request, date):
     for x in range(0, len(products)):
         # Stores the categories of the products, checks if the category has been
         # previously added, omits it if it has.
-        if purchases[x].category not in categories:
-            categories.append(purchases[x].category)
+        if purchases[x].category.title() not in categories:
+            categories.append(purchases[x].category.title())
         # Creating dictionary to store the total spent per category
-        category_spent[purchases[x].category] = 0
+        category_spent[purchases[x].category.title()] = 0
         # Check for bulk status and calculate pricer per unit.
         if bulk[x] == True:
             # If it was a bulk purchase, multiply by 100 to display the price per
@@ -120,17 +120,10 @@ def date(request, date):
 
     # Calculating total spent per category
     for purchase in purchases:
-        category_spent[purchase.category] += purchase.price
+        category_spent[purchase.category.title()] += purchase.price
 
     # Product and Price visualization
-    """
-    # Serialize into JSON the product list QuerySet.
-    product_json = serializers.serialize("json", products)
-    # Converts JSON into a dict.
-    product_dict = json.loads(product_json)
-    # List to store the products name to use as tags for the graph.
-    product_names = [product['fields']['name'] for product in product_dict]
-    """
+
     # Convert the prices list QuerySet to a list of floats.
     prices_float = [float(price) for price in prices]
 
@@ -142,14 +135,7 @@ def date(request, date):
     bar_graph = figure.to_html()
 
     # Total spent per category visualization
-    """
-    # Serialize into JSON the category list QuerySet.
-    category_json = serializers.serialize("json", categories)
-    # Converts JSON into a dict.
-    category_dict = json.loads(category_json)
-    # List to store the categories name.
-    category_names = [category['fields']['name'] for category in category_dict]
-    """
+
     # Obtains the values from the category_spent dict and stores them.
     category_values = category_spent.values()
     # List to read and store the values per category and convert them to float.
