@@ -266,16 +266,10 @@ def MonthView(request, year, month):
         total += purchase.price
         # Initializes dictionaries.
         products_total[purchase.product] = 0
-        categories_total[purchase.category] = 0
+        categories_total[purchase.category.title()] = 0
         # Stores the dates.
         if purchase.date_purchase not in dates:
             dates.append(purchase.date_purchase)
-        # Code to cleanup
-        """
-        # Converts the dates into strings and stores it.
-        if purchase.date_purchase.strftime('%Y-%m-%d') not in dates:
-            dates.append(purchase.date_purchase.strftime('%Y-%m-%d'))
-        """
 
     # Rounds the total to 2 decimal places.
     total = round(total, 2)
@@ -284,7 +278,7 @@ def MonthView(request, year, month):
             # Calculates total per product.
             products_total[purchase.product] += purchase.price
             # Calculates total per category.
-            categories_total[purchase.category] += purchase.price
+            categories_total[purchase.category.title()] += purchase.price
 
     # Stores the datetime value to export to the template.
     date = datetime.datetime(year, month, 1)
