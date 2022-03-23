@@ -30,17 +30,16 @@ def check_account(username, object):
         raise Http404
 
 def index(request):
-    """The home page for Grocery Registry."""
+    """The home page for Registro-Super."""
     return render(request, 'shopping_registry/index.html')
 
 @login_required
 def dates(request):
     """Shows all dates."""
-    # Initializes the list to store the dates with registered purchases.
     dates = []
-    # Stores the purchases of the user to extract the dates.
+
     purchases = Purchase.objects.filter(owner=request.user).order_by('-date_purchase')
-    # Extracts the dates of the purchases.
+
     for purchase in purchases:
         if purchase.date_purchase not in dates:
             dates.append(purchase.date_purchase)
@@ -51,76 +50,61 @@ def dates(request):
 @login_required
 def date(request, date):
     """Shows all the information for a day's purchases."""
-    # Checks if the date parameter is a datetime value to initialize variables.
-    if isinstance(date, datetime.date):
-        # Stores the date as a string.
-        date_string = datetime.datetime.strftime(date, '%Y-%m-%d')
-    else:
-        # Stores the date as a string.
-        date_string = date
-        # If the date is string, converts it into datetime value.
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
-    # Gets all the purchases made on the selected date.
+    
+    date_string = date
+    date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    
     purchases = Purchase.objects.filter(date_purchase=date, owner=request.user)
-    # Stores the total purchase price
+
     total = 0
-    # Stores the products
+
     products = []
-    # Stores the quantities, in the same order as to preserve the relationship
-    # Considering implementing into a dictionary
+
     quantities = []
-    # Stores the prices
+
     prices = []
-    # Stores individual prices and the price of 100 grams if bulk.
+
     ind_prices = [] 
+
     # Stores the name of the product, its individual price and its bulk's boolean
     # value
     dictionary = {}
-    # Stores the categories of all the products bought in the trip.
-    # The function of this list is to pass it to the Django template, and there,
-    # uses this list to verify that a key/value pair relates to the product's
-    # category. It's also responsible for the Category/TotalCost visualization
+
     categories = []
-    # Dictionary to store the category of the product coupled with the total
-    # spent on that category
+
     category_spent = {}
-    # Stores the boolean value to check if it was a bulk product.
+
     bulk = []
 
     for purchase in purchases:
-        # Sums purchase's price to the total.
         total += purchase.price
-        # Stores the product's name, quantity, price and if it's either bought in
-        # bulk or not.
-        # Stores the product model, it only contains the name and the category
         products.append(purchase.product)
         quantities.append(purchase.quantity)
         prices.append(purchase.price)
         bulk.append(purchase.bulk)
 
     for x in range(0, len(products)):
-        # Stores the categories of the products, checks if the category has been
-        # previously added, omits it if it has.
         if purchases[x].category.title() not in categories:
             categories.append(purchases[x].category.title())
-        # Creating dictionary to store the total spent per category
+
         category_spent[purchases[x].category.title()] = 0
-        # Check for bulk status and calculate pricer per unit.
+
         if bulk[x] == True:
             # If it was a bulk purchase, multiply by 100 to display the price per
             # 100 grams.
             ind_prices.append(float((prices[x] / quantities[x]) * 100))
         else:
             ind_prices.append(float((prices[x] / quantities[x])))
-        # Rounds the value to 2 decimal places.
+
         ind_prices[x] = round(ind_prices[x], 2)
-        # Generates a dictionary to store a product's details.
+
         dictionary[x] = {'Nombre': purchases[x], 'Categoria': purchases[x].category,
             'Bulk': bulk[x], 'Precio': ind_prices[x]}
 
     # Calculating total spent per category
     for purchase in purchases:
         category_spent[purchase.category.title()] += purchase.price
+
 
     # Product and Price visualization
 
@@ -190,10 +174,9 @@ def edit_purchase(request, purchase_id):
 @login_required
 def erase_date_confirmation(request, date_string):
     """Confirm the deletion of the purchases done on the selected date."""
-    # Make sure the  user isn't using the demo account.
+
     demo_account(request.user.username)
 
-    # Gets all the purchases done on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
 
     # Date is stored in string 'YYYY-MM-DD', converted to datetime value.
@@ -205,16 +188,15 @@ def erase_date_confirmation(request, date_string):
 @login_required
 def erase_date(request, date_string):
     """Delete all the purchases done on the selected date."""
-    # Make sure the  user isn't using the demo account.
+
     demo_account(request.user.username)
 
-    # Date_string is stored in string format 'YYYY-MM-DD', converted to datetime value.
+    # Date_string is stored in string format 'YYYY-MM-DD', 
+    # converted to datetime value.
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
 
-    # Gets all the purchases done on the selected date.
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
 
-    # Erases all the queryied purchases.
     purchases_erase = purchases.delete()
 
     context = {'date': date, 'purchase': purchases}
@@ -225,7 +207,6 @@ def delete_purchase_confirmation(request, purchase_id):
     """Confirms the deletion of a purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, purchase)
 
     context = {'purchase': purchase}
@@ -237,10 +218,8 @@ def delete_purchase(request, purchase_id):
     """Deletes a single purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    # Checks if user is using demo account and is the owner of the object.
     check_account(request.user.username, purchase)
 
-    # Deletes the queryied purchase.
     purchase_erase = purchase.delete()
 
     context = {'purchase': purchase}
@@ -249,38 +228,31 @@ def delete_purchase(request, purchase_id):
 @login_required
 def MonthView(request, year, month):
     """Displays all shopping trips in a month."""
-    # QuerySet to store the filtered purchases.
+
     purchases = Purchase.objects.filter(date_purchase__year=year, 
         date_purchase__month=month, owner=request.user)
-    # Stores the total spent in the given month.
+
     total = 0
-    # Stores the dates with registered purchases.
+
     dates = []
-    # Stores the products bought and the total spent on them.
+
     products_total = {}
-    # Stores the categories of the bought products and the total spent.
+
     categories_total = {}
 
     for purchase in purchases:
-        # Calculates the total spent in the month.
         total += purchase.price
-        # Initializes dictionaries.
         products_total[purchase.product] = 0
         categories_total[purchase.category.title()] = 0
-        # Stores the dates.
         if purchase.date_purchase not in dates:
             dates.append(purchase.date_purchase)
 
-    # Rounds the total to 2 decimal places.
     total = round(total, 2)
 
     for purchase in purchases:
-            # Calculates total per product.
             products_total[purchase.product] += purchase.price
-            # Calculates total per category.
             categories_total[purchase.category.title()] += purchase.price
 
-    # Stores the datetime value to export to the template.
     date = datetime.datetime(year, month, 1)
 
     # Stores keys and values from dict to use as labels and values in the charts.
@@ -321,12 +293,11 @@ def MonthView(request, year, month):
 @login_required
 def Years(request):
     """Shows all years with registered purchases."""
-    # Stores all the purchases made by the user.
+
     purchases = Purchase.objects.filter(owner=request.user).order_by('date_purchase')
-    # List to store the years with registered purchases.
+
     years = []
     for purchase in purchases:
-        # Verifies if the year is already stored.
         if purchase.date_purchase.year not in years:
             years.append(purchase.date_purchase.year)
     context = {'years': years}
@@ -335,26 +306,24 @@ def Years(request):
 @login_required
 def Months(request, year):
     """Shows all the months with registered purchases in the selected month."""
-    # Stores all the purchases registered by the User.
     purchases = Purchase.objects.filter(owner=request.user).order_by('date_purchase')
-    # List to store all the months.
+
     months = []
     for purchase in purchases:
-        # Verifies if the month hasn't been stored yet.
         if purchase.date_purchase.month not in months:
             months.append(purchase.date_purchase.month)
-    # Stores the month and year together as a datetime value.
+
     datetimes = []
     for month in months:
         datetimes.append(datetime.datetime(year, month, 1).date())
-    # Find a way to turn the int value to a month datetime.
+
     context = {'months': months, 'dates': datetimes, 'year': year}
     return render(request, 'shopping_registry/months.html', context)
 
 @login_required
 def registering_instructions(request):
     """Page that links to the PurchaseForm and includes instructions."""
-    # Make sure the  user isn't using the demo account.
+
     demo_account(request.user.username)
 
     return render(request, 'shopping_registry/instrucciones_registro.html')
@@ -368,7 +337,7 @@ def demo_account_instructions(request):
 @login_required
 def new_purchase(request):
     """Add a new purchase."""
-    # Make sure the  user isn't using the demo account.
+
     demo_account(request.user.username)
 
     next = redirect('shopping_registry:dates')
@@ -391,6 +360,5 @@ def new_purchase(request):
                 next = redirect('shopping_registry:new_purchase')
             return next
 
-    # Display a blank or invalid form.
     context = {'form': form}
     return render(request, 'shopping_registry/new_purchase.html', context)
