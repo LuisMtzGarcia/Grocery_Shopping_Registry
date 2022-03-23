@@ -2,6 +2,8 @@
 WebApp to track and visualize grocery shopping expenses. Project focused on 
 building a CRUD application.
 
+(Create, Read, Update, Delete)
+
 [Visit the site](https://registro-super.herokuapp.com/)
 
 The site is hosted on Heroku, please be patient with the dyno's wake-up time.
@@ -70,4 +72,16 @@ Once selected, all information will be displayed.
 
 ![Day 4](https://i.imgur.com/cqtqbHa.png "Day 4")
 
-# Finishing readme file.
+### Per month
+
+You can select a month with registered purchases and view related information of those purchases.
+
+![Month 1](https://i.imgur.com/Z6XSPCV.png "Month 1")
+
+![Month 2](https://i.imgur.com/WR1GdPH.png "Month 2")
+
+![Month 3](https://i.imgur.com/6euXZzN.png "Month 3")
+
+![Month 4](https://i.imgur.com/B3DVmkv.png "Month 4")
+
+![Month 5](https://i.imgur.com/90I8gQf.png "Month 5")
