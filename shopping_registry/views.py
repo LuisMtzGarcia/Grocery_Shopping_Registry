@@ -24,7 +24,6 @@ def check_account(username, object=Purchase.objects.none()):
     # Owner of the object check.
     if object != Purchase.objects.none():
         if username != object.owner.username:
-            print("nononono")
             raise Http404
 
 def index(request):
