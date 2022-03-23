@@ -68,4 +68,6 @@ Once selected, all information will be displayed.
 
 ![Day 3](https://i.imgur.com/skQbkzD.png "Day 3")
 
+![Day 4](https://i.imgur.com/cqtqbHa.png "Day 4")
+
 # Finishing readme file.
