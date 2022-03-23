@@ -13,21 +13,19 @@ import plotly.graph_objects as go
 import json
 import datetime
 
-def demo_account(username):
-    """Checks if the user is using the demo account."""
-    if username == '2supercuenta':
-        raise PermissionDenied
-
-def check_account(username, object):
+def check_account(username, object=Purchase.objects.none()):
     """Checks if the user is using the demo account and if they're the owner of 
         the object."""
+
     # Demo account check.
-    if username == '2supercuenta':
+    if username == 'supercuenta':
         raise PermissionDenied
 
     # Owner of the object check.
-    if username != object.owner.username:
-        raise Http404
+    if object != Purchase.objects.none():
+        if username != object.owner.username:
+            print("nononono")
+            raise Http404
 
 def index(request):
     """The home page for Registro-Super."""
@@ -175,7 +173,7 @@ def edit_purchase(request, purchase_id):
 def erase_date_confirmation(request, date_string):
     """Confirm the deletion of the purchases done on the selected date."""
 
-    demo_account(request.user.username)
+    check_account(request.user.username)
 
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
 
@@ -189,7 +187,7 @@ def erase_date_confirmation(request, date_string):
 def erase_date(request, date_string):
     """Delete all the purchases done on the selected date."""
 
-    demo_account(request.user.username)
+    check_account(request.user.username)
 
     # Date_string is stored in string format 'YYYY-MM-DD', 
     # converted to datetime value.
@@ -324,7 +322,7 @@ def Months(request, year):
 def registering_instructions(request):
     """Page that links to the PurchaseForm and includes instructions."""
 
-    demo_account(request.user.username)
+    check_account(request.user.username)
 
     return render(request, 'shopping_registry/instrucciones_registro.html')
 
@@ -338,7 +336,7 @@ def demo_account_instructions(request):
 def new_purchase(request):
     """Add a new purchase."""
 
-    demo_account(request.user.username)
+    check_account(request.user.username)
 
     next = redirect('shopping_registry:dates')
 
