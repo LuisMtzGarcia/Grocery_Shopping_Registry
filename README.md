@@ -51,7 +51,7 @@ Here it is, in all its glory:
   <img src="https://i.imgur.com/9hgz4Xb.png">
 </p>
 
-* Chef's kiss * Truly the epitome of form building. A Mona Lisa of the front-end work, if you will.
+*Chef's kiss* Truly the epitome of form building. A Mona Lisa of the front-end work, if you will.
 
 Now, let me remove my self-contratulation cap and continue.
 

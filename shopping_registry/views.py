@@ -26,6 +26,16 @@ def check_account(username, object=Purchase.objects.none()):
         if username != object.owner.username:
             raise Http404
 
+def calculate_total(purchases):
+    total = 0
+
+    for purchase in purchases:
+        total += purchase.price
+
+    total = round(total, 2)
+    
+    return total
+
 def index(request):
     """The home page for Registro-Super."""
     return render(request, 'shopping_registry/index.html')
@@ -53,7 +63,7 @@ def date(request, date):
     
     purchases = Purchase.objects.filter(date_purchase=date, owner=request.user)
 
-    total = 0
+    total = calculate_total(purchases)
 
     products = []
 
@@ -74,7 +84,6 @@ def date(request, date):
     bulk = []
 
     for purchase in purchases:
-        total += purchase.price
         products.append(purchase.product)
         quantities.append(purchase.quantity)
         prices.append(purchase.price)
@@ -229,7 +238,7 @@ def MonthView(request, year, month):
     purchases = Purchase.objects.filter(date_purchase__year=year, 
         date_purchase__month=month, owner=request.user)
 
-    total = 0
+    total = calculate_total(purchases)
 
     dates = []
 
@@ -238,17 +247,19 @@ def MonthView(request, year, month):
     categories_total = {}
 
     for purchase in purchases:
-        total += purchase.price
-        products_total[purchase.product] = 0
-        categories_total[purchase.category.title()] = 0
+        if purchase.product not in products_total:
+            products_total[purchase.product] = 0
+            products_total[purchase.product] += purchase.price
+        else:
+            products_total[purchase.product] += purchase.price
+
+        if purchase.category.title() not in categories_total:
+            categories_total[purchase.category.title()] = 0
+            categories_total[purchase.category.title()] += purchase.price
+        else:
+            categories_total[purchase.category.title()] += purchase.price
         if purchase.date_purchase not in dates:
             dates.append(purchase.date_purchase)
-
-    total = round(total, 2)
-
-    for purchase in purchases:
-            products_total[purchase.product] += purchase.price
-            categories_total[purchase.category.title()] += purchase.price
 
     date = datetime.datetime(year, month, 1)
 
