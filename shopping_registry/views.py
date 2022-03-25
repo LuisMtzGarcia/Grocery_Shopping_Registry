@@ -16,13 +16,13 @@ import datetime
 def check_account(username, object=Purchase.objects.none()):
     """Checks if the user is using the demo account and if they're the owner of 
         the object."""
-
+    
     # Demo account check.
     if username == 'supercuenta':
         raise PermissionDenied
 
     # Owner of the object check.
-    if object != Purchase.objects.none():
+    if hasattr(object, 'owner'):
         if username != object.owner.username:
             raise Http404
 
@@ -334,10 +334,12 @@ def demo_account_instructions(request):
 @login_required
 def new_purchase(request):
     """Add a new purchase."""
-
-    check_account(request.user.username)
+    username = request.user.username
+    check_account(username)
 
     next = redirect('shopping_registry:dates')
+
+    print("this works")
 
     if request.method != 'POST':
         # No data submitted; create a blank form.

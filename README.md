@@ -1,3 +1,9 @@
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 # Grocery_shopping_registry
 WebApp to track and visualize grocery shopping expenses. Project focused on 
 building a CRUD application.
@@ -34,6 +40,23 @@ my handling of the back-end and the front-end of a website.
 * Plotly 5.4.0
 
 ## How to use
+
+### First of all, I wanna show off the "Register a purchase" form.
+
+It was the hardest part of the whole ordeal, I had to learn a lot of stuff really quickly just to style the damn thing.
+
+Here it is, in all its glory:
+
+<p align="center">
+  <img src="https://i.imgur.com/9hgz4Xb.png">
+</p>
+
+* Chef's kiss * Truly the epitome of form building. A Mona Lisa of the front-end work, if you will.
+
+Now, let me remove my self-contratulation cap and continue.
+
+### Demo account
+
 If you just want to see a demonstration of the site, I invite you to use the demo
  account.
 
