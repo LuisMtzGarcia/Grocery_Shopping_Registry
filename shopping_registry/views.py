@@ -36,6 +36,18 @@ def calculate_total(purchases):
     
     return total
 
+def total_categories(purchases):
+    categories_total = {}
+
+    for purchase in purchases:
+        if purchase.category.title() not in categories_total:
+            categories_total[purchase.category.title()] = 0
+            categories_total[purchase.category.title()] += purchase.price
+        else:
+            categories_total[purchase.category.title()] += purchase.price
+
+    return categories_total
+
 def index(request):
     """The home page for Registro-Super."""
     return render(request, 'shopping_registry/index.html')
@@ -79,7 +91,7 @@ def date(request, date):
 
     categories = []
 
-    category_spent = {}
+    categories_total = total_categories(purchases)
 
     bulk = []
 
@@ -93,8 +105,6 @@ def date(request, date):
         if purchases[x].category.title() not in categories:
             categories.append(purchases[x].category.title())
 
-        category_spent[purchases[x].category.title()] = 0
-
         if bulk[x] == True:
             # If it was a bulk purchase, multiply by 100 to display the price per
             # 100 grams.
@@ -106,10 +116,6 @@ def date(request, date):
 
         dictionary[x] = {'Nombre': purchases[x], 'Categoria': purchases[x].category,
             'Bulk': bulk[x], 'Precio': ind_prices[x]}
-
-    # Calculating total spent per category
-    for purchase in purchases:
-        category_spent[purchase.category.title()] += purchase.price
 
 
     # Product and Price visualization
@@ -126,8 +132,8 @@ def date(request, date):
 
     # Total spent per category visualization
 
-    # Obtains the values from the category_spent dict and stores them.
-    category_values = category_spent.values()
+    # Obtains the values from the categories_total dict and stores them.
+    category_values = categories_total.values()
     # List to read and store the values per category and convert them to float.
     total_cat_spent = [value for value in category_values]
 
@@ -139,7 +145,7 @@ def date(request, date):
 
     context = {'date': date, 'date_string': date_string, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
-        'categories': categories, 'category_spent': category_spent, 
+        'categories': categories, 'categories_total': categories_total, 
         'bar_graph': bar_graph, 'pie_graph': pie_graph}
     return render(request, 'shopping_registry/date.html', context)
 
