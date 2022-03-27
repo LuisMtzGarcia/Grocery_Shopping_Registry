@@ -27,6 +27,8 @@ def check_account(username, object=Purchase.objects.none()):
             raise Http404
 
 def calculate_total(purchases):
+    """Calculates the total spent for the given purchases and 
+        rounds the result."""
     total = 0
 
     for purchase in purchases:
@@ -37,6 +39,7 @@ def calculate_total(purchases):
     return total
 
 def total_categories(purchases):
+    """Calculates the total spent per category for the given purchases."""
     categories_total = {}
 
     for purchase in purchases:
@@ -47,6 +50,27 @@ def total_categories(purchases):
             categories_total[purchase.category.title()] += purchase.price
 
     return categories_total
+
+def generatePieGraph(categories_total):
+    """Generates a pie graph displaying the total spent per category."""
+
+    # Stores keys and values from dict to use as labels and values in the charts.
+    # Pie graph.
+    pie_labels = categories_total.keys()
+    pie_values = categories_total.values()
+
+    # Casts into list for graph compatibility.
+    # Pie graph.
+    pie_labels = list(pie_labels)
+    pie_values = list(pie_values)
+
+    # Pie graph.
+    Pie = go.Pie(labels=pie_labels, values=pie_values, hole=.3, 
+        title_text="Categorias")
+    pie_chart = go.Figure(data=Pie)
+    pie_graph = pie_chart.to_html()
+
+    return pie_graph    
 
 def index(request):
     """The home page for Registro-Super."""
@@ -132,16 +156,7 @@ def date(request, date):
 
     # Total spent per category visualization
 
-    # Obtains the values from the categories_total dict and stores them.
-    category_values = categories_total.values()
-    # List to read and store the values per category and convert them to float.
-    total_cat_spent = [value for value in category_values]
-
-    # Generate the Pie chart.
-    Pie = go.Pie(labels=categories, values=total_cat_spent, hole=.3, 
-        title_text="Categorias")
-    pie_chart = go.Figure(data=Pie)
-    pie_graph = pie_chart.to_html()
+    pie_graph = generatePieGraph(categories_total)
 
     context = {'date': date, 'date_string': date_string, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
@@ -250,7 +265,7 @@ def MonthView(request, year, month):
 
     products_total = {}
 
-    categories_total = {}
+    categories_total = total_categories(purchases)
 
     for purchase in purchases:
         if purchase.product not in products_total:
@@ -259,11 +274,6 @@ def MonthView(request, year, month):
         else:
             products_total[purchase.product] += purchase.price
 
-        if purchase.category.title() not in categories_total:
-            categories_total[purchase.category.title()] = 0
-            categories_total[purchase.category.title()] += purchase.price
-        else:
-            categories_total[purchase.category.title()] += purchase.price
         if purchase.date_purchase not in dates:
             dates.append(purchase.date_purchase)
 
@@ -273,17 +283,11 @@ def MonthView(request, year, month):
     # Bar chart.
     bar_labels = products_total.keys()
     bar_values = products_total.values()
-    # Pie chart.
-    pie_labels = categories_total.keys()
-    pie_values = categories_total.values()
 
     # Casts into list for chart compatibility.
     # Bar chart.
     bar_labels = list(bar_labels)
     bar_values = list(bar_values)
-    # Pie chart.
-    pie_labels = list(pie_labels)
-    pie_values = list(pie_values)
 
     # Generating the charts.
     # Bar chart.
@@ -294,10 +298,7 @@ def MonthView(request, year, month):
     bar_graph = figure.to_html()
 
     # Pie chart.
-    Pie = go.Pie(labels=pie_labels, values=pie_values, hole=.3, 
-        title_text="Categorias")
-    pie_chart = go.Figure(data=Pie)
-    pie_graph = pie_chart.to_html()
+    pie_graph = generatePieGraph(categories_total)
 
     context = {'date': date, 'dates': dates, 'total':total, 
         'products_total': products_total, 'categories_total': categories_total,
