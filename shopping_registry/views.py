@@ -72,6 +72,17 @@ def generatePieGraph(categories_total):
 
     return pie_graph    
 
+def generateBarGraph(x, y):
+    """Generates a pie graph displaying the total spent per product."""
+
+    Bar = go.Bar(x=x, y=y)
+    layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
+        yaxis={'title':'Costo'})
+    figure = go.Figure(data=[Bar],layout=layout)
+    bar_graph = figure.to_html()  
+
+    return bar_graph  
+
 def index(request):
     """The home page for Registro-Super."""
     return render(request, 'shopping_registry/index.html')
@@ -147,15 +158,11 @@ def date(request, date):
     # Convert the prices list QuerySet to a list of floats.
     prices_float = [float(price) for price in prices]
 
-    # Generate the Bar chart.
-    Bar = go.Bar(x=products, y=prices_float)
-    layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
-        yaxis={'title':'Costo'})
-    figure = go.Figure(data=[Bar],layout=layout)
-    bar_graph = figure.to_html()
+    # Generating the charts.
+    # Bar chart.
+    bar_graph = generateBarGraph(products, prices_float)
 
-    # Total spent per category visualization
-
+    # Pie chart.
     pie_graph = generatePieGraph(categories_total)
 
     context = {'date': date, 'date_string': date_string, 'purchases': purchases, 'total':total, 
@@ -291,11 +298,7 @@ def MonthView(request, year, month):
 
     # Generating the charts.
     # Bar chart.
-    Bar = go.Bar(x=bar_labels, y=bar_values)
-    layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
-        yaxis={'title':'Costo'})
-    figure = go.Figure(data=[Bar],layout=layout)
-    bar_graph = figure.to_html()
+    bar_graph = generateBarGraph(bar_labels, bar_values)
 
     # Pie chart.
     pie_graph = generatePieGraph(categories_total)
