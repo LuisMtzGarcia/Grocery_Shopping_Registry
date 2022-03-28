@@ -1,9 +1,3 @@
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 # Grocery_shopping_registry
 WebApp to track and visualize grocery shopping expenses. Project focused on 
 building a CRUD application.
