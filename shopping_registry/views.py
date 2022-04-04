@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.core import serializers
-from django.core.exceptions import PermissionDenied
 from django.db.models import Sum
+
+from shopping_registry import accountVerification
 
 from .models import Purchase
 from .forms import PurchaseForm
@@ -12,19 +13,6 @@ import plotly.graph_objects as go
 
 import json
 import datetime
-
-def check_account(username, object=Purchase.objects.none()):
-    """Checks if the user is using the demo account and if they're the owner of 
-        the object."""
-    
-    # Demo account check.
-    if username == 'supercuenta':
-        raise PermissionDenied
-
-    # Owner of the object check.
-    if hasattr(object, 'owner'):
-        if username != object.owner.username:
-            raise Http404
 
 def calculate_total(purchases):
     """Calculates the total spent for the given purchases and 
@@ -177,7 +165,7 @@ def edit_purchase(request, purchase_id):
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
     # Checks if user is using demo account and is the owner of the object.
-    check_account(request.user.username, purchase)
+    accountVerification.check_account(request.user.username, purchase)
 
     date = purchase.date_purchase
 
@@ -209,7 +197,7 @@ def edit_purchase(request, purchase_id):
 def erase_date_confirmation(request, date_string):
     """Confirm the deletion of the purchases done on the selected date."""
 
-    check_account(request.user.username)
+    accountVerification.check_account(request.user.username)
 
     purchases = Purchase.objects.filter(date_purchase=date_string, owner=request.user)
 
@@ -223,7 +211,7 @@ def erase_date_confirmation(request, date_string):
 def erase_date(request, date_string):
     """Delete all the purchases done on the selected date."""
 
-    check_account(request.user.username)
+    accountVerification.check_account(request.user.username)
 
     # Date_string is stored in string format 'YYYY-MM-DD', 
     # converted to datetime value.
@@ -241,7 +229,7 @@ def delete_purchase_confirmation(request, purchase_id):
     """Confirms the deletion of a purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    check_account(request.user.username, purchase)
+    accountVerification.check_account(request.user.username, purchase)
 
     context = {'purchase': purchase}
     return render(request, 'shopping_registry/delete_purchase_confirmation.html', 
@@ -252,7 +240,7 @@ def delete_purchase(request, purchase_id):
     """Deletes a single purchase."""
     purchase = get_object_or_404(Purchase, id=purchase_id)
 
-    check_account(request.user.username, purchase)
+    accountVerification.check_account(request.user.username, purchase)
 
     purchase_erase = purchase.delete()
 
@@ -342,7 +330,7 @@ def Months(request, year):
 def registering_instructions(request):
     """Page that links to the PurchaseForm and includes instructions."""
 
-    check_account(request.user.username)
+    accountVerification.check_account(request.user.username)
 
     return render(request, 'shopping_registry/instrucciones_registro.html')
 
@@ -356,7 +344,7 @@ def demo_account_instructions(request):
 def new_purchase(request):
     """Add a new purchase."""
     username = request.user.username
-    check_account(username)
+    accountVerification.check_account(username)
 
     next = redirect('shopping_registry:dates')
 
