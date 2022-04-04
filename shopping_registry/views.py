@@ -5,6 +5,7 @@ from django.core import serializers
 from django.db.models import Sum
 
 from shopping_registry import accountVerification
+from shopping_registry import totalCalculations
 
 from .models import Purchase
 from .forms import PurchaseForm
@@ -13,31 +14,6 @@ import plotly.graph_objects as go
 
 import json
 import datetime
-
-def calculate_total(purchases):
-    """Calculates the total spent for the given purchases and 
-        rounds the result."""
-    total = 0
-
-    for purchase in purchases:
-        total += purchase.price
-
-    total = round(total, 2)
-    
-    return total
-
-def total_categories(purchases):
-    """Calculates the total spent per category for the given purchases."""
-    categories_total = {}
-
-    for purchase in purchases:
-        if purchase.category.title() not in categories_total:
-            categories_total[purchase.category.title()] = 0
-            categories_total[purchase.category.title()] += purchase.price
-        else:
-            categories_total[purchase.category.title()] += purchase.price
-
-    return categories_total
 
 def generatePieGraph(categories_total):
     """Generates a pie graph displaying the total spent per category."""
@@ -58,7 +34,7 @@ def generatePieGraph(categories_total):
     pie_chart = go.Figure(data=Pie)
     pie_graph = pie_chart.to_html()
 
-    return pie_graph    
+    return pie_graph
 
 def generateBarGraph(x, y):
     """Generates a pie graph displaying the total spent per product."""
@@ -98,7 +74,7 @@ def date(request, date):
     
     purchases = Purchase.objects.filter(date_purchase=date, owner=request.user)
 
-    total = calculate_total(purchases)
+    total = totalCalculations.calculate_total(purchases)
 
     products = []
 
@@ -114,7 +90,7 @@ def date(request, date):
 
     categories = []
 
-    categories_total = total_categories(purchases)
+    categories_total = totalCalculations.total_categories(purchases)
 
     bulk = []
 
@@ -254,13 +230,13 @@ def MonthView(request, year, month):
     purchases = Purchase.objects.filter(date_purchase__year=year, 
         date_purchase__month=month, owner=request.user)
 
-    total = calculate_total(purchases)
+    total = totalCalculations.calculate_total(purchases)
 
     dates = []
 
     products_total = {}
 
-    categories_total = total_categories(purchases)
+    categories_total = totalCalculations.total_categories(purchases)
 
     for purchase in purchases:
         if purchase.product not in products_total:

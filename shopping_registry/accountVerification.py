@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+
 from .models import Purchase
 
 def check_account(username, object=Purchase.objects.none()):
