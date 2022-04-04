@@ -6,46 +6,13 @@ from django.db.models import Sum
 
 from shopping_registry import accountVerification
 from shopping_registry import totalCalculations
+from shopping_registry import graphGeneration
 
 from .models import Purchase
 from .forms import PurchaseForm
 
-import plotly.graph_objects as go
-
 import json
-import datetime
-
-def generatePieGraph(categories_total):
-    """Generates a pie graph displaying the total spent per category."""
-
-    # Stores keys and values from dict to use as labels and values in the charts.
-    # Pie graph.
-    pie_labels = categories_total.keys()
-    pie_values = categories_total.values()
-
-    # Casts into list for graph compatibility.
-    # Pie graph.
-    pie_labels = list(pie_labels)
-    pie_values = list(pie_values)
-
-    # Pie graph.
-    Pie = go.Pie(labels=pie_labels, values=pie_values, hole=.3, 
-        title_text="Categorias")
-    pie_chart = go.Figure(data=Pie)
-    pie_graph = pie_chart.to_html()
-
-    return pie_graph
-
-def generateBarGraph(x, y):
-    """Generates a pie graph displaying the total spent per product."""
-
-    Bar = go.Bar(x=x, y=y)
-    layout = go.Layout(title="Productos y costo", xaxis={'title':'Productos'}, 
-        yaxis={'title':'Costo'})
-    figure = go.Figure(data=[Bar],layout=layout)
-    bar_graph = figure.to_html()  
-
-    return bar_graph  
+import datetime 
 
 def index(request):
     """The home page for Registro-Super."""
@@ -124,10 +91,10 @@ def date(request, date):
 
     # Generating the charts.
     # Bar chart.
-    bar_graph = generateBarGraph(products, prices_float)
+    bar_graph = graphGeneration.generateBarGraph(products, prices_float)
 
     # Pie chart.
-    pie_graph = generatePieGraph(categories_total)
+    pie_graph = graphGeneration.generatePieGraph(categories_total)
 
     context = {'date': date, 'date_string': date_string, 'purchases': purchases, 'total':total, 
         'products':products, 'ind_prices':ind_prices, 'dictionary': dictionary,
@@ -262,10 +229,10 @@ def MonthView(request, year, month):
 
     # Generating the charts.
     # Bar chart.
-    bar_graph = generateBarGraph(bar_labels, bar_values)
+    bar_graph = graphGeneration.generateBarGraph(bar_labels, bar_values)
 
     # Pie chart.
-    pie_graph = generatePieGraph(categories_total)
+    pie_graph = graphGeneration.generatePieGraph(categories_total)
 
     context = {'date': date, 'dates': dates, 'total':total, 
         'products_total': products_total, 'categories_total': categories_total,
