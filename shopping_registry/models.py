@@ -11,7 +11,7 @@ class Purchase(models.Model):
     date_purchase = models.DateField()
     # Compras a granel / Bulk purchases
     bulk = models.BooleanField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
 
     class Meta:
         verbose_name_plural = 'purchases'
