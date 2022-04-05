@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 
 from shopping_registry.models import Purchase
 
-from tests import obtainFieldLabel
-
 import datetime
 
 User = get_user_model()
@@ -36,5 +34,5 @@ class PurchaseModelTest(TestCase):
 
     def test_quantity_label(self):
         purchase = Purchase.objects.get(id=1)
-        field_label = obtainFieldLabel.obtainFieldLabel('quantity', purchase)
+        field_label = purchase._meta.get_field('quantity').verbose_name
         self.assertEqual(field_label, 'quantity')
